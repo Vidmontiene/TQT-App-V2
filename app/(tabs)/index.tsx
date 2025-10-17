@@ -1,98 +1,124 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import { StyleSheet, View, Image, TouchableOpacity, Text, ScrollView} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { router } from 'expo-router';
 
 export default function HomeScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
+    <ScrollView>
+      <SafeAreaView
+        style={styles.container}
+        edges={['top', 'right', 'bottom', 'left']}>
+        <Text style={styles.titulo}>Bem vindo(a) ao TQT-App</Text>
         <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
+          source={require('../../assets/images/criancas.jpg')}
+          style={styles.foto_perfil}
         />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+        <Text style={styles.subtitulo}>Cuidando com Amor e Atenção</Text>
+        <Text style={styles.info}>Aqui você encontra tudo o que precisa para o cuidado diário e em situações especiais.</Text>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+        {/*Botões*/}
+        <View style={styles.alinha_botoes}>
+
+          {/*Procedimentos diários*/}
+          <View style={styles.botao_container}>
+            <TouchableOpacity>
+              <Image
+                source={require('../../assets/images/procdiarios.png')}
+                style={styles.foto_botao}
+              />
+            </TouchableOpacity>
+            <Text style={styles.texto_botao}>Procedimentos diários</Text>
+          </View>
+
+          {/*Procedimentos de emergência*/}
+          <View style={styles.botao_container}>
+            <TouchableOpacity>
+              <Image
+                source={require('../../assets/images/emergencia.png')}
+                style={styles.foto_botao}
+              />
+            </TouchableOpacity>
+            <Text style={styles.texto_botao}>Procedimentos de emergência</Text>
+          </View>
+
+          {/*Especificações da cânula*/}
+          <View style={styles.botao_container}>
+            <TouchableOpacity>
+              <Image
+                source={require('../../assets/images/especificacoes.png')}
+                style={styles.foto_botao}
+              />
+            </TouchableOpacity>
+            <Text style={styles.texto_botao}>Especificações da cânula</Text>
+          </View>
+
+          {/*Materiais essenciais*/}
+          <View style={styles.botao_container}>
+            <TouchableOpacity>
+              <Image
+                source={require('../../assets/images/essenciais.png')}
+                style={styles.foto_botao}
+              />
+            </TouchableOpacity>
+            <Text style={styles.texto_botao}>Materiais essenciais</Text>
+          </View>
+        </View>
+      </SafeAreaView>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
+  titulo:{
+    fontWeight: 'bold',
+    fontSize: 22,
+    textAlign: 'center',
+    paddingVertical: 10
+  },
+  container:{
+    backgroundColor: 'white',
+    gap: 18
+  },
+  foto_perfil:{
+    alignSelf:'center',
+    //width: '90%', 
+    //height: 200,
+    width: 250,
+    height: 180,
+    borderRadius: 50,
+    paddingVertical: 10
+  },
+  subtitulo:{
+    textAlign: 'center',
+    fontWeight:'bold',
+    fontSize: 20
+  },
+  info:{
+    textAlign: 'center',
+    fontSize: 15,
+    padding: 'auto'
+  },
+  alinha_botoes:{
     flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'baseline',
+    justifyContent:'space-evenly',
+    alignContent: 'center',
+  },
+  foto_botao:{
+    width: 160,
+    height: 160,
+    borderRadius: 10,
+  },
+  botao_container:{
+    width: '48%',
     alignItems: 'center',
-    gap: 8,
+    marginBottom: 20,
+    
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
+  texto_botao:{
+    textAlign: 'center',
+    marginTop: 8,
+    flexWrap: 'wrap', 
+  }
 });
