@@ -1,5 +1,6 @@
-import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { Text } from 'react-native'
 import { Stack } from 'expo-router';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
@@ -9,16 +10,24 @@ export const unstable_settings = {
 
 export default function RootLayout() {
   return (
-    <ThemeProvider value={DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="modal"
-          options={{ presentation: 'modal', title: 'Modal' }}
-        />
-      </Stack>
-      <StatusBar style="dark" /> {/* força tema claro */}
-    </ThemeProvider>
+      <SafeAreaView style={{ flex: 1 }}>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="procedimentos"
+            options={{ 
+              presentation: 'modal', 
+              title: 'Cuidados com a Traqueostomia',
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontSize: 18,
+                fontWeight: 'bold',
+              },
+            }}
+          />
+        </Stack>
+        <StatusBar style="dark" />
+      </SafeAreaView>
   );
 }
 
