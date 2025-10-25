@@ -13,8 +13,9 @@ export default function RootLayout() {
       <SafeAreaView style={{ flex: 1 }}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+
           <Stack.Screen
-            name="procedimentos"
+            name="diarios"
             options={{ 
               presentation: 'modal', 
               title: 'Cuidados com a Traqueostomia',
@@ -25,6 +26,33 @@ export default function RootLayout() {
               },
             }}
           />
+
+          <Stack.Screen
+            name="emergencia"
+            options={{ 
+              presentation: 'modal', 
+              title: 'Emergências',
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontSize: 18,
+                fontWeight: 'bold',
+              },
+            }}
+          />
+
+          <Stack.Screen
+            name="canula"
+            options={{ 
+              presentation: 'modal', 
+              title: 'Especificações da Cânula',
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontSize: 18,
+                fontWeight: 'bold',
+              },
+            }}
+          />
+
         </Stack>
         <StatusBar style="dark" />
       </SafeAreaView>

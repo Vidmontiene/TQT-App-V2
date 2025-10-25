@@ -3,8 +3,10 @@ import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { Background } from '@react-navigation/elements';
+import { iniciar as iniciarCanula} from '@/database/canula'
 
 export default function HomeScreen() {
+
   return (
     <ScrollView>
       <SafeAreaView
@@ -23,7 +25,7 @@ export default function HomeScreen() {
 
           {/*Procedimentos diários*/}
           <View style={styles.botao_container}>
-            <TouchableOpacity onPress={() => router.push('/procedimentos')}>
+            <TouchableOpacity onPress={() => router.push('/diarios')}>
               <MaterialIcons 
                 name="health-and-safety" 
                 size={48} 
@@ -36,7 +38,7 @@ export default function HomeScreen() {
 
           {/*Procedimentos de emergência*/}
           <View style={styles.botao_container}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => router.push('/emergencia')}>
               <MaterialIcons 
                 name="warning-amber" 
                 size={48} 
@@ -49,7 +51,7 @@ export default function HomeScreen() {
 
           {/*Especificações da cânula*/}
           <View style={styles.botao_container}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => router.push('/canula')}>
               <MaterialIcons 
                 name="info-outline" 
                 size={48} 
