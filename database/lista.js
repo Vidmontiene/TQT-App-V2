@@ -12,50 +12,52 @@ export const iniciar = async () => {
     const dbConn = await openDB();
 
     await dbConn.execAsync(`
-    CREATE TABLE IF NOT EXISTS canula (
+    CREATE TABLE IF NOT EXISTS lista (
         id INTEGER PRIMARY KEY,
-        tipo TEXT,
-        balao INTEGER,
-        tamanho REAL,
-        material INTEGER,
-        marca TEXT,
-        data TEXT
+        canula INTEGER,
+        fita INTEGER,
+        gaze INTEGER,
+        solucao INTEGER,
+        luva INTEGER,
+        aspirador INTEGER,
+        sonda INTEGER,
+        mascara INTEGER,
+        oculos INTEGER
     );
     `);
 
-    console.log("Tabela 'canula' criada/verificada.");
+    console.log("Tabela 'lista' criada/verificada.");
 
     await dbConn.execAsync(`
-        INSERT OR IGNORE INTO canula (id) VALUES (1);
+        INSERT OR IGNORE INTO lista (id) VALUES (1);
     `)
 
-    console.log("Linha inserida em 'canula'.");
+    console.log("Linha inserida em 'lista'.");
     
-    const result = await dbConn.getAllAsync(`SELECT * FROM canula;`);
+    const result = await dbConn.getAllAsync(`SELECT * FROM lista;`);
     console.log("Conteúdo da tabela após iniciar:", result);
 };
 
-//Muda a informação da cânula
-export const setCanula = async (campo, valor) => {
+//Muda a informação da lista
+export const setLista = async (campo, valor) => {
     const dbConn = await openDB();
 
     await dbConn.runAsync(
-        `UPDATE canula SET ${campo} = ? WHERE id = ?;`,
+        `UPDATE lista SET ${campo} = ? WHERE id = ?;`,
         [valor, 1]
     );
     console.log(`${campo} atualizado para: ${valor}`);
 };
 
-
 //Pegar informações da canula
-export const getCanula = async () => {
+export const getLista = async () => {
 
     const dbConn = await openDB();
 
     const result = await dbConn.getAllAsync(`
-        SELECT * FROM canula;
+        SELECT * FROM lista;
     `)
 
-    console.log("Dados obtidos de 'canula':", result);
+    console.log("Dados obtidos de 'lista':", result);
     return result;
 }

@@ -53,6 +53,19 @@ export default function RootLayout() {
             }}
           />
 
+          <Stack.Screen
+            name="materiais"
+            options={{ 
+              presentation: 'modal', 
+              title: 'Materiais para Traqueostomia',
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontSize: 18,
+                fontWeight: 'bold',
+              },
+            }}
+          />
+
         </Stack>
         <StatusBar style="dark" />
       </SafeAreaView>

@@ -2,8 +2,6 @@ import { StyleSheet, View, Image, TouchableOpacity, Text, ScrollView} from 'reac
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
-import { Background } from '@react-navigation/elements';
-import { iniciar as iniciarCanula} from '@/database/canula'
 
 export default function HomeScreen() {
 
@@ -64,7 +62,7 @@ export default function HomeScreen() {
 
           {/*Materiais essenciais*/}
           <View style={styles.botao_container}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => router.push('/materiais')}>
               <AntDesign
                 name="medicine-box" 
                 size={48} 

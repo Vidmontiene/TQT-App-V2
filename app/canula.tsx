@@ -1,10 +1,10 @@
-import { Feather, MaterialIcons, FontAwesome6 } from '@expo/vector-icons';
 import { useFocusEffect } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
-import { Text, TouchableOpacity, View, ScrollView, StyleSheet, TextInput } from 'react-native';
+import { Text, TouchableOpacity, View, ScrollView, StyleSheet, TextInput, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getCanula, iniciar, setCanula } from '@/database/canula';
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { Picker } from '@react-native-picker/picker';
 
 export default function Canula() {
 
@@ -15,7 +15,8 @@ export default function Canula() {
     const [marca, setMarca] = useState("");               // Mostra a Marca na UI
     const [data, setData] = useState<Date | null>(null);  // Mostra a data na UI
 
-    const [showData, setShowData] = useState(false);        // Abre/Fecha escolhedor de DateTimePicker
+    const [showData, setShowData] = useState(false);       // Abre/Fecha escolhedor de DateTimePicker
+    const [msg, setMsg] = useState("");                    // Mostra mensagem de salvamento 
 
     // Define os radioButtons de balão
     const baloes = [
@@ -75,8 +76,18 @@ export default function Canula() {
     // Lida com mudanças no tamanho (permite apenas n ou n.n ou "")
     const mudanca = (num: string) => {
         num = num.replace(',', '.');
+
+        const partes = num.split('.');
+        if (partes.length > 2) {
+            num = partes[0] + '.' + partes[1];
+        }
+
+        if (!num.includes('.') && num.length >= 2) {
+            num = num[0] + '.' + num.slice(1, 2);
+        }
+
         const regex = /^(\d{0,1}(\.\d{0,1})?)$/;
-        if (regex.test(num) || num === "") {
+        if (regex.test(num) || num === '') {
             setTamanho(num);
         }
     };
@@ -97,87 +108,97 @@ export default function Canula() {
         await setCanula("material", material);
         await setCanula("balao", balao);
         carregarCanula();
-    }
-
+        setMsg("Informações salvas com sucesso!");
+        setTimeout(() => setMsg(""), 1500); // desaparece após 1.5s
+    };
 
     return (
-        <ScrollView>
-            <SafeAreaView
-                style={styles.container}
-                edges={['top', 'right', 'bottom', 'left']}>
+        <SafeAreaView
+            style={styles.container}
+            edges={['top', 'right', 'bottom', 'left']}>
 
-                {/*Tipo*/}
-                <Text style={styles.texto}>Tipo de Cânula</Text>
-                <TextInput
-                    style={styles.input_txt}
-                    value={tipo}
-                    onChangeText={setTipo}
+            {msg ? <Text style={styles.msg}>{msg}</Text> : null}
+
+            {/*Tipo*/}
+            <Text style={styles.texto}>Tipo de Cânula</Text>
+            <TextInput
+                style={styles.input_txt}
+                value={tipo}
+                onChangeText={setTipo}
+            />
+
+            {/*Balão*/}
+            <Text style={styles.texto}>Tem Balão?</Text>
+            <View style={styles.input_txt}>
+                <Picker
+                selectedValue={balao}
+                onValueChange={(itemValue) => setBalao(itemValue)}
+                >
+                    <Picker.Item label="Sim" value="1" />
+                    <Picker.Item label="Não" value="2" />
+                </Picker>
+            </View>
+
+
+            {/*Tamanho*/}
+            <Text style={styles.texto}>Tamanho da Cânula</Text>
+            <TextInput
+                style={styles.input_txt}
+                value={tamanho}
+                onChangeText={mudanca}
+                keyboardType="numeric"
+                maxLength={4}
+            />
+
+            {/*Material*/}
+            <Text style={styles.texto}>Tipo de Cânula</Text>
+            <View style={styles.input_txt}>
+                <Picker
+                selectedValue={material}
+                onValueChange={(itemValue) => setMaterial(itemValue)}>
+                    <Picker.Item label="Metálica" value="1" />
+                    <Picker.Item label="Plástica/Silicone" value="2" />
+                </Picker>
+            </View>
+
+            {/*Marca*/}
+            <Text style={styles.texto}>Marca</Text>
+            <TextInput
+                style={styles.input_txt}
+                value={marca}
+                onChangeText={setMarca}
+            />
+
+            {/*Data*/}
+            <Text style={styles.texto}>Data da última Troca</Text>
+            <TouchableOpacity style={styles.input_txt} onPress={() => setShowData(true)}>
+                <Text style={styles.txt_data}>
+                    {data ? data.toLocaleDateString("pt-BR") : ""}
+                </Text>
+            </TouchableOpacity>
+            {showData && (
+                <DateTimePicker
+                    value={data || new Date()}
+                    mode="date"
+                    display="default"
+                    onChange={onChange}
                 />
+            )}
 
-                {/*Balão*/}
-                <Text style={styles.texto}>Tem Balão?</Text>
-                <TextInput
-                    style={styles.input_txt}
-                    placeholder=""
-                    /* value={}
-                    onChangeText={}*/
-                />
+            <TouchableOpacity style={styles.botao} onPress={mudarCanula}>
+                <Text style={styles.txt_botao}>Salvar</Text>
+            </TouchableOpacity>
+        </SafeAreaView>
 
-                {/*Tamanho*/}
-                <Text style={styles.texto}>Tamanho da Cânula</Text>
-                <TextInput
-                    style={styles.input_txt}
-                    value={tamanho}
-                    onChangeText={mudanca}
-                    keyboardType="numeric"
-                    maxLength={4}
-                />
-
-                {/*Material*/}
-                <Text style={styles.texto}>Material</Text>
-                <TextInput
-                    style={styles.input_txt}
-                    placeholder=""
-                    /* value={}
-                    onChangeText={}*/
-                />
-
-                {/*Marca*/}
-                <Text style={styles.texto}>Marca</Text>
-                <TextInput
-                    style={styles.input_txt}
-                    value={marca}
-                    onChangeText={setMarca}
-                />
-
-                {/*Data*/}
-                <Text style={styles.texto}>Data da última Troca</Text>
-                <TouchableOpacity style={styles.input_txt} onPress={() => setShowData(true)}>
-                    <Text style={[styles.txt_data, { color: data ? '#000' : 'gray' }]}>
-                        {data ? data.toLocaleDateString("pt-BR") : ""}
-                    </Text>
-                </TouchableOpacity>
-                {showData && (
-                    <DateTimePicker
-                        value={data || new Date()}
-                        mode="date"
-                        display="default"
-                        onChange={onChange}
-                    />
-                )}
-
-                <TouchableOpacity style={styles.botao} onPress={mudarCanula}>
-                    <Text style={styles.txt_botao}>Salvar</Text>
-                </TouchableOpacity>
-            </SafeAreaView>
-        </ScrollView>
     );
-    }
+}
+
+const { width } = Dimensions.get('window');
 
     const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#ffffffff',
-        padding: 10,
+        backgroundColor: 'white',
+        paddingHorizontal: 10,
         height: "100%"
     },
     texto:{
@@ -193,12 +214,13 @@ export default function Canula() {
         alignSelf: 'center',
         marginTop: 10,
         marginBottom: 20,
-        height: 50,
-        justifyContent: 'center'
+        height: 45,
+        justifyContent: 'center',
+        fontSize: 15,
     },
     botao:{
         backgroundColor: '#12B9ED',
-        height: 60,
+        height: 52,
         borderRadius: 10,
         marginTop: 10,
         marginBottom: 40,
@@ -211,6 +233,20 @@ export default function Canula() {
         fontSize: 17
     },
     txt_data:{
-        paddingLeft: 5
+        paddingLeft: 5,
+        fontSize: 15,
+    },
+    msg:{
+        backgroundColor: '#D0F0FB',
+        color: '#12B9ED',
+        fontWeight: '600',
+        marginBottom: 13,
+        padding: 22,
+        fontSize: 17,
+        textAlign: 'center',
+        width: width,
+         zIndex: 999,
+        borderRadius: 4,
+        position: 'absolute'
     }
 })
