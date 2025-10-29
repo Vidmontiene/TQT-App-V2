@@ -38,6 +38,13 @@ import {StyleSheet} from 'react-native';
     borderRadius: 12,
   
   },
+  img_redondo:{
+    marginRight: 12,
+    color: '#12B9ED',
+    backgroundColor: "#D0F0FB",
+    padding: 20,
+    borderRadius: 50,
+  },
   container_botao:{
     flex: 1,
     justifyContent: 'center',

@@ -151,7 +151,7 @@ export default function Canula() {
             />
 
             {/*Material*/}
-            <Text style={styles.texto}>Tipo de Cânula</Text>
+            <Text style={styles.texto}>Material</Text>
             <View style={styles.input_txt}>
                 <Picker
                 selectedValue={material}
