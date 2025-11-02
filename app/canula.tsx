@@ -73,24 +73,44 @@ export default function Canula() {
         return new Date(ano, mes - 1, dia);
     }
 
-    // Lida com mudanças no tamanho (permite apenas n ou n.n ou "")
+    // Lida com mudanças no tamanho (permite apenas n ou n.n ou 10.0 ou "")
     const mudanca = (num: string) => {
         num = num.replace(',', '.');
+
+        if (num === '') {
+            setTamanho('');
+            return;
+        }
+
+        if (num === '.') return;
 
         const partes = num.split('.');
         if (partes.length > 2) {
             num = partes[0] + '.' + partes[1];
         }
 
-        if (!num.includes('.') && num.length >= 2) {
-            num = num[0] + '.' + num.slice(1, 2);
+        // Caso especial: "100" → "10.0"
+        if (num === "1.00") {
+            setTamanho("10.0");
+            return;
         }
 
-        const regex = /^(\d{0,1}(\.\d{0,1})?)$/;
-        if (regex.test(num) || num === '') {
-            setTamanho(num);
+        if (!num.includes('.') && num.length === 1) {
+        } 
+        else if (!num.includes('.') && num.length === 2) {
+            num = `${num[0]}.${num[1]}`;
         }
+
+        const regex = /^\d{0,2}(\.\d{0,1})?$/;
+        if (!regex.test(num)) return;
+
+        const valor = parseFloat(num);
+        if (!isNaN(valor) && valor > 10) return;
+        setTamanho(num);
     };
+
+
+
 
     // Lida com mudança na data 
     const onChange = (event: any, dataSelecionada: any) => {
@@ -147,7 +167,7 @@ export default function Canula() {
                 value={tamanho}
                 onChangeText={mudanca}
                 keyboardType="numeric"
-                maxLength={4}
+                maxLength={5}
             />
 
             {/*Material*/}

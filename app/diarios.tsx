@@ -2,6 +2,7 @@ import { MaterialIcons, Octicons, MaterialCommunityIcons } from '@expo/vector-ic
 import { Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from '@/estilos/botoes';
+import { router } from 'expo-router';
 
 
 export default function Diarios() {
@@ -12,7 +13,7 @@ export default function Diarios() {
       <Text style={styles.titulo}>Procedimentos Diários</Text>
 
       {/*Apiração da cânula*/}
-      <TouchableOpacity style={styles.botao}>
+      <TouchableOpacity style={styles.botao} onPress={() => router.push('/aspiracao')}>
         <MaterialIcons  name="medication" size={33} style={styles.img}/>
         <View style={styles.container_botao}>
           <Text style={styles.titulo_botao}>Aspiração de cânula</Text>

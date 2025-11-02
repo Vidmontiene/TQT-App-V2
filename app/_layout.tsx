@@ -66,6 +66,19 @@ export default function RootLayout() {
             }}
           />
 
+          <Stack.Screen
+            name="aspiracao"
+            options={{ 
+              presentation: 'modal', 
+              title: 'Aspiração da Cânula',
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontSize: 18,
+                fontWeight: 'bold',
+              },
+            }}
+          />
+
         </Stack>
         <StatusBar style="dark" />
       </SafeAreaView>
