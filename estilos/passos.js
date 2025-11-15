@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 export const styles = StyleSheet.create({
   container:{
     backgroundColor: 'white',
-    padding: 10,
+    paddingHorizontal: 10,
     height: "100%"
   },
   titulo:{
@@ -78,5 +78,30 @@ export const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 17
+  },
+  container_aviso:{
+    backgroundColor: '#DFF1F6',
+    width: '99%',
+    borderRadius: 10,
+    alignSelf: 'center',
+    padding: 10,
+    gap: 8,  
+    marginBottom: 15
+  },
+  titulo_aviso:{
+    color: '#12B9ED',
+    fontWeight: 'bold',
+    fontSize: 20
+  },
+  icon_titulo:{
+    flexDirection: 'row', 
+  },
+  video:{
+    width: '97%', 
+    aspectRatio: 16/9,
+    alignSelf: 'center',
+    marginBottom: 15,
+    borderRadius: 15,
+    overflow: 'hidden',
   }
 });

@@ -34,7 +34,7 @@ export default function Materiais() {
         }, [])
      );
 
-    // Carrega os valores do banco nos useStates
+    // Carrega os valores do DB nos useStates
     const carregarLista = async () => {
         const rows = await getLista();
         if (Array.isArray(rows) && rows.length > 0) {

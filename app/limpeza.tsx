@@ -1,25 +1,39 @@
-import { Text, TouchableOpacity, View, ScrollView } from 'react-native';
+import { Text, View, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CheckBox } from 'react-native-elements';
 import { useState } from 'react';
+import { MaterialIcons } from '@expo/vector-icons';
 import { styles } from '@/estilos/passos'
 import { ResizeMode, Video } from 'expo-av';
 
-export default function Aspiracao() {
+export default function Limpeza() {
 
-  const [soro, setSoro] = useState(false);  
+  const [subcanula, setSubcanula] = useState(false);  
   const [luva, setLuva] = useState(false); 
-  const [aspirador, setAspirador] = useState(false); 
-  const [sonda, setSonda] = useState(false); 
+  const [escova, setEscova] = useState(false); 
+  const [gaze, setGaze] = useState(false); 
   const [agua, setAgua] = useState(false); 
-  const [recipiente, setRecipiente] = useState(false); 
+  const [sabao, setSabao] = useState(false); 
       
   return (
     <ScrollView>
       <SafeAreaView
         style={styles.container}
         edges={['top', 'right', 'bottom', 'left']}>
-          
+
+        {/*Aviso*/}
+        <View style={styles.container_aviso}>
+            <View style={styles.icon_titulo}>
+                <MaterialIcons
+                    name="info-outline"
+                    size={30}
+                    color='#12B9ED'
+                />
+                <Text style={styles.titulo_aviso}> Aviso</Text>
+            </View>
+            <Text style={styles.descricao_passo}>Esse procedimento deve ser feito em cânulas Shiley e Metálica</Text>
+        </View>
+
         {/*Vídeo*/}
         <Text style={styles.titulo}>Vídeo Demonstrativo</Text>
         <Video
@@ -32,30 +46,43 @@ export default function Aspiracao() {
 
         <Text style={styles.titulo}>Materiais</Text>
 
-        {/*Aspirador*/}
+        {/*Água*/}
         <View style={styles.check}>
           <CheckBox
-            checked={aspirador}
-            onPress={() => setAspirador(!aspirador)}
+            checked={agua}
+            onPress={() => setAgua(!agua)}
             checkedColor= '#12B9ED'
             uncheckedColor="#85D7F2"
             size={33}
             containerStyle={{ padding: 0, margin: 0, backgroundColor: 'transparent' }}
           />
-          <Text style={styles.item}>Aspirador</Text>
+          <Text style={styles.item}>Água</Text>
         </View>
 
-        {/*Sonda*/}
+        {/*Sabão*/}
         <View style={styles.check}>
           <CheckBox
-            checked={sonda}
-            onPress={() => setSonda(!sonda)}
+            checked={sabao}
+            onPress={() => setSabao(!sabao)}
             checkedColor= '#12B9ED'
             uncheckedColor="#85D7F2"
             size={33}
             containerStyle={{ padding: 0, margin: 0, backgroundColor: 'transparent' }}
           />
-          <Text style={styles.item}>Sonda de aspiração</Text>
+          <Text style={styles.item}>Sabão neutro</Text>
+        </View>
+
+        {/*Gaze*/}
+        <View style={styles.check}>
+          <CheckBox
+            checked={gaze}
+            onPress={() => setGaze(!gaze)}
+            checkedColor= '#12B9ED'
+            uncheckedColor="#85D7F2"
+            size={33}
+            containerStyle={{ padding: 0, margin: 0, backgroundColor: 'transparent' }}
+          />
+          <Text style={styles.item}>Gaze</Text>
         </View>
 
         {/*Luvas*/}
@@ -68,46 +95,33 @@ export default function Aspiracao() {
             size={33}
             containerStyle={{ padding: 0, margin: 0, backgroundColor: 'transparent' }}
           />
-          <Text style={styles.item}>Luvas estéreis</Text>
+          <Text style={styles.item}>Luvas</Text>
         </View>
 
-        {/*Soro*/}
+        {/*Escova*/}
         <View style={styles.check}>
           <CheckBox
-            checked={soro}
-            onPress={() => setSoro(!soro)}
+            checked={escova}
+            onPress={() => setEscova(!escova)}
             checkedColor= '#12B9ED'
             uncheckedColor="#85D7F2"
             size={33}
             containerStyle={{ padding: 0, margin: 0, backgroundColor: 'transparent' }}
           />
-          <Text style={styles.item}>Soro fisiológico</Text>
+          <Text style={styles.item}>Escovinha</Text>
         </View>
 
-        {/*Água e Sabão*/}
+        {/*Subcanula*/}
         <View style={styles.check}>
           <CheckBox
-            checked={agua}
-            onPress={() => setAgua(!agua)}
+            checked={subcanula}
+            onPress={() => setSubcanula(!subcanula)}
             checkedColor= '#12B9ED'
             uncheckedColor="#85D7F2"
             size={33}
             containerStyle={{ padding: 0, margin: 0, backgroundColor: 'transparent' }}
           />
-          <Text style={styles.item}>Água e sabão</Text>
-        </View>
-
-        {/*Recipiente*/}
-        <View style={styles.check}>
-          <CheckBox
-            checked={recipiente}
-            onPress={() => setRecipiente(!recipiente)}
-            checkedColor= '#12B9ED'
-            uncheckedColor="#85D7F2"
-            size={33}
-            containerStyle={{ padding: 0, margin: 0, backgroundColor: 'transparent' }}
-          />
-          <Text style={styles.item}>Recipiente para descarte</Text>
+          <Text style={styles.item}>Subcânula de reserva</Text>
         </View>
 
         <Text style={[styles.titulo, {marginTop: 10}]}>Passo a Passo</Text>
@@ -119,7 +133,7 @@ export default function Aspiracao() {
           </View>
           <View style={styles.txt_passo_container}>
             <Text style={styles.titulo_passo}>Preparar</Text>
-            <Text style={styles.descricao_passo}>Lave as mãos com água e sabão, prepare o aspirador e a sonda, e verifique a necessidade de ventilação mecânica.</Text>
+            <Text style={styles.descricao_passo}>Lave as mãos e coloque as luvas. Prepare todos os materiais necessários em uma área limpa.</Text>
           </View>
         </View>
 
@@ -130,7 +144,7 @@ export default function Aspiracao() {
           </View>
           <View style={styles.txt_passo_container}>
             <Text style={styles.titulo_passo}>Executar</Text>
-            <Text style={styles.descricao_passo}>Introduza a sonda o necessário para passar a cânula e vá retirando em movimento circular. Repita se necessário, monitorando a saturação.</Text>
+            <Text style={styles.descricao_passo}>Remova a cânula interna. Lave-a com água e sabão neutro. Use a escovinha para limpar o interior. Enxágue bem e seque com gaze.</Text>
           </View>
         </View>
 
@@ -141,18 +155,11 @@ export default function Aspiracao() {
           </View>
           <View style={styles.txt_passo_container}>
             <Text style={styles.titulo_passo}>Finalizar</Text>
-            <Text style={styles.descricao_passo}>Descarte a sonda, lave as mãos, e registre o procedimento, incluindo secreções e intercorrências.</Text>
+            <Text style={styles.descricao_passo}>Insira a cânula interna limpa na cânula externa. Verifique se está bem encaixada. Descarte os materiais usados de forma segura.</Text>
           </View>
         </View>
-
-        {/*Botão de Registro*/}
-        <TouchableOpacity style={styles.botao}>
-            <Text style={styles.txt_botao}>Registro</Text>
-        </TouchableOpacity>
 
       </SafeAreaView>
     </ScrollView>
   );
 }
-
-

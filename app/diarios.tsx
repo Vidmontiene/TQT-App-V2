@@ -22,7 +22,7 @@ export default function Diarios() {
       </TouchableOpacity>
 
       {/*Limpeza da cânula interna (subcânula)*/}
-      <TouchableOpacity style={styles.botao}>
+      <TouchableOpacity style={styles.botao} onPress={() => router.push('/limpeza')}>
         <MaterialIcons  name="water-drop" size={33} style={styles.img}/>
         <View style={styles.container_botao}>
           <Text style={styles.titulo_botao}>Limpeza da cânula interna (subcânula)</Text>
@@ -31,7 +31,7 @@ export default function Diarios() {
       </TouchableOpacity>
 
       {/*Limpeza do estoma (pele)*/}
-      <TouchableOpacity style={styles.botao}>
+      <TouchableOpacity style={styles.botao} onPress={() => router.push('/estoma')}>
         <MaterialCommunityIcons name="necklace" size={33} style={styles.img}/>
         <View style={styles.container_botao}>
           <Text style={styles.titulo_botao}>Limpeza do estoma (pele)</Text>
@@ -40,7 +40,7 @@ export default function Diarios() {
       </TouchableOpacity>
 
       {/*Troca do fixador (cordinha)*/}
-      <TouchableOpacity style={styles.botao}>
+      <TouchableOpacity style={styles.botao} onPress={() => router.push('/troca')}>
         <Octicons name="arrow-switch" size={33} style={styles.img}/>
         <View style={styles.container_botao}>
           <Text style={styles.titulo_botao}>Troca do fixador (cordinha)</Text>

@@ -1,4 +1,3 @@
-import { Text } from 'react-native'
 import { Stack } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
@@ -71,6 +70,45 @@ export default function RootLayout() {
             options={{ 
               presentation: 'modal', 
               title: 'Aspiração da Cânula',
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontSize: 18,
+                fontWeight: 'bold',
+              },
+            }}
+          />
+
+          <Stack.Screen
+            name="limpeza"
+            options={{ 
+              presentation: 'modal', 
+              title: 'Limpeza da Cânula Interna',
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontSize: 18,
+                fontWeight: 'bold',
+              },
+            }}
+          />
+
+          <Stack.Screen
+            name="estoma"
+            options={{ 
+              presentation: 'modal', 
+              title: 'Limpeza do Estoma',
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontSize: 18,
+                fontWeight: 'bold',
+              },
+            }}
+          />
+
+          <Stack.Screen
+            name="troca"
+            options={{ 
+              presentation: 'modal', 
+              title: 'Troca do Fixador',
               headerTitleAlign: 'center',
               headerTitleStyle: {
                 fontSize: 18,
