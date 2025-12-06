@@ -3,8 +3,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { CheckBox } from 'react-native-elements';
 import { useState } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
-import { styles } from '@/estilos/passos'
-import { ResizeMode, Video } from 'expo-av';
+import { styles } from '@/estilos/passos';
+import { VideoView, useVideoPlayer } from 'expo-video';
 
 export default function Limpeza() {
 
@@ -14,6 +14,10 @@ export default function Limpeza() {
   const [gaze, setGaze] = useState(false); 
   const [agua, setAgua] = useState(false); 
   const [sabao, setSabao] = useState(false); 
+
+  const player = useVideoPlayer(
+    require('@/assets/videos/video3.mp4'),
+  );
       
   return (
     <ScrollView>
@@ -36,12 +40,14 @@ export default function Limpeza() {
 
         {/*Vídeo*/}
         <Text style={styles.titulo}>Vídeo Demonstrativo</Text>
-        <Video
-            style={styles.video}
-            source={require('@/assets/videos/mock.mp4')}
-            useNativeControls
-            resizeMode={ResizeMode.CONTAIN}
-            isLooping
+        <VideoView
+          style={styles.video}
+          nativeControls={true}
+          player={player}
+          contentFit="contain"
+          fullscreenOptions={{
+            enable: true,
+          }}
         />
 
         <Text style={styles.titulo}>Materiais</Text>

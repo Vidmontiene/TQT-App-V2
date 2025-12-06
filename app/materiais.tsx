@@ -7,18 +7,24 @@ import { getLista, setLista, iniciar } from '@/database/lista'
 
 export default function Materiais() {
 
-    // false = 2, true = 1
-    const [canula, setCanula] = useState(false);  
-    const [fita, setFita] = useState(false);  
-    const [gaze, setGaze] = useState(false);  
-    const [solucao, setSolucao] = useState(false);  
-    const [luva, setLuva] = useState(false); 
-    const [aspirador, setAspirador] = useState(false); 
-    const [sonda, setSonda] = useState(false); 
-    const [mascara, setMascara] = useState(false); 
-    const [oculos, setOculos] = useState(false); 
+    // 1 = verdadeiro, 0 = falso
+    const [items, setItems] = useState({
+        canula: false,
+        fita: false,
+        gaze: false,
+        solucao: false,
+        aspirador: false,
+        oculos: false,
+        luva: false,
+        sonda: false,
+        mascara: false  
+    });
 
-    const [msg, setMsg] = useState("");                 // Mostra mensagem de salvamento 
+    //Função para inverter o valor da checkbox ao clicar
+    const mudaValor = (key: keyof typeof items) => {
+        setItems({ ...items, [key]: !items[key] });
+        return !items[key];
+    };
 
     // Garantir tabela e registro único (id=1)
     useEffect(() => {
@@ -38,50 +44,41 @@ export default function Materiais() {
     const carregarLista = async () => {
         const rows = await getLista();
         if (Array.isArray(rows) && rows.length > 0) {
-        const row = rows[0];
-        setCanula((row?.canula == null || row?.canula == 2) ? false : true);
-        setFita((row?.fita == null || row?.fita == 2) ? false : true);
-        setGaze((row?.gaze == null || row?.gaze == 2) ? false : true);
-        setSolucao((row?.solucao == null || row?.solucao == 2) ? false : true);
-        setLuva((row?.luva == null || row?.luva == 2) ? false : true);
-        setAspirador((row?.aspirador == null || row?.aspirador == 2) ? false : true);
-        setSonda((row?.sonda == null || row?.sonda == 2) ? false : true);
-        setMascara((row?.mascara == null || row?.mascara == 2) ? false : true);
-        setOculos((row?.oculos == null || row?.oculos == 2) ? false : true);
+            const row = rows[0];
+            setItems({
+                canula: row.canula === 1,
+                fita: row.fita === 1,
+                aspirador: row.aspirador === 1,
+                solucao: row.solucao === 1,
+                gaze: row.gaze === 1,
+                luva: row.luva === 1,
+                sonda: row.sonda === 1,
+                oculos: row.oculos === 1,
+                mascara: row.mascara === 1,
+            });
         }
     };
 
-    // Salva useStates no DB
-    const salvar = async () => {
-        await setLista("canula", (canula == null || canula == false) ? 2 : 1);
-        await setLista("fita", (fita == null || fita == false) ? 2 : 1);
-        await setLista("gaze", (gaze == null || gaze == false) ? 2 : 1);
-        await setLista("solucao", (solucao == null || solucao == false) ? 2 : 1);
-        await setLista("luva", (luva == null || luva == false) ? 2 : 1);
-        await setLista("aspirador", (aspirador == null || aspirador == false) ? 2 : 1);
-        await setLista("sonda", (sonda == null || sonda == false) ? 2 : 1);
-        await setLista("mascara", (mascara == null || mascara == false) ? 2 : 1);
-        await setLista("oculos", (oculos == null || oculos == false) ? 2 : 1);
-        carregarLista();
-        setMsg("Informações salvas com sucesso!");
-        setTimeout(() => setMsg(""), 1500); // desaparece após 1.5s
+    //Muda o valor do checklist, tanto no DB quanto no react
+    const mudaLista = async (campo: keyof typeof items) => {
+        const valor = mudaValor(campo);
+        await setLista(campo, valor ? 1 : 0); 
     }
-    
+
     return (
         <View style={styles.view_externa}>
-            {msg ? <Text style={styles.msg}>{msg}</Text> : null}
             <ScrollView>
                 <SafeAreaView style={styles.container} edges={['top', 'right', 'bottom', 'left']}>
                     
                     <Text style={styles.titulo}>Kit de Cuidados</Text>
 
                     {/*Canula*/}
-                    <TouchableOpacity style={styles.botao} onPress={() => setCanula(!canula)}>
+                    <TouchableOpacity style={styles.botao} onPress={() => mudaLista("canula")}>
                         <View style={styles.conteudo_botao}>
                             <Text style={styles.titulo_botao}>Cânula de traqueostomia (tamanho adequado)</Text>
                             <CheckBox
-                                checked={canula}
-                                onPress={() => setCanula(!canula)}
+                                checked={items.canula}
+                                onPress={() => mudaLista("canula")}
                                 checkedColor= '#12B9ED'
                                 uncheckedColor="gray"
                                 size={30}
@@ -91,12 +88,12 @@ export default function Materiais() {
                     </TouchableOpacity>
 
                     {/*Fita Adesiva*/}
-                    <TouchableOpacity style={styles.botao} onPress={() => setFita(!fita)}>
+                    <TouchableOpacity style={styles.botao} onPress={() => mudaLista("fita")}>
                         <View style={styles.conteudo_botao}>
                             <Text style={styles.titulo_botao}>Fita adesiva para fixação da cânula</Text>
                             <CheckBox
-                                checked={fita}
-                                onPress={() => setFita(!fita)}
+                                checked={items.fita}
+                                onPress={() => mudaLista("fita")}
                                 checkedColor= '#12B9ED'
                                 uncheckedColor="gray"
                                 size={30}
@@ -106,12 +103,12 @@ export default function Materiais() {
                     </TouchableOpacity>
 
                     {/*Gaze*/}
-                    <TouchableOpacity style={styles.botao} onPress={() => setGaze(!gaze)}>
+                    <TouchableOpacity style={styles.botao} onPress={() => mudaLista("gaze")}>
                         <View style={styles.conteudo_botao}>
                             <Text style={styles.titulo_botao}>Gaze estéril</Text>
                             <CheckBox
-                                checked={gaze}
-                                onPress={() => setGaze(!gaze)}
+                                checked={items.gaze}
+                                onPress={() => mudaLista("gaze")}
                                 checkedColor= '#12B9ED'
                                 uncheckedColor="gray"
                                 size={30}
@@ -121,12 +118,12 @@ export default function Materiais() {
                     </TouchableOpacity>
                 
                     {/*Solução*/}
-                    <TouchableOpacity style={styles.botao} onPress={() => setSolucao(!solucao)}>
+                    <TouchableOpacity style={styles.botao} onPress={() => mudaLista("solucao")}>
                         <View style={styles.conteudo_botao}>
                             <Text style={styles.titulo_botao}>Solução salina estéril</Text>
                             <CheckBox
-                                checked={solucao}
-                                onPress={() => setSolucao(!solucao)}
+                                checked={items.solucao}
+                                onPress={() => mudaLista("solucao")}
                                 checkedColor= '#12B9ED'
                                 uncheckedColor="gray"
                                 size={30}
@@ -136,12 +133,12 @@ export default function Materiais() {
                     </TouchableOpacity>
 
                     {/*Luvas*/}
-                    <TouchableOpacity style={styles.botao} onPress={() => setLuva(!luva)}>
+                    <TouchableOpacity style={styles.botao} onPress={() => mudaLista("luva")}>
                         <View style={styles.conteudo_botao}>
                             <Text style={styles.titulo_botao}>Luvas estéreis</Text>
                             <CheckBox
-                                checked={luva}
-                                onPress={() => setLuva(!luva)}
+                                checked={items.luva}
+                                onPress={() => mudaLista("luva")}
                                 checkedColor= '#12B9ED'
                                 uncheckedColor="gray"
                                 size={30}
@@ -153,12 +150,12 @@ export default function Materiais() {
                     <Text style={styles.titulo}>Materiais Adicionais</Text>
 
                     {/*Aspirador*/}
-                    <TouchableOpacity style={styles.botao} onPress={() => setAspirador(!aspirador)}>
+                    <TouchableOpacity style={styles.botao} onPress={() => mudaLista("aspirador")}>
                         <View style={styles.conteudo_botao}>
                             <Text style={styles.titulo_botao}>Aspirador de secreções</Text>
                             <CheckBox
-                                checked={aspirador}
-                                onPress={() => setAspirador(!aspirador)}
+                                checked={items.aspirador}
+                                onPress={() => mudaLista("aspirador")}
                                 checkedColor= '#12B9ED'
                                 uncheckedColor="gray"
                                 size={30}
@@ -168,12 +165,12 @@ export default function Materiais() {
                     </TouchableOpacity>
 
                     {/*Sonda*/}
-                    <TouchableOpacity style={styles.botao} onPress={() => setSonda(!sonda)}>
+                    <TouchableOpacity style={styles.botao} onPress={() => mudaLista("sonda")}>
                         <View style={styles.conteudo_botao}>
                             <Text style={styles.titulo_botao}>Sondas de aspiração (tamanhos variados)</Text>
                             <CheckBox
-                                checked={sonda}
-                                onPress={() => setSonda(!sonda)}
+                                checked={items.sonda}
+                                onPress={() => mudaLista("sonda")}
                                 checkedColor= '#12B9ED'
                                 uncheckedColor="gray"
                                 size={30}
@@ -183,12 +180,12 @@ export default function Materiais() {
                     </TouchableOpacity>
 
                     {/*Mascara*/}
-                    <TouchableOpacity style={styles.botao} onPress={() => setMascara(!mascara)}>
+                    <TouchableOpacity style={styles.botao} onPress={() => mudaLista("mascara")}>
                         <View style={styles.conteudo_botao}>
                             <Text style={styles.titulo_botao}>Máscara de proteção facial</Text>
                             <CheckBox
-                                checked={mascara}
-                                onPress={() => setMascara(!mascara)}
+                                checked={items.mascara}
+                                onPress={() => mudaLista("mascara")}
                                 checkedColor= '#12B9ED'
                                 uncheckedColor="gray"
                                 size={30}
@@ -198,23 +195,18 @@ export default function Materiais() {
                     </TouchableOpacity>
 
                     {/*Óculos*/}
-                    <TouchableOpacity style={styles.botao} onPress={() => setOculos(!oculos)}>
+                    <TouchableOpacity style={styles.botao} onPress={() => mudaLista("oculos")}>
                         <View style={styles.conteudo_botao}>
                             <Text style={styles.titulo_botao}>Óculos de proteção</Text>
                             <CheckBox
-                                checked={oculos}
-                                onPress={() => setOculos(!oculos)}
+                                checked={items.oculos}
+                                onPress={() => mudaLista("oculos")}
                                 checkedColor= '#12B9ED'
                                 uncheckedColor="gray"
                                 size={30}
                                 containerStyle={{ padding: 0, margin: 0, backgroundColor: 'transparent' }}
                             />
                         </View>
-                    </TouchableOpacity>
-
-                    {/*Botão de Salvar*/}
-                    <TouchableOpacity style={styles.botao_salvar} onPress={salvar}>
-                        <Text style={styles.txt_botao}>Salvar Lista</Text>
                     </TouchableOpacity>
                 </SafeAreaView>
             </ScrollView>

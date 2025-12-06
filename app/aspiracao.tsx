@@ -3,7 +3,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { CheckBox } from 'react-native-elements';
 import { useState } from 'react';
 import { styles } from '@/estilos/passos'
-import { ResizeMode, Video } from 'expo-av';
+import { VideoView, useVideoPlayer } from 'expo-video';
+import { router } from 'expo-router';
+
 
 export default function Aspiracao() {
 
@@ -13,6 +15,10 @@ export default function Aspiracao() {
   const [sonda, setSonda] = useState(false); 
   const [agua, setAgua] = useState(false); 
   const [recipiente, setRecipiente] = useState(false); 
+
+  const player = useVideoPlayer(
+    require('@/assets/videos/video2.mp4'),
+  );
       
   return (
     <ScrollView>
@@ -22,12 +28,14 @@ export default function Aspiracao() {
           
         {/*Vídeo*/}
         <Text style={styles.titulo}>Vídeo Demonstrativo</Text>
-        <Video
-            style={styles.video}
-            source={require('@/assets/videos/mock.mp4')}
-            useNativeControls
-            resizeMode={ResizeMode.CONTAIN}
-            isLooping
+        <VideoView
+          style={styles.video}
+          nativeControls={true}
+          player={player}
+          contentFit="contain"
+          fullscreenOptions={{
+            enable: true,
+          }}
         />
 
         <Text style={styles.titulo}>Materiais</Text>
@@ -146,7 +154,7 @@ export default function Aspiracao() {
         </View>
 
         {/*Botão de Registro*/}
-        <TouchableOpacity style={styles.botao}>
+        <TouchableOpacity style={styles.botao} onPress={() => router.push('../(tabs)/agenda')}>
             <Text style={styles.txt_botao}>Registro</Text>
         </TouchableOpacity>
 

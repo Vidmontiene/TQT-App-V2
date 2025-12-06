@@ -49,5 +49,7 @@ import {StyleSheet} from 'react-native';
     flex: 1,
     justifyContent: 'center',
     gap: 3
-  }
+  },
+
+
 });

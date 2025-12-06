@@ -2,15 +2,19 @@ import { Text, View, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CheckBox } from 'react-native-elements';
 import { useState } from 'react';
-import { Video, ResizeMode } from 'expo-av';
 import { styles } from '@/estilos/passos';
 import { MaterialIcons } from '@expo/vector-icons';
+import { VideoView, useVideoPlayer } from 'expo-video';
 
 export default function Troca() {
 
   const [fixador, setFixador] = useState(false);  
   const [tesoura, setTesoura] = useState(false); 
   const [pessoa, setPessoa] = useState(false); 
+
+  const player = useVideoPlayer(
+    require('@/assets/videos/video4.mp4'),
+  );
       
   return (
     <ScrollView>
@@ -33,12 +37,14 @@ export default function Troca() {
 
         {/*Vídeo*/}
         <Text style={styles.titulo}>Vídeo Demonstrativo</Text>
-        <Video
-            style={styles.video}
-            source={require('@/assets/videos/mock.mp4')}
-            useNativeControls
-            resizeMode={ResizeMode.CONTAIN}
-            isLooping
+        <VideoView
+          style={styles.video}
+          nativeControls={true}
+          player={player}
+          contentFit="contain"
+          fullscreenOptions={{
+            enable: true,
+          }}
         />
 
 

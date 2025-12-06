@@ -17,7 +17,7 @@ export const iniciar = async () => {
         doutor TEXT,
         num_doutor INTEGER,
         emergencia TEXT,
-        num_emergencia INTEGER,
+        num_emergencia INTEGER
     );
     `);
 
@@ -34,14 +34,14 @@ export const iniciar = async () => {
 };
 
 //Muda a informação do numero
-export const setNumero = async (campo, valor) => {
+export const setNumero = async (doutor, numDoutor, emergencia, numEmergencia) => {
     const dbConn = await openDB();
 
     await dbConn.runAsync(
-        `UPDATE numeros SET ${campo} = ? WHERE id = ?;`,
-        [valor, 1]
+        `UPDATE numeros SET doutor=?, num_doutor=?, emergencia=?, num_emergencia=? WHERE id=1`,
+        [doutor, numDoutor, emergencia, numEmergencia]
     );
-    console.log(`${campo} atualizado para: ${valor}`);
+    console.log(`Dados atualizados`);
 };
 
 //Pegar informações do número

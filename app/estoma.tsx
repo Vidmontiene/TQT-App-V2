@@ -2,8 +2,8 @@ import { Text, View, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CheckBox } from 'react-native-elements';
 import { useState } from 'react';
-import { styles } from '@/estilos/passos'
-import { ResizeMode, Video } from 'expo-av';
+import { styles } from '@/estilos/passos';
+import { VideoView, useVideoPlayer } from 'expo-video';
 
 export default function Estoma() {
 
@@ -11,6 +11,10 @@ export default function Estoma() {
   const [luva, setLuva] = useState(false); 
   const [gaze, setGaze] = useState(false); 
   const [antisseptico, setAntisseptico] = useState(false); 
+
+  const player = useVideoPlayer(
+    require('@/assets/videos/video1.mp4'),
+  );
       
   return (
     <ScrollView>
@@ -20,12 +24,14 @@ export default function Estoma() {
             
         {/*Vídeo*/}
         <Text style={styles.titulo}>Vídeo Demonstrativo</Text>
-        <Video
-            style={styles.video}
-            source={require('@/assets/videos/mock.mp4')}
-            useNativeControls
-            resizeMode={ResizeMode.CONTAIN}
-            isLooping
+        <VideoView
+          style={styles.video}
+          nativeControls={true}
+          player={player}
+          contentFit="contain"
+          fullscreenOptions={{
+            enable: true,
+          }}
         />
 
         <Text style={styles.titulo}>Materiais</Text>

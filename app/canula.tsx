@@ -110,8 +110,6 @@ export default function Canula() {
     };
 
 
-
-
     // Lida com mudança na data 
     const onChange = (event: any, dataSelecionada: any) => {
         const dataAtual = dataSelecionada || data;
