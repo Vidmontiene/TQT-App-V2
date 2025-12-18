@@ -30,7 +30,7 @@ export default function RootLayout() {
             name="emergencia"
             options={{ 
               presentation: 'modal', 
-              title: 'Emergências',
+              title: 'Emergência',
               headerTitleAlign: 'center',
               headerTitleStyle: {
                 fontSize: 18,
@@ -109,6 +109,19 @@ export default function RootLayout() {
             options={{ 
               presentation: 'modal', 
               title: 'Troca do Fixador',
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontSize: 18,
+                fontWeight: 'bold',
+              },
+            }}
+          />
+
+          <Stack.Screen
+            name="telas_emergencia"
+            options={{ 
+              presentation: 'modal', 
+              title: 'Emergência',
               headerTitleAlign: 'center',
               headerTitleStyle: {
                 fontSize: 18,

@@ -8,12 +8,12 @@ import { Picker } from '@react-native-picker/picker';
 
 export default function Canula() {
 
-    const [tipo, setTipo] = useState("");                 // Mostra o tipo na UI
-    const [balao, setBalao] = useState("0");              // "1" = com balão, "2" = sem balão
-    const [material, setMaterial] = useState("0");        // "1" = metálica, "2" = plástica/silicone
-    const [tamanho, setTamanho] = useState("");           // Mostra o tamanho na UI
-    const [marca, setMarca] = useState("");               // Mostra a Marca na UI
-    const [data, setData] = useState<Date | null>(null);  // Mostra a data na UI
+    const [tipo, setTipo] = useState("");                   // Define os tipos
+    const [balao, setBalao] = useState("0");                // "1" = com balão, "2" = sem balão
+    const [material, setMaterial] = useState("0");          // "1" = metálica, "2" = plástica/silicone
+    const [tamanho, setTamanho] = useState("");             // Mostra o tamanho na UI
+    const [marca, setMarca] = useState("");                 // Mostra a Marca na UI
+    const [data, setData] = useState<Date | null>(null);    // Mostra a data na UI
 
     const [showData, setShowData] = useState(false);       // Abre/Fecha escolhedor de DateTimePicker
     const [msg, setMsg] = useState("");                    // Mostra mensagem de salvamento 
@@ -109,7 +109,6 @@ export default function Canula() {
         setTamanho(num);
     };
 
-
     // Lida com mudança na data 
     const onChange = (event: any, dataSelecionada: any) => {
         const dataAtual = dataSelecionada || data;
@@ -181,11 +180,17 @@ export default function Canula() {
 
             {/*Marca*/}
             <Text style={styles.texto}>Marca</Text>
-            <TextInput
-                style={styles.input_txt}
-                value={marca}
-                onChangeText={setMarca}
-            />
+            <View style={styles.input_txt}>
+                <Picker
+                selectedValue={marca}
+                onValueChange={(itemValue) => setMarca(itemValue)}>
+                    <Picker.Item label="BCI" value="BCI" />
+                    <Picker.Item label="Shiley" value="Shiley" />
+                    <Picker.Item label="Safer" value="Safer" />
+                    <Picker.Item label="Portex" value="Portex" />
+                    <Picker.Item label="Outro" value="Outro" />
+                </Picker>
+            </View>
 
             {/*Data*/}
             <Text style={styles.texto}>Data da última Troca</Text>

@@ -6,7 +6,7 @@ import { ligar } from '@/scripts/ligar';
 import { BlurView } from 'expo-blur';
 import { iniciar, setNumero, getNumero } from '@/database/numeros';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useFocusEffect } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 
 export default function Emergencia() {
 
@@ -109,7 +109,7 @@ export default function Emergencia() {
           </TouchableOpacity>
 
           {/*Não Consigo Aspirar*/}
-          <TouchableOpacity style={styles.botao}>
+          <TouchableOpacity style={styles.botao} onPress={() => router.push('/telas_emergencia/grupo1')}>
             <MaterialIcons name="warning-amber" size={33} style={styles.img}/>
             <View style={styles.container_botao}>
               <Text style={styles.titulo_botao}>Não Consigo Aspirar</Text>
