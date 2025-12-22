@@ -45,7 +45,7 @@ export default function Emergencia() {
 
   // Salva useStatates no DB
   const salvar = async () => {
-    await setNumero(doutor, numDoutor, emergencia, numEmergencia);
+    await setNumero(doutor.trim(), numDoutor, emergencia.trim(), numEmergencia);
     setModal(false);
     carregarNumeros();
   };
@@ -73,13 +73,13 @@ export default function Emergencia() {
   // Lida com mudanças no numero de emergencia
   const mudancaEmergencia = (num: string) => {
     num = num.replace(/[^0-9]/g, "")
-    setNumEmergencia(num);
+    setNumEmergencia(num.trim());
   };
 
   // Lida com mudanças no numero do medico
   const mudancaDoutor = (num: string) => {
     num = num.replace(/[^0-9]/g, "")
-    setNumDoutor(num);
+    setNumDoutor(num.trim());
   };
 
   return (
@@ -91,7 +91,7 @@ export default function Emergencia() {
           <Text style={styles.titulo}>Procedimentos de Emergência</Text>
 
           {/*A cânula saiu*/}
-          <TouchableOpacity style={styles.botao}>
+          <TouchableOpacity style={styles.botao} onPress={() => router.push('/telas_emergencia/grupo3')}>
             <MaterialIcons  name="warning-amber" size={33} style={styles.img}/>
             <View style={styles.container_botao}>
               <Text style={styles.titulo_botao}>A cânula saiu</Text>
@@ -100,7 +100,7 @@ export default function Emergencia() {
           </TouchableOpacity>
 
           {/*Dificuldade para Respirar*/}
-          <TouchableOpacity style={styles.botao}>
+          <TouchableOpacity style={styles.botao}  onPress={() => router.push('/telas_emergencia/grupo2')}>
             <MaterialIcons  name="warning-amber" size={33} style={styles.img}/>
             <View style={styles.container_botao}>
               <Text style={styles.titulo_botao}>Dificuldade para Respirar</Text>

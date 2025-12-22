@@ -1,28 +1,18 @@
-import { Text, View, ScrollView, StyleSheet } from 'react-native';
+import { Text } from 'react-native';
+import { styles } from '@/estilos/emergencia';
+import AntDesign from '@expo/vector-icons/AntDesign';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 export default function Nca0() {
 
   return (
-    <SafeAreaView style={styles.container}>
-        <Text style={styles.titulo}>tela 0</Text>
+    <SafeAreaView style={[styles.container, {alignItems: 'center', justifyContent: 'center'}]}>
+      <AntDesign name="sun" size={50} color='#12B9ED' />
+      <Text style={[styles.titulo, {fontSize: 25}] }>Vamos verificar o problema</Text>
+      <Text style={[styles.txt, {textAlign: 'center'}]}>Siga os passos com calma. Estamos aqui para ajudar</Text>
+
     </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
-  titulo:{
-    fontWeight: 'bold',
-    fontSize: 22,
-    textAlign: 'center',
-    paddingBottom: 10,
-    marginTop: 20,
-  },
-  container:{
-    backgroundColor: 'white',
-    width: '100%',
-    height: '100%',
-    flex: 1
-  },
-})

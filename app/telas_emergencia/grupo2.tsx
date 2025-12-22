@@ -5,18 +5,18 @@ import Feather from '@expo/vector-icons/Feather';
 import { ligar } from "@/scripts/ligar";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'; 
 
-import Nca0 from "./nconsigoasp0";
-import Nca1 from "./nconsigoasp1";
-import Nca2 from "./nconsigoasp2";
-import Nca3 from "./nconsigoasp3";
-import Nca4 from "./nconsigoasp4";
-import Nca5 from "./nconsigoasp5";
+import Dr0 from "./dificuldaderesp0";
+import Dr1 from "./dificuldaderesp1";
+import Dr2 from "./dificuldaderesp2";
+import Dr3 from "./dificuldaderesp3";
+import Dr4 from "./dificuldaderesp4";
+import Dr5 from "./dificuldaderesp5";
 
 
 export default function EmergenciaSwipe() {
   const [pagina, setPagina] = useState(0);
   const pagerRef = useRef<PagerView>(null);
-  const telas = [Nca0, Nca1, Nca2, Nca3, Nca4, Nca5];
+  const telas = [Dr0, Dr1, Dr2, Dr3, Dr4, Dr5];
 
   // Passa para a próxima pág
   const proximo = () => {
@@ -131,6 +131,5 @@ const styles = StyleSheet.create({
     marginTop: 2,
     color: 'white',
     fontWeight: 'bold',
-  }
+  } 
 });
-
