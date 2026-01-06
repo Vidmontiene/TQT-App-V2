@@ -38,6 +38,14 @@ import {StyleSheet} from 'react-native';
     borderRadius: 12,
   
   },
+  img_vermelha:{
+    marginRight: 12,
+    color: "#EF4444",
+    backgroundColor: "#f8d9d8bd",
+    padding: 20,
+    borderRadius: 12,
+  
+  },
   img_redondo:{
     marginRight: 12,
     color: '#12B9ED',

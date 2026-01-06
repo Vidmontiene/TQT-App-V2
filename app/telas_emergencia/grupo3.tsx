@@ -4,6 +4,8 @@ import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import Feather from '@expo/vector-icons/Feather'; 
 import { ligar } from "@/scripts/ligar";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'; 
+import { router } from "expo-router";
+import { IconSymbol } from '@/components/ui/icon-symbol';
 
 import Cs0 from "./canulasaiu0";
 import Cs1 from "./canulasaiu1";
@@ -57,23 +59,38 @@ export default function EmergenciaSwipe() {
         ))}
       </View>
 
-      {/*Botões*/}
+     {/*Botões*/}
       <View style={styles.container_botoes}>
 
-        <TouchableOpacity style={styles.botao} onPress={anterior} disabled={pagina === 0}>
-          <MaterialIcons name="arrow-back-ios" size={24} color="white" />
-          <Text style={styles.txt_botao}>Anterior</Text>
-        </TouchableOpacity>
+        {pagina === 0 ?
+          <TouchableOpacity style={styles.botao} onPress={() => router.push('..')}>
+            <IconSymbol  name="house.fill" size={24} color='white' />
+            <Text style={styles.txt_botao}>Sair</Text>
+          </TouchableOpacity> 
+          :
+          <TouchableOpacity style={styles.botao} onPress={anterior} disabled={pagina === 0}>
+            <MaterialIcons name="arrow-back-ios" size={24} color="white" />
+            <Text style={styles.txt_botao}>Anterior</Text>
+          </TouchableOpacity>
+        }
 
         <TouchableOpacity style={[styles.botao, {backgroundColor: '#EE4544'}]} onPress={() => ligar(192)}>
           <Feather name="phone" size={24} color="white" />
           <Text style={styles.txt_botao}>Emergência</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.botao} onPress={proximo} disabled={pagina === telas.length - 1}>
-          <MaterialIcons name="arrow-forward-ios" size={24} color="white" />
-          <Text style={styles.txt_botao}>Próximo</Text>
-        </TouchableOpacity>
+        {pagina === telas.length - 1 ?         
+        
+          <TouchableOpacity style={styles.botao} onPress={() => router.push('..')}>
+            <IconSymbol  name="house.fill" size={24} color='white' />
+            <Text style={styles.txt_botao}>Sair</Text>
+          </TouchableOpacity> 
+          :
+          <TouchableOpacity style={styles.botao} onPress={proximo}>
+            <MaterialIcons name="arrow-forward-ios" size={24} color="white" />
+            <Text style={styles.txt_botao}>Próximo</Text>
+          </TouchableOpacity>
+        }
 
       </View>
     </View>
