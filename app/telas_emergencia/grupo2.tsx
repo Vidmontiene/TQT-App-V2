@@ -65,7 +65,7 @@ export default function EmergenciaSwipe() {
       <View style={styles.container_botoes}>
 
         {pagina === 0 ?
-          <TouchableOpacity style={styles.botao} onPress={() => router.push('..')}>
+          <TouchableOpacity style={styles.botao} onPress={() => router.push('/')}>
             <IconSymbol  name="house.fill" size={24} color='white' />
             <Text style={styles.txt_botao}>Sair</Text>
           </TouchableOpacity> 
@@ -83,7 +83,7 @@ export default function EmergenciaSwipe() {
 
         {pagina === telas.length - 1 ?         
         
-          <TouchableOpacity style={styles.botao} onPress={() => router.push('..')}>
+          <TouchableOpacity style={styles.botao} onPress={() => router.push('/')}>
             <IconSymbol  name="house.fill" size={24} color='white' />
             <Text style={styles.txt_botao}>Sair</Text>
           </TouchableOpacity> 
@@ -108,6 +108,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 5,
     zIndex: 10,
+    backgroundColor: 'white',
+    paddingBottom: 6
   },
   traco: {
     width: 40,
@@ -128,7 +130,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: "center",
     alignSelf: 'center',
-
+    backgroundColor: 'white',
     paddingVertical: 12,
     borderTopWidth: 1,
     borderTopColor: "#eee",

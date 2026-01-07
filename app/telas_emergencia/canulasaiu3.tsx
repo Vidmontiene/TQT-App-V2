@@ -6,7 +6,7 @@ export default function Cs3() {
 
   return (
     <SafeAreaView style={styles.container}>
-        <Text style={styles.titulo2}>3. Inserindo a nova cânula</Text>
+        <Text style={styles.titulo}>3. Inserindo a nova cânula</Text>
         <Image
           source={require('@/assets/images/cs3.png')}
           style={styles.foto}

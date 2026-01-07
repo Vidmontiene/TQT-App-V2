@@ -11,14 +11,8 @@ export const styles = StyleSheet.create({
   titulo:{
     fontWeight: 'bold',
     fontSize: 23,
-    marginBottom: 20,
-    marginTop: -10
-  },
-  titulo2:{
-    fontWeight: 'bold',
-    fontSize: 23,
     marginTop: 20,
-    
+    textAlign:'center'
   },
   txt:{
     fontSize: 17
@@ -36,11 +30,41 @@ export const styles = StyleSheet.create({
   },
   topico:{
     flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginVertical: 6,
+    alignItems: 'center',
+    marginVertical: 3,
   },
   bullet: {
-    fontSize: 20,
+    fontSize: 30,
+    lineHeight: 10,
     marginRight: 8,
   },
+  txt_topico:{
+    fontSize: 16
+  },
+  botao:{
+    alignSelf: 'center',
+    backgroundColor: '#4CAF50',
+    alignItems: 'center',
+    padding: 17,
+    borderRadius: 10,
+    width: '90%',
+    marginVertical: 20
+  },
+  txt_botao:{
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  container_botao:{
+    flexDirection: 'row',
+    gap: 15
+  },
+  titulo_icon:{
+    fontWeight: 'bold',
+    fontSize: 23, 
+  },
+  subtitulo_icon:{
+    fontWeight: '500',
+    fontSize: 19,
+  }
 })

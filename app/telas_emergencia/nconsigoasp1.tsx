@@ -6,7 +6,7 @@ export default function Nca1() {
 
   return (
     <SafeAreaView style={styles.container}>
-              <Text style={styles.titulo2}>1. Verifique o equipamento</Text>
+              <Text style={styles.titulo}>1. Verifique o equipamento</Text>
         <Image
           source={require('@/assets/images/nca1.png')}
           style={styles.foto}

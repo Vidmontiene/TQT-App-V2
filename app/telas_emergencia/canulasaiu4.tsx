@@ -9,7 +9,7 @@ export default function Cs4() {
 
   return (
     <SafeAreaView style={styles.container}>
-        <Text style={[styles.titulo2, {textAlign: 'center', marginBottom: 15}]}>Procedimento finalizado</Text>
+        <Text style={[styles.titulo, {textAlign: 'center', marginBottom: 40}]}>Procedimento finalizado</Text>
   
         <View style={styles2.botao}>
           <Feather name="eye" size={33} style={styles2.img}/>

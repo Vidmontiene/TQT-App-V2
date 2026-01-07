@@ -6,7 +6,7 @@ export default function Nca2() {
 
   return (
     <SafeAreaView style={styles.container}>
-        <Text style={styles.titulo2}>2. Tente com uma sonda nova</Text>
+        <Text style={styles.titulo}>2. Tente com uma sonda nova</Text>
         <Image
           source={require('@/assets/images/nca2.png')}
           style={styles.foto}

@@ -6,7 +6,7 @@ export default function Cs2() {
 
   return (
     <SafeAreaView style={styles.container}>
-        <Text style={styles.titulo2}>2. Levante o queixo da criança e afaste a pele para abrir o orifício da traqueostomia</Text>
+        <Text style={styles.titulo}>2. Levante o queixo da criança e afaste a pele para abrir o orifício da traqueostomia</Text>
         <Image
           source={require('@/assets/images/cs2.png')}
           style={styles.foto}
