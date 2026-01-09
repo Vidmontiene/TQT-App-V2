@@ -9,13 +9,13 @@ export default function Cs4() {
 
   return (
     <SafeAreaView style={styles.container}>
-        <Text style={[styles.titulo, {textAlign: 'center', marginBottom: 40}]}>Procedimento finalizado</Text>
+        <Text style={[styles.titulo, {textAlign: 'center', marginBottom: 40}]}>Procedimento Finalizado</Text>
   
         <View style={styles2.botao}>
           <Feather name="eye" size={33} style={styles2.img}/>
           <View style={styles2.container_botao}>
             <Text style={styles2.titulo_botao}>Observar Respiração</Text>
-            <Text style={styles2.txt_botao}>Observar se a criança está respirando normalmente.</Text>
+            <Text style={styles2.txt_botao}>Observe se a criança está respirando normalmente.</Text>
           </View>
         </View>
 

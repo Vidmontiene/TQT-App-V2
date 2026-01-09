@@ -30,16 +30,17 @@ export const styles = StyleSheet.create({
   },
   topico:{
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     marginVertical: 3,
   },
   bullet: {
     fontSize: 30,
-    lineHeight: 10,
+    lineHeight: 20,
     marginRight: 8,
   },
   txt_topico:{
-    fontSize: 16
+    fontSize: 16,
+    lineHeight: 20,
   },
   botao:{
     alignSelf: 'center',
@@ -66,5 +67,20 @@ export const styles = StyleSheet.create({
   subtitulo_icon:{
     fontWeight: '500',
     fontSize: 19,
+  },
+  container_emergencia:{
+    backgroundColor: '#F6F3E0',
+    borderRadius: 10,
+    borderWidth: 0.5,
+    borderColor: '#CB8A01',
+    paddingHorizontal: 10,
+    width: '97%',
+    alignSelf: 'center'
+  },
+  titulo_emergencia:{
+    fontWeight: 'bold',
+    fontSize: 19,
+    color: '#8B5617',
+    maxWidth: '90%',
   }
 })

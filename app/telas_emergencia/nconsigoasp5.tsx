@@ -18,7 +18,7 @@ export default function Nca5() {
       {/*Tela inicial*/}
       {nao === 0 && (
         <>
-          <Text style={[styles.titulo, {textAlign: 'center', marginBottom: 130}]}>Conseguiu aspirar a secreção e desobstruir a cânula?</Text>
+          <Text style={[styles.titulo, {textAlign: 'center', marginBottom: 130}]}>Conseguiu Aspirar a Secreção e Desobstruir a Cânula?</Text>
 
           {/*Botão de sim*/}
           <TouchableOpacity style={styles.botao} onPress={() => router.push('..')}>

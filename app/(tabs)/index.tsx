@@ -10,7 +10,7 @@ export default function HomeScreen() {
       <SafeAreaView
         style={styles.container}
         edges={['top', 'right', 'bottom', 'left']}>
-        <Text style={styles.titulo}>Bem vindo(a) ao TQT-App</Text>
+        <Text style={styles.titulo}>Bem Vindo(a) ao TQT-App</Text>
         <Image
           source={require('../../assets/images/criancas.jpg')}
           style={styles.foto_perfil}

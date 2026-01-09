@@ -7,7 +7,7 @@ export default function Nca4() {
   return (
     <SafeAreaView style={styles.container}>
       
-        <Text style={styles.titulo}>4. Use o ambu para tentar deslocar a rolha</Text>
+        <Text style={styles.titulo}>4. Use o Ambu para Tentar Deslocar a Rolha</Text>
         <Image
           source={require('@/assets/images/nca4.png')}
           style={styles.foto}

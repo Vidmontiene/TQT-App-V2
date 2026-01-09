@@ -6,7 +6,7 @@ export default function Cs1() {
 
   return (
     <SafeAreaView style={styles.container}>
-        <Text style={styles.titulo}>1. Posicione a criança</Text>
+        <Text style={styles.titulo}>1. Posicione a Criança</Text>
         <Image
           source={require('@/assets/images/cs1.png')}
           style={styles.foto}

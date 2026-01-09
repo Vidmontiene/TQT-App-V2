@@ -17,7 +17,7 @@ export default function Dr3() {
           paddingBottom: 160, 
         }}
       >
-        <Text style={styles.titulo}>3. Cheque a fonte de oxigênio (se a criança usar)</Text>
+        <Text style={styles.titulo}>3. Cheque a Fonte de Oxigênio (se a criança usar)</Text>
 
         {/*Verifique o ventilador mecânico*/}
         <View style={[styles.container_botao, {alignItems: 'center', marginVertical: 15, gap: 7, marginLeft: 10}]}>

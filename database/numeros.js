@@ -55,4 +55,4 @@ export const getNumero = async () => {
 
     console.log("Dados obtidos de 'numeros':", result);
     return result;
-}
+};

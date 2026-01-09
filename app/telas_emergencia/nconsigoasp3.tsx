@@ -6,7 +6,7 @@ export default function Nca3() {
 
   return (
     <SafeAreaView style={styles.container}>
-        <Text style={styles.titulo}>3. Use soro fisiológico</Text>
+        <Text style={styles.titulo}>3. Use Soro Fisiológico</Text>
         <Image
           source={require('@/assets/images/nca3.png')}
           style={styles.foto}

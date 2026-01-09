@@ -6,7 +6,7 @@ export default function Dr1() {
 
   return (
     <SafeAreaView style={styles.container}>
-        <Text style={styles.titulo}>1. Aspire a cânula</Text>
+        <Text style={styles.titulo}>1. Aspire a Cânula</Text>
         <Image
           source={require('@/assets/images/dr1.png')}
           style={styles.foto}

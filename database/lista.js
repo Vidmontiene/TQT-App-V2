@@ -60,4 +60,4 @@ export const getLista = async () => {
 
     console.log("Dados obtidos de 'lista':", result);
     return result;
-}
+};

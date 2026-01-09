@@ -6,7 +6,7 @@ export default function Dr2() {
 
   return (
     <SafeAreaView style={styles.container}>
-        <Text style={styles.titulo}>2. Verifique a cânula</Text>
+        <Text style={styles.titulo}>2. Verifique a Cânula</Text>
         <Image
           source={require('@/assets/images/dr2.png')}
           style={styles.foto}
