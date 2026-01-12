@@ -1,6 +1,6 @@
 import { useFocusEffect } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
-import { Text, TouchableOpacity, View, ScrollView, StyleSheet, TextInput, Dimensions } from 'react-native';
+import { Text, TouchableOpacity, View, StyleSheet, TextInput, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getCanula, iniciar, setCanula } from '@/database/canula';
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -42,7 +42,7 @@ export default function Canula() {
         useCallback(() => {
             carregarCanula();
         }, [])
-     );
+    );
 
     // Carrega os valores do banco nos useStates
     const carregarCanula = async () => {
@@ -124,7 +124,7 @@ export default function Canula() {
         await setCanula("tipo", tipo);
         await setCanula("material", material);
         await setCanula("balao", balao);
-        carregarCanula();
+        await carregarCanula();
         setMsg("Informações salvas com sucesso!");
         setTimeout(() => setMsg(""), 1500); // desaparece após 1.5s
     };

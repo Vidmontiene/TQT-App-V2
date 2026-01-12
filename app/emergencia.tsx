@@ -47,7 +47,7 @@ export default function Emergencia() {
   const salvar = async () => {
     await setNumero(doutor.trim(), numDoutor, emergencia.trim(), numEmergencia);
     setModal(false);
-    carregarNumeros();
+    await carregarNumeros();
   };
 
   // Liga para o medico

@@ -9,7 +9,7 @@ export default function Ajuda() {
     <SafeAreaView style={styles.container} edges={['top', 'right', 'bottom', 'left']}>
 
       <Text style={[styles.txt_botao, {marginBottom: 15, textAlign: 'justify'}]}>
-        Este Aplicativo é uma ferramenta de apoio e não substitui o aconselhamento médico profissional. Em caso de emergência, entre em contato com os serviços de saúde locais imediatamente
+        Este Aplicativo é uma ferramenta de apoio e não substitui o aconselhamento médico profissional. Em caso de emergência, entre em contato com os serviços de saúde locais imediatamente.
       </Text>
 
       <Text style={styles.titulo}>Contatos de Suporte</Text>

@@ -12,12 +12,12 @@ export const iniciar = async () => {
     const dbConn = await openDB();
 
     await dbConn.execAsync(`
-    CREATE TABLE IF NOT EXISTS agenda (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        data TEXT,
-        hora TEXT, 
-        atividade TEXT 
-    );
+        CREATE TABLE IF NOT EXISTS agenda (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            data TEXT,
+            hora TEXT, 
+            atividade TEXT 
+        );
     `);
 
     console.log("Tabela 'agenda' criada/verificada.");

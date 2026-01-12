@@ -1,4 +1,6 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
+
+const { width } = Dimensions.get('window');
 
  export const styles = StyleSheet.create({
   container: {
@@ -58,6 +60,24 @@ import {StyleSheet} from 'react-native';
     justifyContent: 'center',
     gap: 3
   },
-
-
+  seta:{
+    marginLeft: 4.5,
+    color: '#555'
+  },
+  msg:{
+    backgroundColor: '#D0F0FB',
+    color: '#12B9ED',
+    fontWeight: '600',
+    marginBottom: 13,
+    padding: 22,
+    fontSize: 17,
+    textAlign: 'center',
+    width: width,
+    zIndex: 999,
+    borderRadius: 4,
+    position: 'absolute'
+  },
+  input_txt:{
+    padding: 0
+  },
 });

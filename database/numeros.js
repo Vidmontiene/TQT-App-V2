@@ -15,9 +15,9 @@ export const iniciar = async () => {
     CREATE TABLE IF NOT EXISTS numeros (
         id INTEGER PRIMARY KEY,
         doutor TEXT,
-        num_doutor INTEGER,
+        num_doutor TEXT,
         emergencia TEXT,
-        num_emergencia INTEGER
+        num_emergencia TEXT
     );
     `);
 
