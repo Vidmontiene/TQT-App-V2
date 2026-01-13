@@ -13,7 +13,7 @@ export default function Nca4() {
           style={styles.foto}
           resizeMode= 'contain'
         />
-        <Text style={{color: '#12B9ED', fontSize: 19, fontWeight: 'bold', marginBottom: 10, marginTop: -20}}>Dicas importantes</Text>
+        <Text style={{color: '#12B9ED', fontSize: 19, fontWeight: 'bold', marginBottom: 10, marginTop: -20}}>Dicas Importantes</Text>
 
         <View style={styles.topico}>
           <Text style={styles.bullet}>•</Text>

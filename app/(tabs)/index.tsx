@@ -31,7 +31,7 @@ export default function HomeScreen() {
                 color="#A855F7"
               />
             </TouchableOpacity>
-            <Text style={styles.texto_botao}>Procedimentos diários</Text>
+            <Text style={styles.texto_botao}>Procedimentos Diários</Text>
           </View>
 
           {/*Procedimentos de emergência*/}
@@ -44,7 +44,7 @@ export default function HomeScreen() {
                 color="#EF4444"
               />
             </TouchableOpacity>
-            <Text style={styles.texto_botao}>Procedimentos de emergência</Text>
+            <Text style={styles.texto_botao}>Procedimentos de Emergência</Text>
           </View>
 
           {/*Especificações da cânula*/}
@@ -57,7 +57,7 @@ export default function HomeScreen() {
                 color="#3B82F6"
               />
             </TouchableOpacity>
-            <Text style={styles.texto_botao}>Especificações da cânula</Text>
+            <Text style={styles.texto_botao}>Especificações da Cânula</Text>
           </View>
 
           {/*Materiais essenciais*/}
@@ -70,7 +70,7 @@ export default function HomeScreen() {
                 color="#22C55E"
               />
             </TouchableOpacity>
-            <Text style={styles.texto_botao}>Materiais essenciais</Text>
+            <Text style={styles.texto_botao}>Materiais Essenciais</Text>
           </View>
         </View>
       </SafeAreaView>

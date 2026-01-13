@@ -26,13 +26,6 @@ export default function Materiais() {
         return !items[key];
     };
 
-    // Garantir tabela e registro único (id=1)
-    useEffect(() => {
-        (async () => {
-        await iniciar();
-        })();
-    }, []);
-
     // Carregar do banco sempre que a tela ganhar foco
     useFocusEffect(
         useCallback(() => {

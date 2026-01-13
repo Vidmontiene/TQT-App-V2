@@ -1,17 +1,24 @@
 import * as SQLite from 'expo-sqlite';
 
-const openDB = async () => {
-    const db = await SQLite.openDatabaseAsync('MeuBanco.db');
-    console.log("Banco de dados aberto");
-    return db;
+let db = null;
+let inicializado = false;
+
+// Abre o banco
+export const openDB = async () => {
+  if (db) return db;
+
+  db = await SQLite.openDatabaseAsync('MeuBanco.db');
+  console.log('Banco aberto');
+  return db;
 };
 
 //Iniciar as tabelas
 export const iniciar = async () => {
 
-    const dbConn = await openDB();
+    if (inicializado) return; // Se já foi inicializado sai
+    const db = await openDB();
 
-    await dbConn.execAsync(`
+    await db.execAsync(`
     CREATE TABLE IF NOT EXISTS lista (
         id INTEGER PRIMARY KEY,
         canula INTEGER,
@@ -28,35 +35,37 @@ export const iniciar = async () => {
 
     console.log("Tabela 'lista' criada/verificada.");
 
-    await dbConn.execAsync(`
-        INSERT OR IGNORE INTO lista (id) VALUES (1);
-    `)
+    // Cria 1 linha fixa (id=1)
+    await db.runAsync(
+        `INSERT OR IGNORE INTO lista (id) VALUES (?);`,
+        [1]
+    );
 
-    console.log("Linha inserida em 'lista'.");
-    
-    const result = await dbConn.getAllAsync(`SELECT * FROM lista;`);
-    console.log("Conteúdo da tabela após iniciar:", result);
-};
+    console.log("Linha inicial criada na tabela 'lista'.");
+    const result = await db.getAllAsync(`SELECT * FROM lista;`);
+        inicializado = true;  // Foi inicializado
+        console.log("Conteúdo da tabela após iniciar:", result);
+    };
 
 //Muda a informação da lista
 export const setLista = async (campo, valor) => {
-    const dbConn = await openDB();
 
-    await dbConn.runAsync(
-        `UPDATE lista SET ${campo} = ? WHERE id = ?;`,
-        [valor, 1]
+    await iniciar();
+    const db = await openDB();
+
+    await db.runAsync(
+        `UPDATE lista SET ${campo} = ? WHERE id = 1;`,
+        [valor]
     );
     console.log(`${campo} atualizado para: ${valor}`);
 };
 
 //Pegar informações da canula
 export const getLista = async () => {
+    await iniciar();
+    const db = await openDB();
 
-    const dbConn = await openDB();
-
-    const result = await dbConn.getAllAsync(`
-        SELECT * FROM lista;
-    `)
+    const result = await db.getAllAsync(`SELECT * FROM lista;`);
 
     console.log("Dados obtidos de 'lista':", result);
     return result;

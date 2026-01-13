@@ -17,13 +17,6 @@ export default function Emergencia() {
 
   const [modal, setModal] = useState(false);
 
-  // Garantir tabela e registro único (id=1)
-  useEffect(() => {
-    (async () => {
-      await iniciar();
-    })();
-  }, []);
-
   // Carregar do banco sempre que a tela ganhar foco
   useFocusEffect(
       useCallback(() => {

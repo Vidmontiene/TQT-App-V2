@@ -4,7 +4,7 @@ import { styles } from '@/estilos/botoes';
 import { getPerfil, setPerfil, iniciar } from '@/database/perfil';
 import { useFocusEffect } from 'expo-router';
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { useCallback, useEffect, useState, useRef } from 'react';
+import { useCallback, useState, useRef } from 'react';
 import Feather from '@expo/vector-icons/Feather';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
@@ -79,12 +79,6 @@ export default function Perfil() {
     setShowData(false);
   };
 
-  // Garantir tabela e registro único (id=1)
-  useEffect(() => {
-    (async () => {
-    await iniciar();
-    })();
-  }, []);
 
   // Carrega os valores do banco nos useStates
   const carregarPerfil = async () => {
@@ -149,6 +143,7 @@ export default function Perfil() {
                 value={nomeResponsavel}
                 onChangeText={setNomeResponsavel}
                 style={styles.input_txt}
+                maxLength={65}
                 placeholder="Clique para adicionar."
                 onBlur={() => salvar("nome_responsavel", nomeResponsavel)}
               />
@@ -182,6 +177,8 @@ export default function Perfil() {
                 value={email}
                 style={styles.input_txt}
                 onChangeText={setEmail}
+                maxLength={65}
+                keyboardType='email-address'
                 placeholder="Clique para adicionar."
                 onBlur={() => salvar("email", email)}
               />
@@ -249,6 +246,7 @@ export default function Perfil() {
                 ref={inputRef}
                 value={nomeCrianca}
                 style={styles.input_txt}
+                maxLength={65}
                 onChangeText={setNomeCrianca}
                 placeholder="Clique para adicionar."
                 onBlur={() => salvar("nome_crianca", nomeCrianca)}
@@ -282,10 +280,9 @@ export default function Perfil() {
         <TouchableOpacity
           style={styles.botao}
           onPress={() => {
-            setCampoEditando("nomeCrianca");
+            setCampoEditando("patologia");
             setTimeout(() => inputRef.current?.focus(), 100);
-          }}
-        >
+          }}>
 
           <FontAwesome6 name="file-medical" size={31} style={[styles.img_redondo, {paddingHorizontal: 25}]}/>
 
@@ -296,6 +293,7 @@ export default function Perfil() {
               <TextInput
                 ref={inputRef}
                 value={patologia}
+                maxLength={65}
                 style={styles.input_txt}
                 onChangeText={setPatologia}
                 placeholder="Clique para adicionar."

@@ -1,15 +1,21 @@
 import * as SQLite from 'expo-sqlite';
 
-// Abre (ou cria) o banco
+let db = null;
+let inicializado = false;
+
+// Abre o banco
 export const openDB = async () => {
-  const db = await SQLite.openDatabaseAsync('MeuBanco.db');
-  console.log('Banco de dados aberto');
+  if (db) return db;
+
+  db = await SQLite.openDatabaseAsync('MeuBanco.db');
+  console.log('Banco aberto');
   return db;
 };
 
 // Inicializa o banco (cria tabelas + linha inicial)
 export const iniciar = async () => {
-    
+
+  if (inicializado) return; // Se já foi inicializado sai
   const db = await openDB();
 
   await db.execAsync(`
@@ -30,13 +36,17 @@ export const iniciar = async () => {
     `INSERT OR IGNORE INTO canula (id) VALUES (?);`,
     [1]
   );
+
   console.log("Linha inicial criada na tabela 'canula'.");
   const result = await db.getAllAsync(`SELECT * FROM canula;`);
+
+  inicializado = true;  // Foi inicializado
   console.log("Conteúdo atual da tabela:", result);
 };
 
 // Atualiza um campo da tabela da cânula
 export const setCanula = async (campo, valor) => {
+  await iniciar();
   const db = await openDB();
 
   await db.runAsync(
@@ -50,7 +60,9 @@ export const setCanula = async (campo, valor) => {
 
 // Retorna todos os dados da tabela da cânula
 export const getCanula = async () => {
+  await iniciar();
   const db = await openDB();
+  
   const result = await db.getAllAsync(`SELECT * FROM canula;`);
   console.log("Dados retornados:", result);
   return result;

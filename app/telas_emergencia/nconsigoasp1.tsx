@@ -12,7 +12,7 @@ export default function Nca1() {
           style={styles.foto}
           resizeMode= 'contain'
         />
-        <Text style={styles.txt}>Veja se o aspirador está ligado e está funcionando normalmente</Text>
+        <Text style={styles.txt}>Veja se o aspirador está ligado e está funcionando normalmente.</Text>
     </SafeAreaView>
   );
 }

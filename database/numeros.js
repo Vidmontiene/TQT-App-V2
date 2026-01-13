@@ -1,17 +1,22 @@
 import * as SQLite from 'expo-sqlite';
 
+let db = null;
+let inicializado = false;
+
 const openDB = async () => {
-    const db = await SQLite.openDatabaseAsync('MeuBanco.db');
-    console.log("Banco de dados aberto");
-    return db;
+  if (db) return db;
+  db = await SQLite.openDatabaseAsync('MeuBanco.db');
+  console.log('Banco aberto');
+  return db;
 };
 
 //Iniciar as tabelas
 export const iniciar = async () => {
 
-    const dbConn = await openDB();
+    if (inicializado) return; // Se já foi inicializado sai
+    const db = await openDB();
 
-    await dbConn.execAsync(`
+    await db.execAsync(`
     CREATE TABLE IF NOT EXISTS numeros (
         id INTEGER PRIMARY KEY,
         doutor TEXT,
@@ -23,21 +28,25 @@ export const iniciar = async () => {
 
     console.log("Tabela 'numeros' criada/verificada.");
 
-    await dbConn.execAsync(`
-        INSERT OR IGNORE INTO numeros (id) VALUES (1);
-    `)
+    // Cria 1 linha fixa (id=1)
+    await db.runAsync(
+        `INSERT OR IGNORE INTO numeros (id) VALUES (?);`,
+        [1]
+    );
 
-    console.log("Linha inserida em 'numeros'.");
+    console.log("Linha inicial criada na tabela 'numeros'.");
+    const result = await db.getAllAsync(`SELECT * FROM numeros;`);
     
-    const result = await dbConn.getAllAsync(`SELECT * FROM numeros;`);
+    inicializado = true;  // Foi inicializado
     console.log("Conteúdo da tabela após iniciar:", result);
 };
 
 //Muda a informação do numero
 export const setNumero = async (doutor, numDoutor, emergencia, numEmergencia) => {
-    const dbConn = await openDB();
+    await iniciar();
+    const db = await openDB();
 
-    await dbConn.runAsync(
+    await db.runAsync(
         `UPDATE numeros SET doutor=?, num_doutor=?, emergencia=?, num_emergencia=? WHERE id=1`,
         [doutor, numDoutor, emergencia, numEmergencia]
     );
@@ -46,12 +55,10 @@ export const setNumero = async (doutor, numDoutor, emergencia, numEmergencia) =>
 
 //Pegar informações do número
 export const getNumero = async () => {
+    await iniciar();
+    const db = await openDB();
 
-    const dbConn = await openDB();
-
-    const result = await dbConn.getAllAsync(`
-        SELECT * FROM numeros;
-    `)
+    const result = await db.getAllAsync(`SELECT * FROM numeros;`);
 
     console.log("Dados obtidos de 'numeros':", result);
     return result;
