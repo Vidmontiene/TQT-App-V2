@@ -11,12 +11,13 @@ export default function Dr3() {
   return (
     <SafeAreaView style={[styles.container, {flex:1}]}>
       <ScrollView
+        showsVerticalScrollIndicator={false}
         style={{ flex: 1 }}
         nestedScrollEnabled
         contentContainerStyle={{
           paddingBottom: 160, 
-        }}
-      >
+        }}>
+
         <Text style={styles.titulo}>3. Cheque a Fonte de Oxigênio (se a criança usar)</Text>
 
         {/*Verifique o ventilador mecânico*/}

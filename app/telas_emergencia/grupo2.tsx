@@ -104,12 +104,14 @@ const styles = StyleSheet.create({
   tracos_container: {
     position: "absolute",
     top: 20,
-    alignSelf: "center",
+    left: 0,
+    right: 0,
     flexDirection: "row",
+    justifyContent: "center",
     gap: 5,
     zIndex: 10,
     backgroundColor: 'white',
-    paddingBottom: 6
+    paddingBottom: 6,
   },
   traco: {
     width: 40,

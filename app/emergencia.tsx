@@ -87,7 +87,7 @@ export default function Emergencia() {
           <TouchableOpacity style={styles.botao} onPress={() => router.push('/telas_emergencia/grupo3')}>
             <MaterialIcons  name="warning-amber" size={33} style={styles.img}/>
             <View style={styles.container_botao}>
-              <Text style={styles.titulo_botao}>A cânula saiu</Text>
+              <Text style={styles.titulo_botao}>A Cânula Saiu</Text>
               <Text style={styles.txt_botao}>Passos para lidar com a saída da cânula.</Text>
             </View>
           </TouchableOpacity>
