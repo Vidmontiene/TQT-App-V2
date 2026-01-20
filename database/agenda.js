@@ -18,32 +18,33 @@ export const iniciar = async () => {
     if (inicializado) return; // Se já foi inicializado sai
     const db = await openDB();
 
-    await dbConn.execAsync(`
+    await db.execAsync(`
         CREATE TABLE IF NOT EXISTS agenda (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             data TEXT,
             hora TEXT, 
-            atividade TEXT 
+            atividade TEXT,
+            obs TEXT
         );
     `);
 
     console.log("Tabela 'agenda' criada/verificada.");
-    const result = await dbConn.getAllAsync(`SELECT * FROM agenda;`);
+    const result = await db.getAllAsync(`SELECT * FROM agenda;`);
 
     inicializado = true;  // Foi inicializado
     console.log("Conteúdo da tabela após iniciar:", result);
 };
 
 //Inserir novo registro
-export const novoRegistro = async (data, hora, atividade) => {
+export const novoRegistro = async (data, hora, atividade, obs) => {
+    await iniciar();
+    const db = await openDB();
 
-    const dbConn = await openDB();
-
-    await dbConn.execAsync(`
-        INSERT INTO agenda (data, hora, atividade) VALUES ('${data}', '${hora}', '${atividade}')
+    await db.execAsync(`
+        INSERT INTO agenda (data, hora, atividade, obs) VALUES ('${data}', '${hora}', '${atividade}', '${obs}')
     `)
 
-    const result = await dbConn.getAllAsync(`SELECT * FROM agenda;`);
+    const result = await db.getAllAsync(`SELECT * FROM agenda;`);
     console.log("Conteúdo da tabela após nova insercao:", result);
 };
 
@@ -60,13 +61,13 @@ export const setAgenda = async (campo, valor, id) => {
     console.log(`Campo '${campo}' atualizado para: ${valor} no id '${id}'`);
 };
 
-//Pegar informações da agenda (ordena por data decrescente e depois hora decrescente)
+//Pegar informações da agenda (ordena por data crescente e depois hora crescente)
 export const getAgenda = async () => {
     await iniciar();
-    const dbConn = await openDB();
+    const db = await openDB();
 
-    const result = await dbConn.getAllAsync(`
-        SELECT * FROM agenda ORDER BY substr(data, 7, 4) || '-' || substr(data, 4, 2) || '-' || substr(data, 1, 2) DESC, hora DESC;
+    const result = await db.getAllAsync(`
+        SELECT * FROM agenda ORDER BY substr(data, 7, 4) || '-' || substr(data, 4, 2) || '-' || substr(data, 1, 2) ASC, hora ASC;
     `)
 
     console.log("Dados obtidos de 'agenda':", result);
@@ -74,11 +75,11 @@ export const getAgenda = async () => {
 };
 
 //Deletar Registro
-export const deletarRegistro  = async (id) => {
+export const deletarRegistroDB  = async (id) => {
     await iniciar();
-    const dbConn = await openDB();
+    const db = await openDB();
 
-    await dbConn.execAsync(`
+    await db.execAsync(`
         DELETE FROM agenda WHERE id = '${id}'
     `)
     console.log(`registro de id ${id} deletado.`);

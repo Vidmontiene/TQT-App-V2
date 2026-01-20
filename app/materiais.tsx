@@ -1,9 +1,9 @@
 import { StyleSheet, View, TouchableOpacity, Text, ScrollView, Dimensions  } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect } from 'expo-router';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { CheckBox } from 'react-native-elements';
-import { getLista, setLista, iniciar } from '@/database/lista'
+import { getLista, setLista } from '@/database/lista'
 
 export default function Materiais() {
 
