@@ -1,11 +1,11 @@
 import { styles } from '@/estilos/botoes';
 import { Feather, MaterialIcons, FontAwesome6 } from '@expo/vector-icons';
-import { Text, TouchableOpacity, View, ScrollView, Modal, StyleSheet, TextInput,  KeyboardAvoidingView, Platform } from 'react-native';
+import { Text, TouchableOpacity, View, ScrollView, Modal, StyleSheet, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ligar } from '@/scripts/ligar';
 import { BlurView } from 'expo-blur';
-import { iniciar, setNumero, getNumero } from '@/database/numeros';
-import React, { useCallback, useEffect, useState } from 'react';
+import { setNumero, getNumero } from '@/database/numeros';
+import React, { useCallback, useState } from 'react';
 import { router, useFocusEffect } from 'expo-router';
 
 export default function Emergencia() {
@@ -159,6 +159,7 @@ export default function Emergencia() {
               <View style={novos.fundo_modal} pointerEvents="box-none">
                 <Text style={novos.titulo}>Médico de seu filho</Text>
 
+                {/*Nome médico*/}
                 <View style={novos.container_input}>
                   <Text style={novos.txt_input}>Nome: </Text>
                   <TextInput 
@@ -167,6 +168,7 @@ export default function Emergencia() {
                     onChangeText={setDoutor}/>
                 </View>
 
+                {/*Telefone médico*/}
                 <View style={novos.container_input}>
                   <Text style={novos.txt_input}>Telefone: </Text>
                   <TextInput 
@@ -179,6 +181,7 @@ export default function Emergencia() {
 
                 <Text style={[novos.titulo, {marginTop: 20}]}>Serviço de Emergência</Text>
 
+                {/*Nome emergência*/}
                 <View style={novos.container_input}>
                   <Text style={novos.txt_input}>Nome: </Text>
                   <TextInput 
@@ -187,6 +190,7 @@ export default function Emergencia() {
                     onChangeText={setEmergencia}/>
                 </View>
 
+                {/*Telefone emergência*/}
                 <View style={novos.container_input}>
                   <Text style={novos.txt_input}>Telefone: </Text>
                   <TextInput 
@@ -197,6 +201,7 @@ export default function Emergencia() {
                     maxLength={13}/>
                 </View>
 
+                {/*Botão de salvar*/}
                 <TouchableOpacity style={novos.botao} onPress={salvar}>
                   <Text style={novos.txt_botao}>Salvar</Text>
                 </TouchableOpacity>

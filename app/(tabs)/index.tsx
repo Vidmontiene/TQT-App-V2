@@ -1,7 +1,7 @@
-import { StyleSheet, View, Image, TouchableOpacity, Text, ScrollView} from 'react-native';
+import { StyleSheet, View, Image, TouchableOpacity, Text, ScrollView } from 'react-native';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { router, Stack } from 'expo-router';
+import { router } from 'expo-router';
 
 export default function HomeScreen() {
 
@@ -10,13 +10,17 @@ export default function HomeScreen() {
       <SafeAreaView
         style={styles.container}
         edges={['top', 'right', 'bottom', 'left']}>
+
         <Text style={styles.titulo}>Bem Vindo(a) ao TQT-App</Text>
         <Image
           source={require('../../assets/images/criancas.jpg')}
           style={styles.foto_perfil}
         />
         <Text style={styles.subtitulo}>Cuidando com Amor e Atenção</Text>
-        <Text style={styles.info}>Aqui você encontra tudo o que precisa para o cuidado diário e em situações especiais.</Text>
+
+        <Text style={styles.info}>
+          Aqui você encontra tudo o que precisa para o cuidado diário e em situações especiais.
+        </Text>
 
         {/*Botões*/}
         <View style={styles.alinha_botoes}>
@@ -72,6 +76,7 @@ export default function HomeScreen() {
             </TouchableOpacity>
             <Text style={styles.texto_botao}>Materiais Essenciais</Text>
           </View>
+          
         </View>
       </SafeAreaView>
     </ScrollView>

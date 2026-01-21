@@ -47,7 +47,6 @@ export default function Troca() {
           }}
         />
 
-
         <Text style={styles.titulo}>Materiais</Text>
 
         {/*Fixador*/}

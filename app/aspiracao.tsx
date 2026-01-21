@@ -6,7 +6,6 @@ import { styles } from '@/estilos/passos'
 import { VideoView, useVideoPlayer } from 'expo-video';
 import { router } from 'expo-router';
 
-
 export default function Aspiracao() {
 
   const [soro, setSoro] = useState(false);  

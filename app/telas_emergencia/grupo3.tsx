@@ -1,20 +1,22 @@
 import PagerView from "react-native-pager-view";
 import { useState, useRef } from "react";
-import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
+import { TouchableOpacity, View, Text } from "react-native";
 import Feather from '@expo/vector-icons/Feather'; 
 import { ligar } from "@/scripts/ligar";
+import { styles } from "@/estilos/swiper";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'; 
 import { router } from "expo-router";
 import { IconSymbol } from '@/components/ui/icon-symbol';
 
+// Imports de telas A CÂNULA SAIU 
 import Cs0 from "./canulasaiu0";
 import Cs1 from "./canulasaiu1";
 import Cs2 from "./canulasaiu2";
 import Cs3 from "./canulasaiu3";
 import Cs4 from "./canulasaiu4";
 
-
 export default function EmergenciaSwipe() {
+
   const [pagina, setPagina] = useState(0);
   const pagerRef = useRef<PagerView>(null);
   const telas = [Cs0, Cs1, Cs2, Cs3, Cs4];
@@ -61,7 +63,6 @@ export default function EmergenciaSwipe() {
 
       {/*Botões*/}
       <View style={styles.container_botoes}>
-
         {pagina === 0 ?
           <TouchableOpacity style={styles.botao} onPress={() => router.push('/')}>
             <IconSymbol  name="house.fill" size={24} color='white' />
@@ -93,59 +94,7 @@ export default function EmergenciaSwipe() {
         }
 
       </View>
+      
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  tracos_container: {
-    position: "absolute",
-    top: 20,
-    alignSelf: "center",
-    flexDirection: "row",
-    gap: 5,
-    zIndex: 10,
-  },
-  traco: {
-    width: 40,
-    height: 6,
-    borderRadius: 5,
-    backgroundColor: "#ccc",
-    marginHorizontal: 6,
-  },
-  traco_ativo: {
-    backgroundColor: '#12B9ED',
-    height: 7,
-    borderRadius: 7,
-  },
-  container_botoes:{
-    position: "absolute",
-    bottom: 0,
-    width: "100%",
-    flexDirection: 'row',
-    alignItems: "center",
-    alignSelf: 'center',
-
-    paddingVertical: 12,
-    borderTopWidth: 1,
-    borderTopColor: "#eee",
-  },
-
-  botao:{
-    backgroundColor: '#12B9ED',
-    marginHorizontal: 4,
-    paddingVertical: 3,
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 6,
-    gap: 4,
-    flex: 1
-  },
-
-  txt_botao:{
-    fontSize: 12,
-    marginTop: 2,
-    color: 'white',
-    fontWeight: 'bold',
-  } 
-});

@@ -27,15 +27,11 @@ export default function Limpeza() {
 
         {/*Aviso*/}
         <View style={styles.container_aviso}>
-            <View style={styles.icon_titulo}>
-                <MaterialIcons
-                    name="info-outline"
-                    size={30}
-                    color='#12B9ED'
-                />
-                <Text style={styles.titulo_aviso}> Aviso</Text>
-            </View>
-            <Text style={styles.descricao_passo}>Esse procedimento deve ser feito em cânulas Shiley e Metálica</Text>
+          <View style={styles.icon_titulo}>
+            <MaterialIcons name="info-outline" size={30} color='#12B9ED'/>
+            <Text style={styles.titulo_aviso}> Aviso</Text>
+          </View>
+          <Text style={styles.descricao_passo}>Esse procedimento deve ser feito em cânulas Shiley e Metálica</Text>
         </View>
 
         {/*Vídeo*/}

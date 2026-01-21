@@ -35,7 +35,6 @@ export default function Nca5() {
       {/*Apertou 'não'*/}
       {nao === 1 && (
         <>
-
           {/*Título*/}
           <View style={[styles.container_botao, {alignSelf: 'center', marginVertical:20, alignItems: 'center'}]}>
             <MaterialIcons name="warning-amber" size={35} color='#EE4544'/>
@@ -81,9 +80,9 @@ export default function Nca5() {
               <Feather name="arrow-right" size={24} color="white" />
             </View>
           </TouchableOpacity>
-
         </>
       )}
+      
     </SafeAreaView>
   );
 }

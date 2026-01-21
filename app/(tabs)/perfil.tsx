@@ -1,7 +1,8 @@
 import { ScrollView, View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from '@/estilos/botoes';
-import { getPerfil, setPerfil, iniciar } from '@/database/perfil';
+import { getPerfil, setPerfil } from '@/database/perfil';
+import { dateParaData, dataParaDate } from '@/scripts/datas';
 import { useFocusEffect } from 'expo-router';
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useCallback, useState, useRef } from 'react';
@@ -27,21 +28,6 @@ export default function Perfil() {
   const [campoEditando, setCampoEditando] = useState<
     "nomeResponsavel" | "email" | "telefone" | "nomeCrianca" | "patologia" | null
   >(null);
-
-  // Formata a data em DD/MM/AAAA
-  const dateParaData = (date: Date | null) => { 
-    if (!date) return ""; 
-    const d = new Date(date);
-    if (isNaN(d.getTime())) return "";
-    return d.toLocaleDateString("pt-BR"); 
-  }; 
-
-  // Formata a data (DD/MM/AAAA) em Date
-  const dataParaDate = (dataStr: string) => {
-    if (!dataStr || dataStr === "") return null;
-    const [dia, mes, ano] = dataStr.split("/").map(Number);
-    return new Date(ano, mes - 1, dia);
-  };
 
   // Retorna a idade
   const idade = (nasc: Date): number => {
@@ -79,7 +65,6 @@ export default function Perfil() {
     setShowData(false);
   };
 
-
   // Carrega os valores do banco nos useStates
   const carregarPerfil = async () => {
     const rows = await getPerfil();
@@ -107,6 +92,7 @@ export default function Perfil() {
     setTelefone(num.trim());
   };
 
+  // Salva useState no DB
   const salvar = async(campo: String, valor : any) => {
     const valornovo = valor.trim();
     await setPerfil(campo, valornovo);
@@ -115,8 +101,11 @@ export default function Perfil() {
 
   return (
     <SafeAreaView style={styles.container} edges={[ 'left']}>
+
     {msg ? <Text style={styles.msg}>{msg}</Text> : null}
-      <ScrollView showsVerticalScrollIndicator={false}>
+
+      <ScrollView showsVerticalScrollIndicator={false}
+      contentContainerStyle={{ paddingBottom: 210 }}>
         
         <Text style={[styles.txt_botao, {marginVertical: 15, textAlign: 'justify'}]}>
           Clique em qualquer informação para editá-la.
@@ -130,8 +119,8 @@ export default function Perfil() {
           onPress={() => {
             setCampoEditando("nomeResponsavel");
             setTimeout(() => inputRef.current?.focus(), 100);
-          }}
-        >
+          }}>
+
           <FontAwesome6 name="person" size={31} style={[styles.img_redondo, { paddingHorizontal: 25 }]} />
 
           <View style={styles.container_botao}>
@@ -163,8 +152,7 @@ export default function Perfil() {
           onPress={() => {
             setCampoEditando('email');
             setTimeout(() => inputRef.current?.focus(), 100);
-          }}
-        >
+          }}>
 
           <MaterialCommunityIcons  name="email-outline" size={31} style={styles.img_redondo}/>
 
@@ -198,8 +186,8 @@ export default function Perfil() {
           onPress={() => {
             setCampoEditando("telefone");
             setTimeout(() => inputRef.current?.focus(), 100);
-          }}
-        >
+          }}>
+
           <Feather name="phone" size={31} style={styles.img_redondo}/>
 
           <View style={styles.container_botao}>
@@ -234,8 +222,8 @@ export default function Perfil() {
           onPress={() => {
             setCampoEditando("nomeCrianca");
             setTimeout(() => inputRef.current?.focus(), 100);
-          }}
-        >
+          }}>
+            
           <FontAwesome6 name="child-reaching" size={31} style={[styles.img_redondo, {paddingHorizontal: 25}]} />
 
           <View style={styles.container_botao}>

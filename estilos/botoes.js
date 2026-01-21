@@ -8,11 +8,13 @@ const { width } = Dimensions.get('window');
     padding: 10,
     height: "100%"
   },
+
   titulo:{
     fontWeight: 'bold',
     fontSize: 21,
     marginBottom: 20
   },
+
   botao:{
     flexDirection: 'row',
     alignItems: 'center',
@@ -24,14 +26,17 @@ const { width } = Dimensions.get('window');
     height: 115,
     marginBottom: 10,
   },
+
   titulo_botao:{
     fontWeight: 'bold',
     fontSize: 17,
   },
+
   txt_botao:{
     fontSize: 14,
     color: '#555'
   },
+
   img:{
     marginRight: 12,
     color: '#12B9ED',
@@ -40,6 +45,7 @@ const { width } = Dimensions.get('window');
     borderRadius: 12,
   
   },
+
   img_vermelha:{
     marginRight: 12,
     color: "#EF4444",
@@ -48,6 +54,7 @@ const { width } = Dimensions.get('window');
     borderRadius: 12,
   
   },
+
   img_redondo:{
     marginRight: 12,
     color: '#12B9ED',
@@ -55,15 +62,18 @@ const { width } = Dimensions.get('window');
     padding: 20,
     borderRadius: 50,
   },
+
   container_botao:{
     flex: 1,
     justifyContent: 'center',
     gap: 3
   },
+
   seta:{
     marginLeft: 4.5,
     color: '#555'
   },
+  
   msg:{
     backgroundColor: '#D0F0FB',
     color: '#12B9ED',
@@ -77,6 +87,7 @@ const { width } = Dimensions.get('window');
     borderRadius: 4,
     position: 'absolute'
   },
+
   input_txt:{
     padding: 0
   },

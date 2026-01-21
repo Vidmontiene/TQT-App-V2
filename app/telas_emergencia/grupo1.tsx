@@ -1,13 +1,14 @@
 import PagerView from "react-native-pager-view";
 import { useState, useRef } from "react";
-import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
+import { TouchableOpacity, View, Text } from "react-native";
 import Feather from '@expo/vector-icons/Feather'; 
 import { ligar } from "@/scripts/ligar";
+import { styles } from "@/estilos/swiper";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'; 
 import { router } from "expo-router";
 import { IconSymbol } from '@/components/ui/icon-symbol';
 
-
+// Imports de telas NÃO CONSIGO ASPIRAR 
 import Nca0 from "./nconsigoasp0";
 import Nca1 from "./nconsigoasp1";
 import Nca2 from "./nconsigoasp2";
@@ -15,8 +16,8 @@ import Nca3 from "./nconsigoasp3";
 import Nca4 from "./nconsigoasp4";
 import Nca5 from "./nconsigoasp5";
 
-
 export default function EmergenciaSwipe() {
+
   const [pagina, setPagina] = useState(0);
   const pagerRef = useRef<PagerView>(null);
   const telas = [Nca0, Nca1, Nca2, Nca3, Nca4, Nca5];
@@ -82,7 +83,6 @@ export default function EmergenciaSwipe() {
         </TouchableOpacity>
 
         {pagina === telas.length - 1 ?         
-        
           <TouchableOpacity style={styles.botao} onPress={() => router.push('/')}>
             <IconSymbol  name="house.fill" size={24} color='white' />
             <Text style={styles.txt_botao}>Sair</Text>
@@ -92,64 +92,12 @@ export default function EmergenciaSwipe() {
             <MaterialIcons name="arrow-forward-ios" size={24} color="white" />
             <Text style={styles.txt_botao}>Próximo</Text>
           </TouchableOpacity>
-
         }
 
       </View>
+
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  tracos_container: {
-    position: "absolute",
-    top: 20,
-    alignSelf: "center",
-    flexDirection: "row",
-    gap: 5,
-    zIndex: 10,
-  },
-  traco: {
-    width: 40,
-    height: 6,
-    borderRadius: 5,
-    backgroundColor: "#ccc",
-    marginHorizontal: 6,
-  },
-  traco_ativo: {
-    backgroundColor: '#12B9ED',
-    height: 7,
-    borderRadius: 7,
-  },
-  container_botoes:{
-    position: "absolute",
-    bottom: 0,
-    width: "100%",
-    flexDirection: 'row',
-    alignItems: "center",
-    alignSelf: 'center',
-
-    paddingVertical: 12,
-    borderTopWidth: 1,
-    borderTopColor: "#eee",
-  },
-
-  botao:{
-    backgroundColor: '#12B9ED',
-    marginHorizontal: 4,
-    paddingVertical: 3,
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 6,
-    gap: 4,
-    flex: 1
-  },
-
-  txt_botao:{
-    fontSize: 12,
-    marginTop: 2,
-    color: 'white',
-    fontWeight: 'bold',
-  }
-});
 

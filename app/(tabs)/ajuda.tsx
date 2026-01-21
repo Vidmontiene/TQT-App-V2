@@ -1,6 +1,6 @@
 import { styles } from '@/estilos/botoes';
-import { Feather, MaterialIcons, FontAwesome6, MaterialCommunityIcons } from '@expo/vector-icons';
-import { Text, TouchableOpacity, View, ScrollView, Linking } from 'react-native';
+import { Feather,  MaterialCommunityIcons } from '@expo/vector-icons';
+import { Text, TouchableOpacity, View, Linking } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ligar } from '@/scripts/ligar';
 
@@ -37,7 +37,6 @@ export default function Ajuda() {
       </TouchableOpacity>
 
       <Text style={styles.titulo}>Recursos Externos</Text>
-
 
       {/*Ministério da saúde*/}
       <TouchableOpacity style={styles.botao} 

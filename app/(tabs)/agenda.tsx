@@ -2,6 +2,7 @@ import { ScrollView, Text, TouchableOpacity, View, StyleSheet, Modal, TextInput 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles as styles2 } from '@/estilos/botoes';
 import { useFocusEffect } from "expo-router";
+import { dateParaData, dataParaDate, horaParaDate, dateParaHora } from '@/scripts/datas';
 import { novoRegistro, setAgenda, getAgenda, deletarRegistroDB} from "@/database/agenda";
 import { useCallback, useState } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -27,6 +28,8 @@ export default function Agenda() {
   const [registros, setRegistros] = useState<any[]>([]);  // Armazena todos os registros
   const [id, setId] = useState(0);                        // Armazena o id clicado
 
+  const [msg, setMsg] = useState("");                    // Mostra mensagem de aviso
+
   // Dia de hoje
   const hoje = new Date();
   hoje.setHours(0, 0, 0, 0);
@@ -37,38 +40,6 @@ export default function Agenda() {
     setShowData(false);
     setData(currentDate);
   };
-
-  // Formata a data em DD/MM/AAAA
-  const dateParaData = (date: Date | null) => { 
-    if (!date) return ""; 
-    const d = new Date(date);
-    if (isNaN(d.getTime())) return "";
-    return d.toLocaleDateString("pt-BR"); 
-  }; 
-  
-  // Formata a hora em HH:MM
-  const dateParaHora = (time: Date | null) => { 
-    if (!time) return ""; 
-    const t = new Date(time);
-    if (isNaN(t.getTime())) return "";
-    return t.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }); 
-  };
-
-  // Formata a data (DD/MM/AAAA) em Date
-  const dataParaDate = (dataStr: string) => {
-    if (!dataStr || dataStr === "") return null;
-    const [dia, mes, ano] = dataStr.split("/").map(Number);
-    return new Date(ano, mes - 1, dia);
-  }
-
-  // Formata o horário (HH:MM) em Date
-  const horaParaDate = (horaStr: string) =>{
-    if (!horaStr || horaStr === "") return null;
-    const [hora, minuto] = horaStr.split(":").map(Number);
-    const agora = new Date();
-    agora.setHours(hora, minuto, 0, 0); 
-    return agora;
-  }
 
   // Zera os campos do modal
   const zerarUseSates = () => {
@@ -81,12 +52,21 @@ export default function Agenda() {
 
   // Salva novo registro no DB
   const salvarRegistro = async () => {
-    setModalNovo(false);
 
+    // não salva se todos forem vazios
     if (atividade.trim() === "" && obs.trim() === "" && data === null && hora === null){
-      return; // não salva se for vazio
+      setModalNovo(false);
+      return;
     }
 
+    // Indica os campos obrigatórios
+    if (atividade.trim() === "" || data === null || hora === null){
+      setMsg("Atividade, data e hora são campos obrigatórios!");           
+      setTimeout(() => setMsg(""), 2000); // desaparece após 2s
+      return;
+    }
+
+    setModalNovo(false);
     await novoRegistro(dateParaData(data), dateParaHora(hora), atividade.trim(), obs.trim());
     zerarUseSates();  
     carregarAgenda();
@@ -94,6 +74,20 @@ export default function Agenda() {
 
   // Muda o registro no DB
   const mudarRegistro = async () => {
+
+    // não salva se todos forem vazios
+    if (atividade.trim() === "" && obs.trim() === "" && data === null && hora === null){
+      setModalEditar(false);
+      return;
+    }
+
+    // Indica os campos obrigatórios
+    if (atividade.trim() === "" || data === null || hora === null){
+      setMsg("Atividade, data e hora são campos obrigatórios!");           
+      setTimeout(() => setMsg(""), 2000); // desaparece após 2s
+      return;
+    }
+  
     setModalEditar(false);
     await setAgenda("atividade", atividade, id);
     await setAgenda("data", dateParaData(data), id);
@@ -121,6 +115,30 @@ export default function Agenda() {
     carregarAgenda();
   }
 
+  // Pega os registros de hoje
+  const registrosHoje = registros.filter(item => {
+    const dataItem = dataParaDate(item.data);
+    return (
+      dataItem && dataItem.getDate() === hoje.getDate()
+    );
+  });
+
+  // Pega os registros do futuro
+  const registrosFuturo = registros.filter(item => {
+    const dataItem = dataParaDate(item.data);
+    return (
+      dataItem && dataItem > hoje
+    );
+  });
+
+  // Pega os registros do passado
+  const registrosPassado = registros.filter(item => {
+    const dataItem = dataParaDate(item.data);
+    return (
+      dataItem && dataItem < hoje
+    );
+  });
+
   // Carregar do banco sempre que a tela ganhar foco
   useFocusEffect(
       useCallback(() => {
@@ -147,12 +165,12 @@ export default function Agenda() {
 
         {/*Registros de hoje*/}
         <Text style={[styles2.titulo, {fontSize: 24, marginTop: 13}]}>Hoje</Text>
-        {registros
-          .filter(item => {
-            const dataItem = dataParaDate(item.data);
-            return dataItem && dataItem.getDate() === hoje.getDate()
-          })
-          .map((item) => (
+
+        {registrosHoje.length === 0 ? 
+
+          <Text style={styles.subtitulo_vazio}> Não existem registros para hoje.</Text>
+          :
+          registrosHoje.map((item) => (
           <View key={item.id} style={[styles2.botao, {alignItems: 'flex-start', paddingVertical: 10, height: 'auto'}]}>
             <FontAwesome5 name="bell" size={31} style={styles2.img_redondo}/>
             <View style={styles2.container_botao}>
@@ -167,16 +185,17 @@ export default function Agenda() {
               <Entypo name="dots-three-vertical" size={27} style={styles2.seta} />
             </TouchableOpacity>
           </View>
-        ))}
+          ))}
+
 
         {/*Registros de próximos*/}
         <Text style={[styles2.titulo, {fontSize: 24, marginVertical: 15}]}>Próximos</Text>
-        {registros
-          .filter(item => {
-            const dataItem = dataParaDate(item.data);
-            return dataItem && dataItem > hoje
-          })
-          .map((item) => (
+
+        {registrosFuturo.length === 0 ? 
+
+          <Text style={styles.subtitulo_vazio}> Não existem registros futuros.</Text>
+          :
+          registrosFuturo.map((item) => (
           <View key={item.id} style={[styles2.botao, {alignItems: 'flex-start', paddingVertical: 10, height: 'auto'}]}>
             <FontAwesome5 name="bell" size={31} style={styles2.img_redondo}/>
             <View style={styles2.container_botao}>
@@ -195,12 +214,11 @@ export default function Agenda() {
 
         {/*Registros passados*/}
         <Text style={[styles2.titulo, {fontSize: 24, marginVertical: 15}]}>Passados</Text>
-        {registros
-          .filter(item => {
-            const dataItem = dataParaDate(item.data);
-            return dataItem && dataItem < hoje
-          })
-          .reverse().map((item) => (
+        {registrosPassado.length === 0 ?
+
+          <Text style={styles.subtitulo_vazio}> Não existem registros passados.</Text>
+          :
+          registrosPassado.reverse().map((item) => (
 
           <View key={item.id} style={[styles2.botao, {alignItems: 'flex-start', paddingVertical: 10, height: 'auto'}]}>
             <FontAwesome5 name="bell" size={31} style={styles2.img_redondo}/>
@@ -223,8 +241,12 @@ export default function Agenda() {
       {/*Pop up de novo registro*/}
       <Modal animationType="fade" transparent visible={modalNovo}
         onRequestClose={() => {setModalNovo(false), zerarUseSates()}}>
+
+        {msg ? <Text style={styles2.msg}>{msg}</Text> : null}
+
         <BlurView intensity={40} tint="dark" style={styles.embacado}>
           <KeyboardAvoidingView style={styles.fundopopup} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+
             <Text style={styles.titulo}>Preencha os dados</Text>
 
             {/*Atividade*/}
@@ -291,8 +313,12 @@ export default function Agenda() {
       {/*Pop up de editar/excluir registro*/}
       <Modal animationType="fade" transparent visible={modalEditar}
         onRequestClose={() => {setModalEditar(false), zerarUseSates()}}>
+        
+        {msg ? <Text style={styles2.msg}>{msg}</Text> : null}
+
         <BlurView intensity={40} tint="dark" style={styles.embacado}>
           <KeyboardAvoidingView style={styles.fundopopup} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+
             <Text style={styles.titulo}>Edite os dados</Text>
 
             {/*Atividade*/}
@@ -363,25 +389,25 @@ export default function Agenda() {
       </Modal>
 
       {/*Pop up de confirmação de exclusão de registro*/}
-        <Modal animationType="fade" transparent visible={modalConfirmar}
-          onRequestClose={() => {setModalConfirmar(false)}}>
-          <BlurView  intensity={40} tint="dark" style={styles.embacado}>
-              <View style={styles.fundo_popup_confirmar}>
-                <Text style={styles.titulo}>Tem certeza que deseja excluir esse registro?</Text>
-                <Text style={styles.subtitulo}>Não será possível reverter essa ação</Text>
+      <Modal animationType="fade" transparent visible={modalConfirmar}
+        onRequestClose={() => {setModalConfirmar(false)}}>
+        <BlurView  intensity={40} tint="dark" style={styles.embacado}>
+            <View style={styles.fundo_popup_confirmar}>
+              <Text style={styles.titulo}>Tem certeza que deseja excluir esse registro?</Text>
+              <Text style={styles.subtitulo}>Não será possível reverter essa ação.</Text>
 
-                <View style={styles.dataehora}>
-                  <TouchableOpacity style={styles.botao_editar} onPress={deletarRegistro}>
-                    <Text style={styles.txt_botao}>Excluir registro</Text>
-                  </TouchableOpacity>
+              <View style={styles.dataehora}>
+                <TouchableOpacity style={styles.botao_editar} onPress={deletarRegistro}>
+                  <Text style={styles.txt_botao}>Excluir registro</Text>
+                </TouchableOpacity>
 
-                  <TouchableOpacity style={[styles.botao_editar, {backgroundColor:"#d63d3dff"}]} onPress={() => setModalConfirmar(false)}>
-                    <Text style={styles.txt_botao}>Cancelar</Text>
-                  </TouchableOpacity>
-                </View>
+                <TouchableOpacity style={[styles.botao_editar, {backgroundColor:"#d63d3dff"}]} onPress={() => setModalConfirmar(false)}>
+                  <Text style={styles.txt_botao}>Cancelar</Text>
+                </TouchableOpacity>
               </View>
-          </BlurView>
-        </Modal>
+            </View>
+        </BlurView>
+      </Modal>
         
       {/*Botão de "+"*/}
       <TouchableOpacity style={styles.botao_mais} onPress={() => setModalNovo(true)}>
@@ -516,5 +542,9 @@ const styles = StyleSheet.create({
     height: 115,
     marginBottom: 10,
     fontWeight: 'bold'
+  },
+
+  subtitulo_vazio:{
+    fontSize: 17
   }
 });
