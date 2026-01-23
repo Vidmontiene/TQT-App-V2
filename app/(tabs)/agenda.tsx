@@ -42,7 +42,7 @@ export default function Agenda() {
   };
 
   // Zera os campos do modal
-  const zerarUseSates = () => {
+  const zerarUseStates = () => {
     setAtividade("");
     setObs("");
     setId(0);
@@ -68,7 +68,7 @@ export default function Agenda() {
 
     setModalNovo(false);
     await novoRegistro(dateParaData(data), dateParaHora(hora), atividade.trim(), obs.trim());
-    zerarUseSates();  
+    zerarUseStates();  
     carregarAgenda();
   }
 
@@ -93,7 +93,7 @@ export default function Agenda() {
     await setAgenda("data", dateParaData(data), id);
     await setAgenda("hora", dateParaHora(hora), id);
     await setAgenda("obs", obs, id);
-    zerarUseSates(); 
+    zerarUseStates(); 
     carregarAgenda();
   }
 
@@ -111,7 +111,7 @@ export default function Agenda() {
     setModalEditar(false);
     setModalConfirmar(false);
     await deletarRegistroDB(id);
-    zerarUseSates(); 
+    zerarUseStates(); 
     carregarAgenda();
   }
 
@@ -240,7 +240,7 @@ export default function Agenda() {
 
       {/*Pop up de novo registro*/}
       <Modal animationType="fade" transparent visible={modalNovo}
-        onRequestClose={() => {setModalNovo(false), zerarUseSates()}}>
+        onRequestClose={() => {setModalNovo(false), zerarUseStates()}}>
 
         {msg ? <Text style={styles2.msg}>{msg}</Text> : null}
 
@@ -312,7 +312,7 @@ export default function Agenda() {
 
       {/*Pop up de editar/excluir registro*/}
       <Modal animationType="fade" transparent visible={modalEditar}
-        onRequestClose={() => {setModalEditar(false), zerarUseSates()}}>
+        onRequestClose={() => {setModalEditar(false), zerarUseStates()}}>
         
         {msg ? <Text style={styles2.msg}>{msg}</Text> : null}
 
