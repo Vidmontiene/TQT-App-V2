@@ -6,6 +6,7 @@ import { dateParaData, dataParaDate } from '@/scripts/datas';
 import { useFocusEffect } from 'expo-router';
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useCallback, useState, useRef } from 'react';
+import { abrirConfiguracoes, situacao } from '@/scripts/notificacoes';
 import Feather from '@expo/vector-icons/Feather';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
@@ -20,6 +21,7 @@ export default function Perfil() {
   const [telefone, setTelefone] = useState("");
   const [data, setData] = useState<Date | null>(null);
   const [patologia, setPatologia] = useState("");
+  const [situacaoNotificacao, setSituacaoNotificacao] = useState('Carregando...');
 
   const [showData, setShowData] = useState(false);       // Abre/Fecha escolhedor de DateTimePicker
   const [msg, setMsg] = useState("");                    // Mostra mensagem de aviso
@@ -28,6 +30,12 @@ export default function Perfil() {
   const [campoEditando, setCampoEditando] = useState<
     "nomeResponsavel" | "email" | "telefone" | "nomeCrianca" | "patologia" | null
   >(null);
+
+  // Informa a situação da notificação
+  const carregarSituacaoNotificacao = async () => {
+    const resultado = await situacao();
+    setSituacaoNotificacao(resultado);
+  };
 
   // Retorna a idade
   const idade = (nasc: Date): number => {
@@ -83,6 +91,7 @@ export default function Perfil() {
   useFocusEffect(
     useCallback(() => {
         carregarPerfil();
+        carregarSituacaoNotificacao();
     }, [])
   );
 
@@ -105,7 +114,7 @@ export default function Perfil() {
     {msg ? <Text style={styles.msg}>{msg}</Text> : null}
 
       <ScrollView showsVerticalScrollIndicator={false}
-      contentContainerStyle={{ paddingBottom: 210 }}>
+      contentContainerStyle={{ paddingBottom: 150 }}>
         
         <Text style={[styles.txt_botao, {marginVertical: 15, textAlign: 'justify'}]}>
           Clique em qualquer informação para editá-la.
@@ -292,6 +301,18 @@ export default function Perfil() {
             )}
           </View>
 
+          <MaterialIcons name="arrow-forward-ios" size={24} style={styles.seta}/>
+        </TouchableOpacity>
+
+        <Text style={styles.titulo}>Configurações</Text>
+    
+        {/*Notificações*/}
+        <TouchableOpacity style={styles.botao} onPress={abrirConfiguracoes}>
+          <MaterialIcons  name="notifications-none" size={31} style={styles.img_redondo}/>
+          <View style={styles.container_botao}>
+            <Text style={styles.titulo_botao}>Notificações</Text>
+            <Text style={styles.txt_botao}>{situacaoNotificacao}</Text>
+          </View>
           <MaterialIcons name="arrow-forward-ios" size={24} style={styles.seta}/>
         </TouchableOpacity>
 

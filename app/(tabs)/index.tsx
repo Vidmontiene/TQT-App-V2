@@ -2,8 +2,15 @@ import { StyleSheet, View, Image, TouchableOpacity, Text, ScrollView } from 'rea
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
+import { pedirPermissao } from '@/scripts/notificacoes';
+import { useEffect } from 'react';
 
 export default function HomeScreen() {
+
+  // Pede permissão uma só vez
+  useEffect(() => {
+    pedirPermissao();
+  }, []);
 
   return (
     <ScrollView>

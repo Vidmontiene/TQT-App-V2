@@ -24,7 +24,8 @@ export const iniciar = async () => {
             data TEXT,
             hora TEXT, 
             atividade TEXT,
-            obs TEXT
+            obs TEXT,
+            notificacao TEXT
         );
     `);
 
@@ -36,20 +37,21 @@ export const iniciar = async () => {
 };
 
 //Inserir novo registro
-export const novoRegistro = async (data, hora, atividade, obs) => {
+export const novoRegistro = async ( data, hora, atividade, obs, notificacao ) => {
     await iniciar();
     const db = await openDB();
 
-    await db.execAsync(`
-        INSERT INTO agenda (data, hora, atividade, obs) VALUES ('${data}', '${hora}', '${atividade}', '${obs}')
-    `)
+    await db.runAsync(`
+        INSERT INTO agenda (data, hora, atividade, obs, notificacao) VALUES (?, ?, ?, ?, ?);`,
+        [data, hora, atividade, obs, notificacao ?? null]
+    );
 
     const result = await db.getAllAsync(`SELECT * FROM agenda;`);
     console.log("Conteúdo da tabela após nova insercao:", result);
 };
 
 // Atualiza um campo da tabela da agenda
-export const setAgenda = async (campo, valor, id) => {
+export const setAgenda = async ( campo, valor, id ) => {
     await iniciar();
     const db = await openDB();
 
@@ -75,7 +77,7 @@ export const getAgenda = async () => {
 };
 
 //Deletar Registro
-export const deletarRegistroDB  = async (id) => {
+export const deletarRegistroDB  = async ( id ) => {
     await iniciar();
     const db = await openDB();
 

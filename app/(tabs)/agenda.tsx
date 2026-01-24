@@ -6,9 +6,10 @@ import { dateParaData, dataParaDate, horaParaDate, dateParaHora } from '@/script
 import { novoRegistro, setAgenda, getAgenda, deletarRegistroDB} from "@/database/agenda";
 import { useCallback, useState } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
+import { BlurView } from 'expo-blur';
+import { agendarNotificacao, cancelarNotificacao } from '@/scripts/notificacoes';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import Entypo from '@expo/vector-icons/Entypo';
-import { BlurView } from 'expo-blur';
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 export default function Agenda() {
@@ -21,6 +22,7 @@ export default function Agenda() {
   const [obs, setObs] = useState("");                     // Mostra o obs na UI
   const [data, setData] = useState<Date | null>(null);    // Mostra a data na UI
   const [hora, setHora] = useState<Date | null>(null);    // Mostra o horário na UI
+  const [notificacaoID, setNotificacaoID] = useState("")  // ID da notificacao
 
   const [showData, setShowData] = useState(false);        // Abre/Fecha escolhedor de data
   const [showTime, setShowTime] = useState(false);        // Abre/Fecha escolhedor de hora
@@ -48,6 +50,7 @@ export default function Agenda() {
     setId(0);
     setData(null);
     setHora(null);
+    setNotificacaoID("");
   }
 
   // Salva novo registro no DB
@@ -66,8 +69,24 @@ export default function Agenda() {
       return;
     }
 
+    // Junta DATA + HORA
+    const dataHora = new Date(data);
+    dataHora.setHours(
+      hora.getHours(),
+      hora.getMinutes(),
+      0,
+      0
+    );
+ 
+    // Cria notificacao
+    const notificacao = await agendarNotificacao(
+      "Você tem uma atividade marcada em sua agenda: " + atividade.trim(), 
+      dateParaData(data) + " - " + dateParaHora(hora), 
+      dataHora
+    );
+
+    await novoRegistro(dateParaData(data), dateParaHora(hora), atividade.trim(), obs.trim(), notificacao);   
     setModalNovo(false);
-    await novoRegistro(dateParaData(data), dateParaHora(hora), atividade.trim(), obs.trim());
     zerarUseStates();  
     carregarAgenda();
   }
@@ -87,12 +106,33 @@ export default function Agenda() {
       setTimeout(() => setMsg(""), 2000); // desaparece após 2s
       return;
     }
+
+    // Junta DATA + HORA
+    const dataHora = new Date(data);
+    dataHora.setHours(
+      hora.getHours(),
+      hora.getMinutes(),
+      0,
+      0
+    );
+
+    // Cancela notificação antiga
+    await cancelarNotificacao(notificacaoID);
+
+    // Cria nova notificacao
+    const notificacao = await agendarNotificacao(
+      "Você tem uma atividade marcada em sua agenda: " + atividade.trim(), 
+      dateParaData(data) + " - " + dateParaHora(hora), 
+      dataHora
+    );
   
-    setModalEditar(false);
     await setAgenda("atividade", atividade, id);
     await setAgenda("data", dateParaData(data), id);
     await setAgenda("hora", dateParaHora(hora), id);
     await setAgenda("obs", obs, id);
+    await setAgenda("notificacao", notificacao, id);
+
+    setModalEditar(false);
     zerarUseStates(); 
     carregarAgenda();
   }
@@ -104,15 +144,19 @@ export default function Agenda() {
     setObs(registro.obs);
     setData(dataParaDate(registro.data));  // Tranforma a data String em Date
     setHora(horaParaDate(registro.hora));  // Tranforma a hora String em Date
+    setNotificacaoID(registro.notificacao);
   };
 
   // Deleta o registro
   const deletarRegistro = async () => {
-    setModalEditar(false);
-    setModalConfirmar(false);
+    await cancelarNotificacao(notificacaoID);
     await deletarRegistroDB(id);
+
     zerarUseStates(); 
     carregarAgenda();
+
+    setModalEditar(false);
+    setModalConfirmar(false);
   }
 
   // Pega os registros de hoje
@@ -245,15 +289,16 @@ export default function Agenda() {
         {msg ? <Text style={styles2.msg}>{msg}</Text> : null}
 
         <BlurView intensity={40} tint="dark" style={styles.embacado}>
-          <KeyboardAvoidingView style={styles.fundopopup} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <View style={styles.fundopopup}>
 
             <Text style={styles.titulo}>Preencha os dados</Text>
 
             {/*Atividade*/}
             <TextInput
               style={styles.input_txt_p}
+              placeholderTextColor="gray"
               placeholder="Tipo de atividade"
-              value={atividade}
+              value={atividade || undefined}
               onChangeText={setAtividade}
             />
 
@@ -294,6 +339,7 @@ export default function Agenda() {
             <TextInput
               style={styles.input_txt_p}
               placeholder="Observação"
+              placeholderTextColor="gray"
               multiline={true} 
               numberOfLines={5}
               textAlignVertical="top" 
@@ -306,7 +352,7 @@ export default function Agenda() {
               <Text style={styles.txt_botao}>Salvar</Text>
             </TouchableOpacity>
 
-          </KeyboardAvoidingView> 
+          </View> 
         </BlurView>
       </Modal>
 
@@ -317,7 +363,7 @@ export default function Agenda() {
         {msg ? <Text style={styles2.msg}>{msg}</Text> : null}
 
         <BlurView intensity={40} tint="dark" style={styles.embacado}>
-          <KeyboardAvoidingView style={styles.fundopopup} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <View style={styles.fundopopup}>
 
             <Text style={styles.titulo}>Edite os dados</Text>
 
@@ -326,6 +372,7 @@ export default function Agenda() {
               style={styles.input_txt_p}
               placeholder="Tipo de atividade"
               value={atividade}
+              placeholderTextColor="gray"
               onChangeText={setAtividade}
             />
 
@@ -366,6 +413,7 @@ export default function Agenda() {
             <TextInput
               style={styles.input_txt_p}
               placeholder="Observação"
+              placeholderTextColor="gray"
               multiline={true} 
               numberOfLines={5}
               textAlignVertical="top" 
@@ -384,7 +432,7 @@ export default function Agenda() {
                 <Text style={styles.txt_botao}>Deletar</Text>
               </TouchableOpacity>
             </View>
-          </KeyboardAvoidingView> 
+          </View> 
         </BlurView>
       </Modal>
 
