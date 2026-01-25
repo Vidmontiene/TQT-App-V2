@@ -38,10 +38,7 @@ export const iniciar = async () => {
   );
 
   console.log("Linha inicial criada na tabela 'canula'.");
-  const result = await db.getAllAsync(`SELECT * FROM canula;`);
-
   inicializado = true;  // Foi inicializado
-  console.log("Conteúdo atual da tabela:", result);
 };
 
 // Atualiza um campo da tabela da cânula

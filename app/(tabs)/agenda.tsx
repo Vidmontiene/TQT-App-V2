@@ -1,4 +1,4 @@
-import { ScrollView, Text, TouchableOpacity, View, StyleSheet, Modal, TextInput , KeyboardAvoidingView, Platform } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View, StyleSheet, Modal, TextInput , KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles as styles2 } from '@/estilos/botoes';
 import { useFocusEffect } from "expo-router";
@@ -195,7 +195,6 @@ export default function Agenda() {
     const rows = await getAgenda();
     if (Array.isArray(rows)) {
       setRegistros(rows);
-      console.log("Registros carregados:", rows);
     }
   };
 
@@ -289,6 +288,7 @@ export default function Agenda() {
         {msg ? <Text style={styles2.msg}>{msg}</Text> : null}
 
         <BlurView intensity={40} tint="dark" style={styles.embacado}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
           <View style={styles.fundopopup}>
 
             <Text style={styles.titulo}>Preencha os dados</Text>
@@ -304,7 +304,7 @@ export default function Agenda() {
 
             {/*Data e Hora*/}
             <View style={styles.dataehora}>
-              <TouchableOpacity onPress={() => setShowData(true)} style={styles.botao_dataehora}>
+              <TouchableOpacity onPress={() => {setShowData(true), Keyboard.dismiss()}} style={styles.botao_dataehora}>
                 <Text style={[styles.txt_data, { color: data ? '#000' : 'gray' }]}>
                   {data ? data.toLocaleDateString("pt-BR") : "Selecione a data"}
                 </Text>
@@ -317,7 +317,7 @@ export default function Agenda() {
                     onChange={onChange}
                   />
                 )}
-              <TouchableOpacity onPress={() => setShowTime(true)} style={styles.botao_dataehora}>
+              <TouchableOpacity onPress={() => {setShowTime(true), Keyboard.dismiss()}} style={styles.botao_dataehora}>
                 <Text style={[styles.txt_data, { color: hora ? '#000' : 'gray' }]}>
                   {hora ? hora.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }) : "Selecione o horário"}
                 </Text>
@@ -353,6 +353,7 @@ export default function Agenda() {
             </TouchableOpacity>
 
           </View> 
+          </TouchableWithoutFeedback>
         </BlurView>
       </Modal>
 
@@ -363,6 +364,7 @@ export default function Agenda() {
         {msg ? <Text style={styles2.msg}>{msg}</Text> : null}
 
         <BlurView intensity={40} tint="dark" style={styles.embacado}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
           <View style={styles.fundopopup}>
 
             <Text style={styles.titulo}>Edite os dados</Text>
@@ -378,7 +380,7 @@ export default function Agenda() {
 
             {/*Data e Hora*/}
             <View style={styles.dataehora}>
-              <TouchableOpacity onPress={() => setShowData(true)} style={styles.botao_dataehora}>
+              <TouchableOpacity onPress={() => {setShowData(true), Keyboard.dismiss()}} style={styles.botao_dataehora}>
                 <Text style={[styles.txt_data, { color: data ? '#000' : 'gray' }]}>
                   {data ? data.toLocaleDateString("pt-BR") : "Selecione a data"}
                 </Text>
@@ -391,7 +393,7 @@ export default function Agenda() {
                     onChange={onChange}
                   />
                 )}
-              <TouchableOpacity onPress={() => setShowTime(true)} style={styles.botao_dataehora}>
+              <TouchableOpacity onPress={() => {setShowTime(true), Keyboard.dismiss()}} style={styles.botao_dataehora}>
                 <Text style={[styles.txt_data, { color: hora ? '#000' : 'gray' }]}>
                   {hora ? hora.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }) : "Selecione o horário"}
                 </Text>
@@ -433,6 +435,7 @@ export default function Agenda() {
               </TouchableOpacity>
             </View>
           </View> 
+        </TouchableWithoutFeedback>
         </BlurView>
       </Modal>
 

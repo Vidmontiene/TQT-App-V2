@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
-
+  
 tracos_container: {
     position: "absolute",
     top: 20,
@@ -31,7 +31,6 @@ tracos_container: {
   
   container_botoes:{
     position: "absolute",
-    bottom: 0,
     width: "100%",
     flexDirection: 'row',
     alignItems: "center",

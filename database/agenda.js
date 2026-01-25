@@ -30,10 +30,7 @@ export const iniciar = async () => {
     `);
 
     console.log("Tabela 'agenda' criada/verificada.");
-    const result = await db.getAllAsync(`SELECT * FROM agenda;`);
-
     inicializado = true;  // Foi inicializado
-    console.log("Conteúdo da tabela após iniciar:", result);
 };
 
 //Inserir novo registro
@@ -46,8 +43,7 @@ export const novoRegistro = async ( data, hora, atividade, obs, notificacao ) =>
         [data, hora, atividade, obs, notificacao ?? null]
     );
 
-    const result = await db.getAllAsync(`SELECT * FROM agenda;`);
-    console.log("Conteúdo da tabela após nova insercao:", result);
+    console.log("Conteúdo inserido com sucesso!");
 };
 
 // Atualiza um campo da tabela da agenda

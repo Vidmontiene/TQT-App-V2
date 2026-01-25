@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 
 export default function HomeScreen() {
 
-  // Pede permissão uma só vez
+  // Pede permissão de notificação uma só vez
   useEffect(() => {
     pedirPermissao();
   }, []);
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   },
   container:{
     backgroundColor: 'white',
-    gap: 18
+    gap: 18,
   },
   foto_perfil:{
     alignSelf:'center',

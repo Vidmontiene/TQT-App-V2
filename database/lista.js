@@ -42,10 +42,8 @@ export const iniciar = async () => {
     );
 
     console.log("Linha inicial criada na tabela 'lista'.");
-    const result = await db.getAllAsync(`SELECT * FROM lista;`);
-        inicializado = true;  // Foi inicializado
-        console.log("Conteúdo da tabela após iniciar:", result);
-    };
+    inicializado = true;  // Foi inicializado
+};
 
 //Muda a informação da lista
 export const setLista = async (campo, valor) => {

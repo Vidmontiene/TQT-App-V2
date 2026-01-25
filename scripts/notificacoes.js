@@ -52,6 +52,7 @@ export const agendarNotificacao = async ( titulo, corpo, dataHora ) => {
 
   const todas = await Notifications.getAllScheduledNotificationsAsync();
   console.log('NOTIFICAÇÕES:', todas);
+
   return notificacao;
 };
 
@@ -59,6 +60,7 @@ export const agendarNotificacao = async ( titulo, corpo, dataHora ) => {
 export const cancelarNotificacao = async ( notificationId ) => {
   if (!notificationId) return;
   await Notifications.cancelScheduledNotificationAsync(notificationId);
+  console.log('Notificação cancelada')
 };
 
 
