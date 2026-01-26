@@ -31,7 +31,6 @@ export default function TabLayout() {
 
   useEffect(() => {
     if (Platform.OS === 'android') {
-      NavigationBar.setBackgroundColorAsync('#ffffff');
       NavigationBar.setButtonStyleAsync('dark');
     }
   }, []);

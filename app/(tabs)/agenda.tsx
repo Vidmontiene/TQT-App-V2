@@ -11,6 +11,7 @@ import { agendarNotificacao, cancelarNotificacao } from '@/scripts/notificacoes'
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import Entypo from '@expo/vector-icons/Entypo';
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { RadioButton } from 'react-native-paper';
 
 export default function Agenda() {
 
@@ -23,6 +24,7 @@ export default function Agenda() {
   const [data, setData] = useState<Date | null>(null);    // Mostra a data na UI
   const [hora, setHora] = useState<Date | null>(null);    // Mostra o horário na UI
   const [notificacaoID, setNotificacaoID] = useState("")  // ID da notificacao
+  const [checked, setChecked] = useState(0);              // 1 = 2h, 2 = 24 h, 3 = nao
 
   const [showData, setShowData] = useState(false);        // Abre/Fecha escolhedor de data
   const [showTime, setShowTime] = useState(false);        // Abre/Fecha escolhedor de hora
@@ -31,6 +33,11 @@ export default function Agenda() {
   const [id, setId] = useState(0);                        // Armazena o id clicado
 
   const [msg, setMsg] = useState("");                    // Mostra mensagem de aviso
+
+  // Registros separados por data
+  const registrosHoje: typeof registros  = [];
+  const registrosFuturo: typeof registros  = [];
+  const registrosPassado: typeof registros = [];
 
   // Dia de hoje
   const hoje = new Date();
@@ -51,41 +58,70 @@ export default function Agenda() {
     setData(null);
     setHora(null);
     setNotificacaoID("");
+    setChecked(0);
+  };
+
+  // Cria a notificação
+  const criarNotificacao = async () => {
+
+    if (checked === 0 || checked === 3){
+      return null
+    }
+
+    if (!data || !hora) { // Não permite null
+      return null;
+    }
+
+    const atividadeTrim = atividade.trim();
+    const obsTrim = obs.trim();
+
+    // Junta data e hora
+    const dataHora = new Date(data);
+    dataHora.setHours(hora.getHours(), hora.getMinutes(), 0, 0);
+
+    // Duas horas antes
+    if (checked === 1){
+      console.log("Salvando notificação 2 h antes")
+      dataHora.setHours(dataHora.getHours() - 2)
+    }
+
+    // Um dia antes
+    else if (checked === 2) {
+      console.log("Salvando notificação 24 h antes")
+      dataHora.setDate(dataHora.getDate() - 1);
+    } 
+
+    const notificacao = await agendarNotificacao(
+      "Você tem uma atividade marcada em sua agenda: " + atividadeTrim, 
+      dateParaData(data) + " - " + dateParaHora(hora), 
+      dataHora
+    );
+
+    return notificacao;
   }
 
   // Salva novo registro no DB
   const salvarRegistro = async () => {
+    const atividadeTrim = atividade.trim();
+    const obsTrim = obs.trim();
 
     // não salva se todos forem vazios
-    if (atividade.trim() === "" && obs.trim() === "" && data === null && hora === null){
+    if (atividadeTrim === "" && obsTrim === "" && data === null && hora === null){
       setModalNovo(false);
       return;
     }
 
     // Indica os campos obrigatórios
-    if (atividade.trim() === "" || data === null || hora === null){
+    if (atividadeTrim === "" || data === null || hora === null){
       setMsg("Atividade, data e hora são campos obrigatórios!");           
       setTimeout(() => setMsg(""), 2000); // desaparece após 2s
       return;
     }
 
-    // Junta DATA + HORA
-    const dataHora = new Date(data);
-    dataHora.setHours(
-      hora.getHours(),
-      hora.getMinutes(),
-      0,
-      0
-    );
- 
     // Cria notificacao
-    const notificacao = await agendarNotificacao(
-      "Você tem uma atividade marcada em sua agenda: " + atividade.trim(), 
-      dateParaData(data) + " - " + dateParaHora(hora), 
-      dataHora
-    );
+    const notificacao = await criarNotificacao();
 
-    await novoRegistro(dateParaData(data), dateParaHora(hora), atividade.trim(), obs.trim(), notificacao);   
+    await novoRegistro(dateParaData(data), dateParaHora(hora), atividadeTrim, obsTrim, notificacao, checked);   
     setModalNovo(false);
     zerarUseStates();  
     carregarAgenda();
@@ -93,49 +129,39 @@ export default function Agenda() {
 
   // Muda o registro no DB
   const mudarRegistro = async () => {
+    const atividadeTrim = atividade.trim();
+    const obsTrim = obs.trim();
 
     // não salva se todos forem vazios
-    if (atividade.trim() === "" && obs.trim() === "" && data === null && hora === null){
+    if (atividadeTrim === "" && obsTrim === "" && data === null && hora === null){
       setModalEditar(false);
       return;
     }
 
     // Indica os campos obrigatórios
-    if (atividade.trim() === "" || data === null || hora === null){
+    if (atividadeTrim === "" || data === null || hora === null){
       setMsg("Atividade, data e hora são campos obrigatórios!");           
       setTimeout(() => setMsg(""), 2000); // desaparece após 2s
       return;
     }
 
-    // Junta DATA + HORA
-    const dataHora = new Date(data);
-    dataHora.setHours(
-      hora.getHours(),
-      hora.getMinutes(),
-      0,
-      0
-    );
-
     // Cancela notificação antiga
     await cancelarNotificacao(notificacaoID);
 
     // Cria nova notificacao
-    const notificacao = await agendarNotificacao(
-      "Você tem uma atividade marcada em sua agenda: " + atividade.trim(), 
-      dateParaData(data) + " - " + dateParaHora(hora), 
-      dataHora
-    );
+    const notificacao = await criarNotificacao();
   
-    await setAgenda("atividade", atividade, id);
+    await setAgenda("atividade", atividadeTrim, id);
     await setAgenda("data", dateParaData(data), id);
     await setAgenda("hora", dateParaHora(hora), id);
-    await setAgenda("obs", obs, id);
+    await setAgenda("obs", obsTrim, id);
     await setAgenda("notificacao", notificacao, id);
+    await setAgenda("aviso", checked, id);
 
     setModalEditar(false);
     zerarUseStates(); 
     carregarAgenda();
-  }
+  };
 
   // Preenche os campos de input com base no registro clicado
   const editarRegistro = (registro: any) => {
@@ -145,6 +171,7 @@ export default function Agenda() {
     setData(dataParaDate(registro.data));  // Tranforma a data String em Date
     setHora(horaParaDate(registro.hora));  // Tranforma a hora String em Date
     setNotificacaoID(registro.notificacao);
+    setChecked(registro.aviso);
   };
 
   // Deleta o registro
@@ -159,35 +186,25 @@ export default function Agenda() {
     setModalConfirmar(false);
   }
 
-  // Pega os registros de hoje
-  const registrosHoje = registros.filter(item => {
+  // PSepara os registros em passado presente e futuro
+  registros.forEach(item => {
     const dataItem = dataParaDate(item.data);
-    return (
-      dataItem && dataItem.getDate() === hoje.getDate()
-    );
-  });
+    if (!dataItem) return;
 
-  // Pega os registros do futuro
-  const registrosFuturo = registros.filter(item => {
-    const dataItem = dataParaDate(item.data);
-    return (
-      dataItem && dataItem > hoje
-    );
-  });
-
-  // Pega os registros do passado
-  const registrosPassado = registros.filter(item => {
-    const dataItem = dataParaDate(item.data);
-    return (
-      dataItem && dataItem < hoje
-    );
+    if (dataItem.toDateString() === hoje.toDateString()) {
+      registrosHoje.push(item);
+    } else if (dataItem > hoje) {
+      registrosFuturo.push(item);
+    } else {
+      registrosPassado.push(item);
+    }
   });
 
   // Carregar do banco sempre que a tela ganhar foco
   useFocusEffect(
-      useCallback(() => {
-          carregarAgenda();
-      }, [])
+    useCallback(() => {
+      carregarAgenda();
+    }, [])
   );
 
   // Carrega os valores do banco nos useStates
@@ -266,7 +283,7 @@ export default function Agenda() {
           <View key={item.id} style={[styles2.botao, {alignItems: 'flex-start', paddingVertical: 10, height: 'auto'}]}>
             <FontAwesome5 name="bell" size={31} style={styles2.img_redondo}/>
             <View style={styles2.container_botao}>
-              <Text style={[styles2.titulo_botao, {textDecorationLine: 'line-through'}]}>{item.atividade}</Text>
+              <Text style={styles2.titulo_botao}>{item.atividade}</Text>
               <Text style={styles2.txt_botao}>{item.data} - {item.hora}</Text>
               {item.obs === "" ? <></> :
                 <Text style={styles2.txt_botao}><Text style={styles.negrito}>Observação:</Text> {item.obs}</Text>
@@ -347,6 +364,41 @@ export default function Agenda() {
               onChangeText={setObs}
             />
 
+            {/*RadioButtons*/}
+            <View style={styles.container_radio}>
+              <RadioButton
+                value="24"
+                color='#12B9ED'
+                uncheckedColor="gray"
+                status={ checked === 1 ? 'checked' : 'unchecked' }
+                onPress={() => {setChecked(1), Keyboard.dismiss()}}
+              />
+              <Text>Avisar 2 horas antes</Text>
+              
+            </View>
+
+            <View style={styles.container_radio}>
+              <RadioButton
+                value="2"
+                color='#12B9ED'
+                uncheckedColor="gray"
+                status={ checked === 2 ? 'checked' : 'unchecked' }
+                onPress={() => {setChecked(2), Keyboard.dismiss()}}
+              />
+              <Text>Avisar 24 horas antes</Text>
+            </View>
+            
+            <View style={styles.container_radio}>
+              <RadioButton
+                value="nao"
+                color='#12B9ED'
+                uncheckedColor="gray"
+                status={ checked === 3 ? 'checked' : 'unchecked' }
+                onPress={() => {setChecked(3), Keyboard.dismiss()}}
+              />
+              <Text>Não avisar</Text>
+            </View>
+
             {/*Botão de salvar*/}
             <TouchableOpacity style={styles.botaopop} onPress={salvarRegistro}>
               <Text style={styles.txt_botao}>Salvar</Text>
@@ -422,6 +474,41 @@ export default function Agenda() {
               value={obs}
               onChangeText={setObs}
             />
+
+            {/*RadioButtons*/}
+            <View style={styles.container_radio}>
+              <RadioButton
+                value="24"
+                color='#12B9ED'
+                uncheckedColor="gray"
+                status={ checked === 1 ? 'checked' : 'unchecked' }
+                onPress={() => {setChecked(1), Keyboard.dismiss()}}
+              />
+              <Text>Avisar 2 horas antes</Text>
+              
+            </View>
+
+            <View style={styles.container_radio}>
+              <RadioButton
+                value="2"
+                color='#12B9ED'
+                uncheckedColor="gray"
+                status={ checked === 2 ? 'checked' : 'unchecked' }
+                onPress={() => {setChecked(2), Keyboard.dismiss()}}
+              />
+              <Text>Avisar 24 horas antes</Text>
+            </View>
+            
+            <View style={styles.container_radio}>
+              <RadioButton
+                value="nao"
+                color='#12B9ED'
+                uncheckedColor="gray"
+                status={ checked === 3 ? 'checked' : 'unchecked' }
+                onPress={() => {setChecked(3), Keyboard.dismiss()}}
+              />
+              <Text>Não avisar</Text>
+            </View>
 
             {/*Botão de salvar/excluir*/}
             <View style={styles.dataehora}>
@@ -513,7 +600,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: '100%',
     alignSelf: 'center',
-    gap: 30
+    gap: 23
   },
 
   fundo_popup_confirmar:{ // Fundo do modal de confirmar exclusão
@@ -597,5 +684,12 @@ const styles = StyleSheet.create({
 
   subtitulo_vazio:{
     fontSize: 17
+  },
+
+  container_radio:{
+    flexDirection: 'row',
+    width: '80%',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   }
 });

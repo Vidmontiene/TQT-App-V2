@@ -80,6 +80,7 @@ const { width } = Dimensions.get('window');
     fontWeight: '600',
     marginBottom: 13,
     padding: 22,
+    paddingTop: 30,
     fontSize: 17,
     textAlign: 'center',
     width: width,

@@ -25,7 +25,8 @@ export const iniciar = async () => {
             hora TEXT, 
             atividade TEXT,
             obs TEXT,
-            notificacao TEXT
+            notificacao TEXT,
+            aviso INTEGER
         );
     `);
 
@@ -34,13 +35,13 @@ export const iniciar = async () => {
 };
 
 //Inserir novo registro
-export const novoRegistro = async ( data, hora, atividade, obs, notificacao ) => {
+export const novoRegistro = async ( data, hora, atividade, obs, notificacao, aviso ) => {
     await iniciar();
     const db = await openDB();
 
     await db.runAsync(`
-        INSERT INTO agenda (data, hora, atividade, obs, notificacao) VALUES (?, ?, ?, ?, ?);`,
-        [data, hora, atividade, obs, notificacao ?? null]
+        INSERT INTO agenda (data, hora, atividade, obs, notificacao, aviso) VALUES (?, ?, ?, ?, ?, ?);`,
+        [data, hora, atividade, obs, notificacao ?? null, aviso]
     );
 
     console.log("Conteúdo inserido com sucesso!");
