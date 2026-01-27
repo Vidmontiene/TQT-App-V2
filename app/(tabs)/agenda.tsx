@@ -91,10 +91,14 @@ export default function Agenda() {
       dataHora.setDate(dataHora.getDate() - 1);
     } 
 
+    // Cria o corpo
+    const corpo = dateParaData(data) + " - " + dateParaHora(hora) + 
+    (obsTrim != "" ? "\nObservação: " + obsTrim : "");
+
     const notificacao = await agendarNotificacao(
-      "Você tem uma atividade marcada em sua agenda: " + atividadeTrim, 
-      dateParaData(data) + " - " + dateParaHora(hora), 
-      dataHora
+      "Lembrete: " + atividadeTrim, // Título
+      corpo, // Corpo
+      dataHora  // Hora
     );
 
     return notificacao;

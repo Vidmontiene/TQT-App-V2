@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "TQT",
+    "name": "TQT App",
     "slug": "TQT",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -36,7 +36,7 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff",
           "dark": {
-            "backgroundColor": "#000000"
+            "backgroundColor": "#ffffff"
           }
         }
       ],

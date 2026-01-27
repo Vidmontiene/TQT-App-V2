@@ -1,11 +1,11 @@
-import { ScrollView, View, Text, TouchableOpacity, TextInput } from 'react-native';
+import { ScrollView, View, Text, TouchableOpacity, TextInput, AppState } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from '@/estilos/botoes';
 import { getPerfil, setPerfil } from '@/database/perfil';
 import { dateParaData, dataParaDate } from '@/scripts/datas';
 import { useFocusEffect } from 'expo-router';
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { useCallback, useState, useRef } from 'react';
+import { useCallback, useState, useRef, useEffect } from 'react';
 import { abrirConfiguracoes, situacao } from '@/scripts/notificacoes';
 import Feather from '@expo/vector-icons/Feather';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -30,6 +30,8 @@ export default function Perfil() {
   const [campoEditando, setCampoEditando] = useState<
     "nomeResponsavel" | "email" | "telefone" | "nomeCrianca" | "patologia" | null
   >(null);
+
+  const appState = useRef(AppState.currentState);         // Estado do app
 
   // Informa a situação da notificação
   const carregarSituacaoNotificacao = async () => {
@@ -86,6 +88,17 @@ export default function Perfil() {
     setData(row?.data ? dataParaDate(row.data) : null);
     }
   };
+
+  // Carrega a situaçãs das notificações quando o app volta para foreground
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', state => {
+      if (state === 'active') {
+        carregarSituacaoNotificacao();
+      }
+    });
+
+    return () => subscription.remove();
+  }, []);
 
   // Carregar do banco sempre que a tela ganhar foco
   useFocusEffect(

@@ -8,13 +8,13 @@ export const pedirPermissao = async () => {
   if (status !== 'granted') {
     await Notifications.requestPermissionsAsync();
   }
-  console.log(situacao());
+  console.log(await situacao());
 };
 
 // Abre configurações
 export const abrirConfiguracoes = async () => {
   Linking.openSettings();
-  console.log(situacao());
+  console.log(await situacao());
 };
 
 // Retorna situação da notificação
