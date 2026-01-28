@@ -60,7 +60,7 @@ export const agendarNotificacao = async ( titulo, corpo, dataHora ) => {
 export const cancelarNotificacao = async ( notificationId ) => {
   if (!notificationId) return;
   await Notifications.cancelScheduledNotificationAsync(notificationId);
-  console.log('Notificação cancelada')
+  console.log(`Notificação de id ${notificationId} cancelada`);
 };
 
 
