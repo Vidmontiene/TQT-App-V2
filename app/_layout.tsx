@@ -1,7 +1,9 @@
-import { Stack } from 'expo-router';
-import { View } from 'react-native';
+import { router, Stack } from 'expo-router';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import 'react-native-reanimated';
 import { StatusBar } from 'expo-status-bar';
+import { TouchableOpacity } from 'react-native';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 export const unstable_settings = {
   anchor: '(tabs)',
@@ -9,17 +11,37 @@ export const unstable_settings = {
 
 export default function RootLayout() {
   return (
-    <View style={{ flex: 1, backgroundColor: '#ffffff' }}>
-      <StatusBar style="dark" />
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
+      <StatusBar style="dark" backgroundColor='white' translucent={false} />
+      <Stack screenOptions={{
+        headerLeft: () => (
+          <TouchableOpacity
+            onPress={() => router.back()}
+            style={{ padding: 7}}
+          >
+            <MaterialIcons
+              name="arrow-back-ios"
+              size={24}
+              color="dark-gray" 
+
+            />
+          </TouchableOpacity>
+        ),
+        animation: 'none',  
+        headerBackTitle: '' ,
+        headerBackVisible: false,
+        }}>
+
+        
+
+        <Stack.Screen name="(tabs)" options={{ headerShown: false, gestureEnabled: false }} />
 
         <Stack.Screen
           name="diarios"
           options={{ 
-            presentation: 'modal', 
             title: 'Cuidados com a Traqueostomia',
             headerTitleAlign: 'center',
+            headerBackTitle: '' ,
             headerTitleStyle: {
               fontSize: 18,
               fontWeight: 'bold',
@@ -30,9 +52,9 @@ export default function RootLayout() {
         <Stack.Screen
           name="emergencia"
           options={{ 
-            presentation: 'modal', 
             title: 'Emergência',
             headerTitleAlign: 'center',
+            headerBackTitle: '' ,
             headerTitleStyle: {
               fontSize: 18,
               fontWeight: 'bold',
@@ -43,9 +65,9 @@ export default function RootLayout() {
         <Stack.Screen
           name="canula"
           options={{ 
-            presentation: 'modal', 
             title: 'Especificações da Cânula',
             headerTitleAlign: 'center',
+            headerBackTitle: '' ,
             headerTitleStyle: {
               fontSize: 18,
               fontWeight: 'bold',
@@ -56,9 +78,9 @@ export default function RootLayout() {
         <Stack.Screen
           name="materiais"
           options={{ 
-            presentation: 'modal', 
             title: 'Materiais para Traqueostomia',
             headerTitleAlign: 'center',
+            headerBackTitle: '' ,
             headerTitleStyle: {
               fontSize: 18,
               fontWeight: 'bold',
@@ -69,8 +91,8 @@ export default function RootLayout() {
         <Stack.Screen
           name="aspiracao"
           options={{ 
-            presentation: 'modal', 
             title: 'Aspiração da Cânula',
+            headerBackTitle: '' ,
             headerTitleAlign: 'center',
             headerTitleStyle: {
               fontSize: 18,
@@ -82,8 +104,8 @@ export default function RootLayout() {
         <Stack.Screen
           name="limpeza"
           options={{ 
-            presentation: 'modal', 
             title: 'Limpeza da Cânula Interna',
+            headerBackTitle: '' ,
             headerTitleAlign: 'center',
             headerTitleStyle: {
               fontSize: 18,
@@ -95,9 +117,9 @@ export default function RootLayout() {
         <Stack.Screen
           name="estoma"
           options={{ 
-            presentation: 'modal', 
             title: 'Limpeza do Estoma',
             headerTitleAlign: 'center',
+            headerBackTitle: '' ,
             headerTitleStyle: {
               fontSize: 18,
               fontWeight: 'bold',
@@ -108,9 +130,9 @@ export default function RootLayout() {
         <Stack.Screen
           name="troca"
           options={{ 
-            presentation: 'modal', 
             title: 'Troca do Fixador',
             headerTitleAlign: 'center',
+            headerBackTitle: '' ,
             headerTitleStyle: {
               fontSize: 18,
               fontWeight: 'bold',
@@ -121,9 +143,9 @@ export default function RootLayout() {
         <Stack.Screen
           name="telas_emergencia"
           options={{ 
-            presentation: 'modal', 
             title: 'Emergência',
             headerTitleAlign: 'center',
+            headerBackTitle: '' ,
             headerTitleStyle: {
               fontSize: 18,
               fontWeight: 'bold',
@@ -132,7 +154,7 @@ export default function RootLayout() {
         />
 
       </Stack>
-    </View>
+    </SafeAreaView>
   );
 }
 

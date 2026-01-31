@@ -1,17 +1,19 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import {StyleSheet, Dimensions, Platform } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
  export const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fafafaff',
-    padding: 10,
-    height: "100%"
+    paddingHorizontal: 10,
+    height: "100%",
+    flex: 1,
+    paddingTop: 20,
   },
 
   titulo:{
     fontWeight: 'bold',
-    fontSize: 21,
+    fontSize: Platform.OS === "ios" ? 23 : 21,
     marginBottom: 20
   },
 
@@ -29,11 +31,11 @@ const { width } = Dimensions.get('window');
 
   titulo_botao:{
     fontWeight: 'bold',
-    fontSize: 17,
+    fontSize: Platform.OS === "ios" ? 18 : 17,
   },
 
   txt_botao:{
-    fontSize: 14,
+    fontSize: Platform.OS === "ios" ? 16 : 14,
     color: '#555'
   },
 

@@ -1,5 +1,5 @@
 import { StyleSheet, View, TouchableOpacity, Text, ScrollView, Dimensions  } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Platform } from 'react-native';
 import { useFocusEffect } from 'expo-router';
 import { useCallback, useState } from 'react';
 import { CheckBox } from 'react-native-elements';
@@ -59,152 +59,150 @@ export default function Materiais() {
   };
 
   return (
-    <View style={styles.view_externa}>
-      <ScrollView>
-        <SafeAreaView style={styles.container} edges={['top', 'right', 'bottom', 'left']}>
-              
-          <Text style={styles.titulo}>Kit de Cuidados</Text>
+    <ScrollView style={{backgroundColor: '#fafafaff'}}>
+      <View style={styles.container}>
+            
+        <Text style={styles.titulo}>Kit de Cuidados</Text>
 
-          {/*Canula*/}
-          <TouchableOpacity style={styles.botao} onPress={() => mudaLista("canula")}>
+        {/*Canula*/}
+        <TouchableOpacity style={styles.botao} onPress={() => mudaLista("canula")}>
+          <View style={styles.conteudo_botao}>
+            <Text style={styles.titulo_botao}>Cânula de traqueostomia (tamanho adequado)</Text>
+              <CheckBox
+                checked={items.canula}
+                onPress={() => mudaLista("canula")}
+                checkedColor= '#12B9ED'
+                uncheckedColor="gray"
+                size={30}
+                containerStyle={{ padding: 0, margin: 0, backgroundColor: 'transparent' }}
+              />
+          </View>
+        </TouchableOpacity>
+
+        {/*Fita Adesiva*/}
+        <TouchableOpacity style={styles.botao} onPress={() => mudaLista("fita")}>
+          <View style={styles.conteudo_botao}>
+            <Text style={styles.titulo_botao}>Fita adesiva para fixação da cânula</Text>
+            <CheckBox
+              checked={items.fita}
+              onPress={() => mudaLista("fita")}
+              checkedColor= '#12B9ED'
+              uncheckedColor="gray"
+              size={30}
+              containerStyle={{ padding: 0, margin: 0, backgroundColor: 'transparent' }}
+            />
+          </View>
+        </TouchableOpacity>
+
+        {/*Gaze*/}
+        <TouchableOpacity style={styles.botao} onPress={() => mudaLista("gaze")}>
+          <View style={styles.conteudo_botao}>
+            <Text style={styles.titulo_botao}>Gaze estéril</Text>
+            <CheckBox
+              checked={items.gaze}
+              onPress={() => mudaLista("gaze")}
+              checkedColor= '#12B9ED'
+              uncheckedColor="gray"
+              size={30}
+              containerStyle={{ padding: 0, margin: 0, backgroundColor: 'transparent' }}
+            />
+          </View>
+        </TouchableOpacity>
+    
+        {/*Solução*/}
+        <TouchableOpacity style={styles.botao} onPress={() => mudaLista("solucao")}>
             <View style={styles.conteudo_botao}>
-              <Text style={styles.titulo_botao}>Cânula de traqueostomia (tamanho adequado)</Text>
+                <Text style={styles.titulo_botao}>Solução salina estéril</Text>
                 <CheckBox
-                  checked={items.canula}
-                  onPress={() => mudaLista("canula")}
-                  checkedColor= '#12B9ED'
-                  uncheckedColor="gray"
-                  size={30}
-                  containerStyle={{ padding: 0, margin: 0, backgroundColor: 'transparent' }}
+                    checked={items.solucao}
+                    onPress={() => mudaLista("solucao")}
+                    checkedColor= '#12B9ED'
+                    uncheckedColor="gray"
+                    size={30}
+                    containerStyle={{ padding: 0, margin: 0, backgroundColor: 'transparent' }}
                 />
             </View>
-          </TouchableOpacity>
+        </TouchableOpacity>
 
-          {/*Fita Adesiva*/}
-          <TouchableOpacity style={styles.botao} onPress={() => mudaLista("fita")}>
-            <View style={styles.conteudo_botao}>
-              <Text style={styles.titulo_botao}>Fita adesiva para fixação da cânula</Text>
-              <CheckBox
-                checked={items.fita}
-                onPress={() => mudaLista("fita")}
-                checkedColor= '#12B9ED'
-                uncheckedColor="gray"
-                size={30}
-                containerStyle={{ padding: 0, margin: 0, backgroundColor: 'transparent' }}
-              />
-            </View>
-          </TouchableOpacity>
+        {/*Luvas*/}
+        <TouchableOpacity style={styles.botao} onPress={() => mudaLista("luva")}>
+          <View style={styles.conteudo_botao}>
+            <Text style={styles.titulo_botao}>Luvas estéreis</Text>
+            <CheckBox
+              checked={items.luva}
+              onPress={() => mudaLista("luva")}
+              checkedColor= '#12B9ED'
+              uncheckedColor="gray"
+              size={30}
+              containerStyle={{ padding: 0, margin: 0, backgroundColor: 'transparent' }}
+            />
+          </View>
+        </TouchableOpacity>
 
-          {/*Gaze*/}
-          <TouchableOpacity style={styles.botao} onPress={() => mudaLista("gaze")}>
-            <View style={styles.conteudo_botao}>
-              <Text style={styles.titulo_botao}>Gaze estéril</Text>
-              <CheckBox
-                checked={items.gaze}
-                onPress={() => mudaLista("gaze")}
-                checkedColor= '#12B9ED'
-                uncheckedColor="gray"
-                size={30}
-                containerStyle={{ padding: 0, margin: 0, backgroundColor: 'transparent' }}
-              />
-            </View>
-          </TouchableOpacity>
-      
-          {/*Solução*/}
-          <TouchableOpacity style={styles.botao} onPress={() => mudaLista("solucao")}>
-              <View style={styles.conteudo_botao}>
-                  <Text style={styles.titulo_botao}>Solução salina estéril</Text>
-                  <CheckBox
-                      checked={items.solucao}
-                      onPress={() => mudaLista("solucao")}
-                      checkedColor= '#12B9ED'
-                      uncheckedColor="gray"
-                      size={30}
-                      containerStyle={{ padding: 0, margin: 0, backgroundColor: 'transparent' }}
-                  />
-              </View>
-          </TouchableOpacity>
+        <Text style={styles.titulo}>Materiais Adicionais</Text>
 
-          {/*Luvas*/}
-          <TouchableOpacity style={styles.botao} onPress={() => mudaLista("luva")}>
-            <View style={styles.conteudo_botao}>
-              <Text style={styles.titulo_botao}>Luvas estéreis</Text>
-              <CheckBox
-                checked={items.luva}
-                onPress={() => mudaLista("luva")}
-                checkedColor= '#12B9ED'
-                uncheckedColor="gray"
-                size={30}
-                containerStyle={{ padding: 0, margin: 0, backgroundColor: 'transparent' }}
-              />
-            </View>
-          </TouchableOpacity>
+        {/*Aspirador*/}
+        <TouchableOpacity style={styles.botao} onPress={() => mudaLista("aspirador")}>
+          <View style={styles.conteudo_botao}>
+            <Text style={styles.titulo_botao}>Aspirador de secreções</Text>
+            <CheckBox
+              checked={items.aspirador}
+              onPress={() => mudaLista("aspirador")}
+              checkedColor= '#12B9ED'
+              uncheckedColor="gray"
+              size={30}
+              containerStyle={{ padding: 0, margin: 0, backgroundColor: 'transparent' }}
+            />
+          </View>
+        </TouchableOpacity>
 
-          <Text style={styles.titulo}>Materiais Adicionais</Text>
+        {/*Sonda*/}
+        <TouchableOpacity style={styles.botao} onPress={() => mudaLista("sonda")}>
+          <View style={styles.conteudo_botao}>
+            <Text style={styles.titulo_botao}>Sondas de aspiração (tamanhos variados)</Text>
+            <CheckBox
+              checked={items.sonda}
+              onPress={() => mudaLista("sonda")}
+              checkedColor= '#12B9ED'
+              uncheckedColor="gray"
+              size={30}
+              containerStyle={{ padding: 0, margin: 0, backgroundColor: 'transparent' }}
+            />
+          </View>
+        </TouchableOpacity>
 
-          {/*Aspirador*/}
-          <TouchableOpacity style={styles.botao} onPress={() => mudaLista("aspirador")}>
-            <View style={styles.conteudo_botao}>
-              <Text style={styles.titulo_botao}>Aspirador de secreções</Text>
-              <CheckBox
-                checked={items.aspirador}
-                onPress={() => mudaLista("aspirador")}
-                checkedColor= '#12B9ED'
-                uncheckedColor="gray"
-                size={30}
-                containerStyle={{ padding: 0, margin: 0, backgroundColor: 'transparent' }}
-              />
-            </View>
-          </TouchableOpacity>
+        {/*Mascara*/}
+        <TouchableOpacity style={styles.botao} onPress={() => mudaLista("mascara")}>
+          <View style={styles.conteudo_botao}>
+            <Text style={styles.titulo_botao}>Máscara de proteção facial</Text>
+            <CheckBox
+              checked={items.mascara}
+              onPress={() => mudaLista("mascara")}
+              checkedColor= '#12B9ED'
+              uncheckedColor="gray"
+              size={30}
+              containerStyle={{ padding: 0, margin: 0, backgroundColor: 'transparent' }}
+            />
+          </View>
+        </TouchableOpacity>
 
-          {/*Sonda*/}
-          <TouchableOpacity style={styles.botao} onPress={() => mudaLista("sonda")}>
-            <View style={styles.conteudo_botao}>
-              <Text style={styles.titulo_botao}>Sondas de aspiração (tamanhos variados)</Text>
-              <CheckBox
-                checked={items.sonda}
-                onPress={() => mudaLista("sonda")}
-                checkedColor= '#12B9ED'
-                uncheckedColor="gray"
-                size={30}
-                containerStyle={{ padding: 0, margin: 0, backgroundColor: 'transparent' }}
-              />
-            </View>
-          </TouchableOpacity>
-
-          {/*Mascara*/}
-          <TouchableOpacity style={styles.botao} onPress={() => mudaLista("mascara")}>
-            <View style={styles.conteudo_botao}>
-              <Text style={styles.titulo_botao}>Máscara de proteção facial</Text>
-              <CheckBox
-                checked={items.mascara}
-                onPress={() => mudaLista("mascara")}
-                checkedColor= '#12B9ED'
-                uncheckedColor="gray"
-                size={30}
-                containerStyle={{ padding: 0, margin: 0, backgroundColor: 'transparent' }}
-              />
-            </View>
-          </TouchableOpacity>
-
-          {/*Óculos*/}
-          <TouchableOpacity style={styles.botao} onPress={() => mudaLista("oculos")}>
-            <View style={styles.conteudo_botao}>
-              <Text style={styles.titulo_botao}>Óculos de proteção</Text>
-              <CheckBox
-                checked={items.oculos}
-                onPress={() => mudaLista("oculos")}
-                checkedColor= '#12B9ED'
-                uncheckedColor="gray"
-                size={30}
-                containerStyle={{ padding: 0, margin: 0, backgroundColor: 'transparent' }}
-              />
-            </View>
-          </TouchableOpacity>
-              
-        </SafeAreaView>
-      </ScrollView>
-    </View>
+        {/*Óculos*/}
+        <TouchableOpacity style={styles.botao} onPress={() => mudaLista("oculos")}>
+          <View style={styles.conteudo_botao}>
+            <Text style={styles.titulo_botao}>Óculos de proteção</Text>
+            <CheckBox
+              checked={items.oculos}
+              onPress={() => mudaLista("oculos")}
+              checkedColor= '#12B9ED'
+              uncheckedColor="gray"
+              size={30}
+              containerStyle={{ padding: 0, margin: 0, backgroundColor: 'transparent' }}
+            />
+          </View>
+        </TouchableOpacity>
+            
+      </View>
+    </ScrollView>
   );
 }
 
@@ -232,7 +230,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     titulo_botao:{
-        fontSize: 15,
+        fontSize: Platform.OS === "ios" ? 17 : 15,
         flexShrink: 1
     },
     conteudo_botao:{
@@ -267,8 +265,4 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         position: 'absolute'
     },
-    view_externa:{
-        margin: 0,
-        padding: 0
-    }
 })

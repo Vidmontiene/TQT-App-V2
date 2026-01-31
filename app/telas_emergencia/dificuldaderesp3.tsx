@@ -4,12 +4,11 @@ import { styles as styles2 } from '@/estilos/botoes';
 import Feather from '@expo/vector-icons/Feather';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Dr3() {
 
   return (
-    <SafeAreaView style={[styles.container, {flex:1}]}>
+    <View style={[styles.container, {flex:1}]}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={{ flex: 1 }}
@@ -87,6 +86,6 @@ export default function Dr3() {
         </View>
 
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }

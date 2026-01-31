@@ -4,7 +4,8 @@ export const styles = StyleSheet.create({
   container:{
     backgroundColor: 'white',
     paddingHorizontal: 10,
-    height: "100%"
+    height: "100%",
+    paddingTop: 20,
   },
 
   titulo:{

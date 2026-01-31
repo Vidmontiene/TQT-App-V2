@@ -3,16 +3,12 @@ import {StyleSheet} from 'react-native';
 export const styles = StyleSheet.create({
   
 tracos_container: {
-    position: "absolute",
-    top: 20,
-    left: 0,
-    right: 0,
-    flexDirection: "row",
-    justifyContent: "center",
-    gap: 5,
-    zIndex: 10,
+    width: '100%',
+    paddingTop: 20,
     backgroundColor: 'white',
-    paddingBottom: 6,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 6,
   },
 
   traco: {
@@ -31,12 +27,15 @@ tracos_container: {
   
   container_botoes:{
     position: "absolute",
-    width: "100%",
+    left: 0,
+    right: 0,
+    bottom: 0,
     flexDirection: 'row',
     alignItems: "center",
-    alignSelf: 'center',
+    justifyContent: 'space-between',
     backgroundColor: 'white',
     paddingVertical: 12,
+    paddingHorizontal: 16,
     borderTopWidth: 1,
     borderTopColor: "#eee",
   },

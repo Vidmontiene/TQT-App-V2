@@ -1,7 +1,6 @@
 import { useFocusEffect } from 'expo-router';
 import { useCallback, useState } from 'react';
-import { Text, TouchableOpacity, View, StyleSheet, TextInput, Dimensions } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Text, TouchableOpacity, View, StyleSheet, TextInput, Dimensions, Keyboard, TouchableWithoutFeedback, Platform, Modal } from 'react-native';
 import { dateParaData, dataParaDate } from '@/scripts/datas';
 import { getCanula, setCanula } from '@/database/canula';
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -18,6 +17,10 @@ export default function Canula() {
 
   const [showData, setShowData] = useState(false);       // Abre/Fecha escolhedor de DateTimePicker
   const [msg, setMsg] = useState("");                    // Mostra mensagem de salvamento 
+
+  const [modalBalao, setModalBalao] = useState(false);    // Picker do balão
+  const [modalMaterial, setModalMaterial] = useState(false);   // Picker do material
+  const [modalMarca, setModalMarca] = useState(false); // Picker da Marca
 
   // Define os radioButtons de balão
   const baloes = [
@@ -109,14 +112,13 @@ export default function Canula() {
   };
 
   return (
-    <SafeAreaView
-      style={styles.container}
-      edges={['top', 'right', 'bottom', 'left']}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+    <View style={styles.container}>
 
       {msg ? <Text style={styles.msg}>{msg}</Text> : null}
-
+      
       {/*Tipo*/}
-      <Text style={styles.texto}>Tipo de Cânula</Text>
+      <Text style={[styles.texto, {marginTop: 20}]}>Tipo de Cânula</Text>
       <TextInput
         style={styles.input_txt}
         value={tipo}
@@ -125,15 +127,35 @@ export default function Canula() {
 
       {/*Balão*/}
       <Text style={styles.texto}>Tem Balão?</Text>
-      <View style={styles.input_txt}>
+      {Platform.OS==='android' ? 
+        <View style={styles.input_txt}>
+          <Picker
+          selectedValue={balao}
+          onValueChange={(itemValue) => setBalao(itemValue)}
+          >
+            <Picker.Item label="Sim" value="1" />
+            <Picker.Item label="Não" value="2" />
+          </Picker>
+        </View>
+        :
+        <TouchableOpacity style={styles.input_txt} onPress={() => setModalBalao(true)}>
+          <Text style={styles.txt}>{balao === '1' ? 'Sim' : balao === '2' ? 'Não' : ''}</Text>
+        </TouchableOpacity>
+      }
+
+      <Modal animationType="slide" transparent visible={modalBalao}>
+        <View style={styles.centralizar_modal}>
+        <View  style={styles.modal}>
         <Picker
-        selectedValue={balao}
-        onValueChange={(itemValue) => setBalao(itemValue)}
-        >
-          <Picker.Item label="Sim" value="1" />
-          <Picker.Item label="Não" value="2" />
+          selectedValue={balao}
+          onValueChange={(itemValue) => {setBalao(itemValue), setModalBalao(false)}}
+          >
+            <Picker.Item label="Sim" value="1" />
+            <Picker.Item label="Não" value="2" />
         </Picker>
-      </View>
+        </View>
+        </View>
+      </Modal>
 
       {/*Tamanho*/}
       <Text style={styles.texto}>Tamanho da Cânula</Text>
@@ -144,40 +166,82 @@ export default function Canula() {
         keyboardType="numeric"
         maxLength={5}
       />
-
+      
       {/*Material*/}
       <Text style={styles.texto}>Material</Text>
-      <View style={styles.input_txt}>
+      {Platform.OS==='android' ? 
+        <View style={styles.input_txt}>
+          <Picker
+          selectedValue={material}
+          onValueChange={(itemValue) => setMaterial(itemValue)}>
+            <Picker.Item label="Metálica" value="1" />
+            <Picker.Item label="Plástica/Silicone" value="2" />
+          </Picker>
+        </View>
+        :
+        <TouchableOpacity style={styles.input_txt} onPress={() => setModalMaterial(true)}>
+          <Text style={styles.txt}>{material === '1' ? 'Metálica' : material === '2' ? "Plástica/Silicone" : ''}</Text>
+        </TouchableOpacity>
+      }
+
+      <Modal animationType="slide" transparent visible={modalMaterial}>
+        <View style={styles.centralizar_modal}>
+        <View  style={styles.modal}>
         <Picker
-        selectedValue={material}
-        onValueChange={(itemValue) => setMaterial(itemValue)}>
-          <Picker.Item label="Metálica" value="1" />
-          <Picker.Item label="Plástica/Silicone" value="2" />
+          selectedValue={material}
+          onValueChange={(itemValue) => {setMaterial(itemValue), setModalMaterial(false)}}
+          >
+            <Picker.Item label="Metálica" value="1" />
+            <Picker.Item label="Plástica/Silicone" value="2" />
         </Picker>
-      </View>
+        </View>
+        </View>
+      </Modal>
 
       {/*Marca*/}
       <Text style={styles.texto}>Marca</Text>
-      <View style={styles.input_txt}>
+      {Platform.OS==='android' ? 
+        <View style={styles.input_txt}>
+          <Picker
+          selectedValue={marca}
+          onValueChange={(itemValue) => setMarca(itemValue)}>
+            <Picker.Item label="BCI" value="BCI" />
+            <Picker.Item label="Shiley" value="Shiley" />
+            <Picker.Item label="Safer" value="Safer" />
+            <Picker.Item label="Portex" value="Portex" />
+            <Picker.Item label="Outro" value="Outro" />
+          </Picker>
+        </View>
+        :
+        <TouchableOpacity style={styles.input_txt} onPress={() => setModalMarca(true)}>
+          <Text style={styles.txt}>{marca}</Text>
+        </TouchableOpacity>
+      }
+      <Modal animationType="slide" transparent visible={modalMarca}>
+        <View style={styles.centralizar_modal}>
+        <View  style={styles.modal}>
         <Picker
-        selectedValue={marca}
-        onValueChange={(itemValue) => setMarca(itemValue)}>
-          <Picker.Item label="BCI" value="BCI" />
-          <Picker.Item label="Shiley" value="Shiley" />
-          <Picker.Item label="Safer" value="Safer" />
-          <Picker.Item label="Portex" value="Portex" />
-          <Picker.Item label="Outro" value="Outro" />
+          selectedValue={marca}
+          onValueChange={(itemValue) => {setMarca(itemValue), setModalMarca(false)}}
+          >
+            <Picker.Item label="BCI" value="BCI" />
+            <Picker.Item label="Shiley" value="Shiley" />
+            <Picker.Item label="Safer" value="Safer" />
+            <Picker.Item label="Portex" value="Portex" />
+            <Picker.Item label="Outro" value="Outro" />
         </Picker>
-      </View>
+        </View>
+        </View>
+      </Modal>
 
       {/*Data*/}
       <Text style={styles.texto}>Data da última Troca</Text>
-      <TouchableOpacity style={styles.input_txt} onPress={() => setShowData(true)}>
+      <TouchableOpacity style={styles.input_txt} onPress={() => {setShowData(true), Keyboard.dismiss()}}>
         <Text style={styles.txt_data}>
           {data ? data.toLocaleDateString("pt-BR") : ""}
         </Text>
       </TouchableOpacity>
-      {showData && (
+      {showData && Platform.OS === 'android' && (
         <DateTimePicker
           value={data || new Date()}
           mode="date"
@@ -185,14 +249,28 @@ export default function Canula() {
           onChange={onChange}
         />
       )}
+      <Modal animationType="slide" transparent visible={showData && Platform.OS === 'ios'}>
+        <View style={styles.centralizar_modal}>
+        <View  style={[styles.modal, {width: '90%'}]}>
+          <DateTimePicker
+            value={data || new Date()}
+            mode="date"
+            display="inline"
+            onChange={onChange}
+          />
+        </View>
+        </View>
+      </Modal>
 
       {/*Botão de salvar*/}
       <TouchableOpacity style={styles.botao} onPress={mudarCanula}>
         <Text style={styles.txt_botao}>Salvar</Text>
       </TouchableOpacity>
 
-  </SafeAreaView>
+  </View>
+  </TouchableWithoutFeedback>
 );
+
 }
 
 const { width } = Dimensions.get('window');
@@ -216,9 +294,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 10,
     marginBottom: 20,
+    paddingHorizontal: 5,
     height: 45,
     justifyContent: 'center',
-    fontSize: 15,
+    fontSize: Platform.OS === "ios" ? 17 : 15,
   },
   botao:{
     backgroundColor: '#12B9ED',
@@ -236,7 +315,7 @@ const styles = StyleSheet.create({
   },
   txt_data:{
     paddingLeft: 5,
-    fontSize: 15,
+    fontSize: Platform.OS === "ios" ? 17 : 15,
   },
   msg:{
     backgroundColor: '#D0F0FB',
@@ -244,11 +323,26 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginBottom: 13,
     padding: 22,
-    fontSize: 17,
+    fontSize: Platform.OS === "ios" ? 19 : 17,
     textAlign: 'center',
     width: width,
       zIndex: 999,
     borderRadius: 4,
     position: 'absolute'
+  },
+  modal:{
+    backgroundColor: 'white',
+    width: '80%',
+    borderRadius: 12,
+    padding: 15,
+  },
+  centralizar_modal:{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.4)'
+  },
+  txt:{
+    fontSize: Platform.OS === "ios" ? 17 : 15,
   }
 })

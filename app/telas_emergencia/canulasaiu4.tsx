@@ -3,12 +3,11 @@ import { styles } from '@/estilos/emergencia';
 import { styles as styles2 } from '@/estilos/botoes'
 import Feather from '@expo/vector-icons/Feather';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Cs4() {
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
 
       <Text style={[styles.titulo, {textAlign: 'center', marginBottom: 40}]}>Procedimento Finalizado</Text>
 
@@ -30,6 +29,6 @@ export default function Cs4() {
         </View>
       </View>
 
-    </SafeAreaView>
+    </View>
   );
 }

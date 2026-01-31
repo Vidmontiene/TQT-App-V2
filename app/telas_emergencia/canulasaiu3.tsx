@@ -1,11 +1,10 @@
-import { Text, Image } from 'react-native';
+import { Text, Image, View } from 'react-native';
 import { styles } from '@/estilos/emergencia';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Cs3() {
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
 
       <Text style={styles.titulo}>3. Inserindo a Nova Cânula</Text>
       <Image
@@ -15,6 +14,6 @@ export default function Cs3() {
       />
       <Text style={styles.txt}>Passe xilocaína gel na cânula. Introduza a cânula no orifício em um movimento firme.</Text>
 
-    </SafeAreaView>
+    </View>
   );
 }

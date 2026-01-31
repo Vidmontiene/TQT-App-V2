@@ -1,14 +1,13 @@
 import { styles } from '@/estilos/botoes';
 import { Feather,  MaterialCommunityIcons } from '@expo/vector-icons';
 import { Text, TouchableOpacity, View, Linking } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { ligar } from '@/scripts/ligar';
 
 export default function Ajuda() {
   return (
-    <SafeAreaView style={styles.container} edges={['top', 'right', 'bottom', 'left']}>
+    <View style={[styles.container, {paddingTop: 0}]}>
 
-      <Text style={[styles.txt_botao, {marginBottom: 15, textAlign: 'justify'}]}>
+      <Text style={[styles.txt_botao, {marginBottom: 15, textAlign: 'justify', marginTop: 15}]}>
         Este Aplicativo é uma ferramenta de apoio e não substitui o aconselhamento médico profissional. Em caso de emergência, entre em contato com os serviços de saúde locais imediatamente.
       </Text>
 
@@ -49,7 +48,7 @@ export default function Ajuda() {
         </View>
       </TouchableOpacity>
     
-    </SafeAreaView>
+    </View>
 
   );
 }

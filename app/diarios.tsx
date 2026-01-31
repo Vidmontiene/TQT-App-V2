@@ -7,9 +7,7 @@ import { router } from 'expo-router';
 
 export default function Diarios() {
   return (
-    <SafeAreaView 
-      style={styles.container}
-      edges={['top', 'right', 'bottom', 'left']}>
+    <View style={styles.container}>
       <Text style={styles.titulo}>Procedimentos Diários</Text>
 
       {/*Apiração da cânula*/}
@@ -47,7 +45,7 @@ export default function Diarios() {
           <Text style={styles.txt_botao}>Trocar o fixador para garantir a higiene e segurança.</Text>
         </View>
       </TouchableOpacity>
-    </SafeAreaView>
+    </View>
   );
 }
 

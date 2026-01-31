@@ -41,17 +41,6 @@ export default function EmergenciaSwipe() {
 
   return (
     <View style={{ flex: 1}}>
-      
-      <PagerView
-        ref={pagerRef}
-        style={{ flex: 1 }}
-        initialPage={0}
-        onPageSelected={(e) => setPagina(e.nativeEvent.position)}>
-          
-        {telas.map((Tela, i) => (
-            <Tela key={i} />
-        ))}
-      </PagerView>
 
       {/*Traços*/}
       <View style={styles.tracos_container}>
@@ -64,6 +53,17 @@ export default function EmergenciaSwipe() {
             ]}/>
         ))}
       </View>
+      
+      <PagerView
+        ref={pagerRef}
+        style={{ flex: 1 }}
+        initialPage={0}
+        onPageSelected={(e) => setPagina(e.nativeEvent.position)}>
+          
+        {telas.map((Tela, i) => (
+            <Tela key={i} />
+        ))}
+      </PagerView>
 
       {/*Botões*/}
       <View style={[styles.container_botoes, { bottom: insets.bottom }]}>

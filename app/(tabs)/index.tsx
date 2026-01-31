@@ -13,10 +13,8 @@ export default function HomeScreen() {
   }, []);
 
   return (
-    <ScrollView>
-      <SafeAreaView
-        style={styles.container}
-        edges={['top', 'right', 'bottom', 'left']}>
+    <ScrollView style={{backgroundColor: 'white'}}>
+      <View style={styles.container}>
 
         <Text style={styles.titulo}>Bem Vindo(a) ao TQT-App</Text>
         <Image
@@ -85,7 +83,7 @@ export default function HomeScreen() {
           </View>
           
         </View>
-      </SafeAreaView>
+      </View>
     </ScrollView>
   );
 }
@@ -100,6 +98,8 @@ const styles = StyleSheet.create({
   container:{
     backgroundColor: 'white',
     gap: 18,
+    padding: 2,
+    flex: 1
   },
   foto_perfil:{
     alignSelf:'center',
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   info:{
     textAlign: 'center',
     fontSize: 15,
-    padding: 'auto'
+    paddingHorizontal: 10
   },
   alinha_botoes:{
     flexDirection: 'row',

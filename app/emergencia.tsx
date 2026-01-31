@@ -1,12 +1,12 @@
 import { styles } from '@/estilos/botoes';
 import { Feather, MaterialIcons, FontAwesome6 } from '@expo/vector-icons';
 import { Text, TouchableOpacity, View, ScrollView, Modal, StyleSheet, TextInput } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { ligar } from '@/scripts/ligar';
 import { BlurView } from 'expo-blur';
 import { setNumero, getNumero } from '@/database/numeros';
 import React, { useCallback, useState } from 'react';
 import { router, useFocusEffect } from 'expo-router';
+import { Platform } from 'react-native';
 
 export default function Emergencia() {
 
@@ -76,140 +76,137 @@ export default function Emergencia() {
   };
 
   return (
-    <ScrollView>
-        <SafeAreaView
-          style={styles.container}
-          edges={['top', 'right', 'bottom', 'left']}>
+    <ScrollView style={{backgroundColor: '#fafafaff'}}>
+      <View style={styles.container}>
+        <Text style={styles.titulo}>Procedimentos de Emergência</Text>
 
-          <Text style={styles.titulo}>Procedimentos de Emergência</Text>
+        {/*A cânula saiu*/}
+        <TouchableOpacity style={styles.botao} onPress={() => router.push('/telas_emergencia/grupo3')}>
+          <MaterialIcons  name="warning-amber" size={33} style={styles.img}/>
+          <View style={styles.container_botao}>
+            <Text style={styles.titulo_botao}>A Cânula Saiu</Text>
+            <Text style={styles.txt_botao}>Passos para lidar com a saída da cânula.</Text>
+          </View>
+        </TouchableOpacity>
 
-          {/*A cânula saiu*/}
-          <TouchableOpacity style={styles.botao} onPress={() => router.push('/telas_emergencia/grupo3')}>
-            <MaterialIcons  name="warning-amber" size={33} style={styles.img}/>
-            <View style={styles.container_botao}>
-              <Text style={styles.titulo_botao}>A Cânula Saiu</Text>
-              <Text style={styles.txt_botao}>Passos para lidar com a saída da cânula.</Text>
-            </View>
-          </TouchableOpacity>
+        {/*Dificuldade para Respirar*/}
+        <TouchableOpacity style={styles.botao}  onPress={() => router.push('/telas_emergencia/grupo2')}>
+          <MaterialIcons  name="warning-amber" size={33} style={styles.img}/>
+          <View style={styles.container_botao}>
+            <Text style={styles.titulo_botao}>Dificuldade para Respirar</Text>
+            <Text style={styles.txt_botao}>O que fazer em caso de dificuldade respiratória.</Text>
+          </View>
+        </TouchableOpacity>
 
-          {/*Dificuldade para Respirar*/}
-          <TouchableOpacity style={styles.botao}  onPress={() => router.push('/telas_emergencia/grupo2')}>
-            <MaterialIcons  name="warning-amber" size={33} style={styles.img}/>
-            <View style={styles.container_botao}>
-              <Text style={styles.titulo_botao}>Dificuldade para Respirar</Text>
-              <Text style={styles.txt_botao}>O que fazer em caso de dificuldade respiratória.</Text>
-            </View>
-          </TouchableOpacity>
+        {/*Não Consigo Aspirar*/}
+        <TouchableOpacity style={styles.botao} onPress={() => router.push('/telas_emergencia/grupo1')}>
+          <MaterialIcons name="warning-amber" size={33} style={styles.img}/>
+          <View style={styles.container_botao}>
+            <Text style={styles.titulo_botao}>Não Consigo Aspirar</Text>
+            <Text style={styles.txt_botao}>Instruções para quando a aspiração não for possível.</Text>
+          </View>
+        </TouchableOpacity>
 
-          {/*Não Consigo Aspirar*/}
-          <TouchableOpacity style={styles.botao} onPress={() => router.push('/telas_emergencia/grupo1')}>
-            <MaterialIcons name="warning-amber" size={33} style={styles.img}/>
-            <View style={styles.container_botao}>
-              <Text style={styles.titulo_botao}>Não Consigo Aspirar</Text>
-              <Text style={styles.txt_botao}>Instruções para quando a aspiração não for possível.</Text>
-            </View>
-          </TouchableOpacity>
+        <Text style={styles.titulo}>Contatos de Emergência</Text>
 
-          <Text style={styles.titulo}>Contatos de Emergência</Text>
+        {/*SAMU*/}
+        <TouchableOpacity style={styles.botao} onPress={() => ligar(192)}>
+          <Feather name="phone" size={33} style={styles.img}/>
+          <View style={styles.container_botao}>
+            <Text style={styles.titulo_botao}>SAMU</Text>
+            <Text style={styles.txt_botao}>Serviço de Atendimento Móvel de Urgência.</Text>
+          </View>
+        </TouchableOpacity>
 
-          {/*SAMU*/}
-          <TouchableOpacity style={styles.botao} onPress={() => ligar(192)}>
-            <Feather name="phone" size={33} style={styles.img}/>
-            <View style={styles.container_botao}>
-              <Text style={styles.titulo_botao}>SAMU</Text>
-              <Text style={styles.txt_botao}>Serviço de Atendimento Móvel de Urgência.</Text>
-            </View>
-          </TouchableOpacity>
+        {/*Médico do seu Filho*/}
+        <TouchableOpacity style={styles.botao} onPress={ligarMedico}>
+          <FontAwesome6 name="user-doctor" size={33} style={styles.img}/>
+          <View style={styles.container_botao}>
+          <Text style={styles.titulo_botao}>{doutor === "" ? "Médico do seu Filho" : doutor}</Text>
+            <Text style={styles.txt_botao}>{numDoutor === "" ? "Adicione o telefone." : numDoutor}</Text>
+          </View>
+        </TouchableOpacity>
+      
+        {/*Serviço de Emergência*/}
+        <TouchableOpacity style={styles.botao} onPress={ligarEmergencia}>
+          <MaterialIcons name="emergency" size={33} style={styles.img}/>
+          <View style={styles.container_botao}>
+            <Text style={styles.titulo_botao}>{emergencia === "" ? "Serviço de Emergência" : emergencia}</Text>
+            <Text style={styles.txt_botao}>{numEmergencia === "" ? "Adicione o telefone." : numEmergencia}</Text>
+          </View>
+        </TouchableOpacity>
 
-          {/*Médico do seu Filho*/}
-          <TouchableOpacity style={styles.botao} onPress={ligarMedico}>
-            <FontAwesome6 name="user-doctor" size={33} style={styles.img}/>
-            <View style={styles.container_botao}>
-            <Text style={styles.titulo_botao}>{doutor === "" ? "Médico do seu Filho" : doutor}</Text>
-              <Text style={styles.txt_botao}>{numDoutor === "" ? "Adicione o telefone." : numDoutor}</Text>
-            </View>
-          </TouchableOpacity>
-        
-          {/*Serviço de Emergência*/}
-          <TouchableOpacity style={styles.botao} onPress={ligarEmergencia}>
-            <MaterialIcons name="emergency" size={33} style={styles.img}/>
-            <View style={styles.container_botao}>
-              <Text style={styles.titulo_botao}>{emergencia === "" ? "Serviço de Emergência" : emergencia}</Text>
-              <Text style={styles.txt_botao}>{numEmergencia === "" ? "Adicione o telefone." : numEmergencia}</Text>
-            </View>
-          </TouchableOpacity>
+        {/*Adicionar e Editar Contatos*/}
+        <TouchableOpacity style={styles.botao} onPress={() => setModal(true)}>
+          <Feather name="plus" size={33} style={styles.img}/>
+          <View style={styles.container_botao}>
+            <Text style={styles.titulo_botao}>Adicionar e Editar Contatos</Text>
+            <Text style={styles.txt_botao}>Informe os contatos de emergência de seu filho.</Text>
+          </View>
+        </TouchableOpacity>
 
-          {/*Adicionar e Editar Contatos*/}
-          <TouchableOpacity style={styles.botao} onPress={() => setModal(true)}>
-            <Feather name="plus" size={33} style={styles.img}/>
-            <View style={styles.container_botao}>
-              <Text style={styles.titulo_botao}>Adicionar e Editar Contatos</Text>
-              <Text style={styles.txt_botao}>Informe os contatos de emergência de seu filho.</Text>
-            </View>
-          </TouchableOpacity>
+        {/*Modal de informações*/}
+        <Modal 
+          animationType='fade' 
+          transparent 
+          visible={modal} 
+          onRequestClose={voltar}
+          statusBarTranslucent>
+          <BlurView intensity={50} tint="dark" style={novos.embacado}>
+            <View style={novos.fundo_modal} pointerEvents="box-none">
+              <Text style={novos.titulo}>Médico de seu filho</Text>
 
-          {/*Modal de informações*/}
-          <Modal 
-            animationType='fade' 
-            transparent 
-            visible={modal} 
-            onRequestClose={voltar}
-            statusBarTranslucent>
-            <BlurView intensity={50} tint="dark" style={novos.embacado}>
-              <View style={novos.fundo_modal} pointerEvents="box-none">
-                <Text style={novos.titulo}>Médico de seu filho</Text>
-
-                {/*Nome médico*/}
-                <View style={novos.container_input}>
-                  <Text style={novos.txt_input}>Nome: </Text>
-                  <TextInput 
-                    style={novos.input}
-                    value={doutor}
-                    onChangeText={setDoutor}/>
-                </View>
-
-                {/*Telefone médico*/}
-                <View style={novos.container_input}>
-                  <Text style={novos.txt_input}>Telefone: </Text>
-                  <TextInput 
-                    style={novos.input}
-                    keyboardType="numeric"
-                    value={numDoutor}
-                    onChangeText={mudancaDoutor}
-                    maxLength={13}/>
-                </View>
-
-                <Text style={[novos.titulo, {marginTop: 20}]}>Serviço de Emergência</Text>
-
-                {/*Nome emergência*/}
-                <View style={novos.container_input}>
-                  <Text style={novos.txt_input}>Nome: </Text>
-                  <TextInput 
-                    style={novos.input}
-                    value={emergencia}
-                    onChangeText={setEmergencia}/>
-                </View>
-
-                {/*Telefone emergência*/}
-                <View style={novos.container_input}>
-                  <Text style={novos.txt_input}>Telefone: </Text>
-                  <TextInput 
-                    style={novos.input}
-                    value={numEmergencia}
-                    onChangeText={mudancaEmergencia}
-                    keyboardType="numeric"
-                    maxLength={13}/>
-                </View>
-
-                {/*Botão de salvar*/}
-                <TouchableOpacity style={novos.botao} onPress={salvar}>
-                  <Text style={novos.txt_botao}>Salvar</Text>
-                </TouchableOpacity>
+              {/*Nome médico*/}
+              <View style={novos.container_input}>
+                <Text style={novos.txt_input}>Nome: </Text>
+                <TextInput 
+                  style={novos.input}
+                  value={doutor}
+                  onChangeText={setDoutor}/>
               </View>
-            </BlurView>
-          </Modal>
 
-        </SafeAreaView>
+              {/*Telefone médico*/}
+              <View style={novos.container_input}>
+                <Text style={novos.txt_input}>Telefone: </Text>
+                <TextInput 
+                  style={novos.input}
+                  keyboardType="numeric"
+                  value={numDoutor}
+                  onChangeText={mudancaDoutor}
+                  maxLength={13}/>
+              </View>
+
+              <Text style={[novos.titulo, {marginTop: 20}]}>Serviço de Emergência</Text>
+
+              {/*Nome emergência*/}
+              <View style={novos.container_input}>
+                <Text style={novos.txt_input}>Nome: </Text>
+                <TextInput 
+                  style={novos.input}
+                  value={emergencia}
+                  onChangeText={setEmergencia}/>
+              </View>
+
+              {/*Telefone emergência*/}
+              <View style={novos.container_input}>
+                <Text style={novos.txt_input}>Telefone: </Text>
+                <TextInput 
+                  style={novos.input}
+                  value={numEmergencia}
+                  onChangeText={mudancaEmergencia}
+                  keyboardType="numeric"
+                  maxLength={13}/>
+              </View>
+
+              {/*Botão de salvar*/}
+              <TouchableOpacity style={novos.botao} onPress={salvar}>
+                <Text style={novos.txt_botao}>Salvar</Text>
+              </TouchableOpacity>
+            </View>
+          </BlurView>
+        </Modal>
+
+      </View>
     </ScrollView>
   );
 }
@@ -241,6 +238,11 @@ const novos = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     flex: 1,
+
+    fontSize: Platform.OS === 'ios' ? 16 : 16,
+    paddingVertical: Platform.OS === 'ios' ? 7 : 7,
+    paddingHorizontal: Platform.OS === 'ios' ? 7 : 7,
+    minHeight: Platform.OS === 'ios' ? 40: 40,
   },
 
   titulo:{
@@ -260,7 +262,7 @@ const novos = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
-    fontSize: 18
+    fontSize: 17
   },
 
   container_input:{
@@ -271,7 +273,7 @@ const novos = StyleSheet.create({
   },
 
   txt_input:{
-    fontSize: 15,
     width: 80,
+    fontSize: Platform.OS === 'ios' ? 17 : 15
   }
 })

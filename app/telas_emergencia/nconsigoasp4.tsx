@@ -1,11 +1,10 @@
 import { Text, Image, View } from 'react-native';
 import { styles } from '@/estilos/emergencia';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Nca4() {
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       
       <Text style={styles.titulo}>4. Use o Ambu para Tentar Deslocar a Rolha</Text>
       <Image
@@ -30,6 +29,6 @@ export default function Nca4() {
         <Text style={styles.txt_topico}>Observe se o tórax se eleva a cada compressão</Text>
       </View>
 
-    </SafeAreaView>
+    </View>
   );
 }

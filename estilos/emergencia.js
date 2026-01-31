@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
   titulo:{
     fontWeight: 'bold',
     fontSize: 23,
-    marginTop: 20,
+    marginTop: 15,
     textAlign:'center'
   },
 

@@ -2,13 +2,12 @@ import { Text, View, ScrollView } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { styles } from '@/estilos/emergencia';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles as styles2 } from '@/estilos/passos';
 
 export default function Dr5() {
 
   return (
-    <SafeAreaView style={[styles.container, {flex:1}]}>
+    <View  style={[styles.container, {flex:1}]}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={{ flex: 1 }}
@@ -67,6 +66,6 @@ export default function Dr5() {
         </View>
 
       </ScrollView>
-    </SafeAreaView>
+    </View >
   );
 }

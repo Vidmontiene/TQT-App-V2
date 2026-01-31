@@ -1,6 +1,5 @@
 import { Text, TouchableOpacity, View, } from 'react-native';
 import { styles } from '@/estilos/emergencia';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { ligar } from "@/scripts/ligar";
 import { styles as styles2 } from '@/estilos/passos';
@@ -13,7 +12,7 @@ export default function Nca5() {
   const [nao, setNao] = useState(0);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
 
       {/*Tela inicial*/}
       {nao === 0 && (
@@ -83,6 +82,6 @@ export default function Nca5() {
         </>
       )}
       
-    </SafeAreaView>
+    </View>
   );
 }

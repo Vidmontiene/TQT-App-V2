@@ -1,5 +1,4 @@
 import { Text, View, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { CheckBox } from 'react-native-elements';
 import { useState } from 'react';
 import { styles } from '@/estilos/passos';
@@ -17,10 +16,8 @@ export default function Troca() {
   );
       
   return (
-    <ScrollView>
-      <SafeAreaView
-        style={styles.container}
-        edges={['top', 'right', 'bottom', 'left']}>
+    <ScrollView style={{backgroundColor: 'white'}}>
+      <View style={styles.container}>
 
         {/*Aviso*/}
         <View style={styles.container_aviso}>
@@ -123,7 +120,7 @@ export default function Troca() {
           </View>
         </View>
 
-      </SafeAreaView>
+      </View>
     </ScrollView>
   );
 }

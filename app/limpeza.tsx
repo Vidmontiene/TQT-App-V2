@@ -20,10 +20,8 @@ export default function Limpeza() {
   );
       
   return (
-    <ScrollView>
-      <SafeAreaView
-        style={styles.container}
-        edges={['top', 'right', 'bottom', 'left']}>
+    <ScrollView style={{backgroundColor: 'white'}}>
+      <View style={styles.container}>
 
         {/*Aviso*/}
         <View style={styles.container_aviso}>
@@ -161,7 +159,7 @@ export default function Limpeza() {
           </View>
         </View>
 
-      </SafeAreaView>
+      </View>
     </ScrollView>
   );
 }

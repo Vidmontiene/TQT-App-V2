@@ -1,5 +1,4 @@
 import { Text, TouchableOpacity, View, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { CheckBox } from 'react-native-elements';
 import { useState } from 'react';
 import { styles } from '@/estilos/passos'
@@ -20,10 +19,8 @@ export default function Aspiracao() {
   );
       
   return (
-    <ScrollView>
-      <SafeAreaView
-        style={styles.container}
-        edges={['top', 'right', 'bottom', 'left']}>
+    <ScrollView style={{backgroundColor: 'white'}}>
+      <View style={styles.container}>
           
         {/*Vídeo*/}
         <Text style={styles.titulo}>Vídeo Demonstrativo</Text>
@@ -157,7 +154,7 @@ export default function Aspiracao() {
             <Text style={styles.txt_botao}>Registro</Text>
         </TouchableOpacity>
 
-      </SafeAreaView>
+      </View>
     </ScrollView>
   );
 }
