@@ -1,5 +1,4 @@
 import { ScrollView, Text, TouchableOpacity, View, StyleSheet, Modal, TextInput , KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles as styles2 } from '@/estilos/botoes';
 import { useFocusEffect } from "expo-router";
 import { dateParaData, dataParaDate, horaParaDate, dateParaHora } from '@/scripts/datas';
@@ -31,7 +30,7 @@ export default function Agenda() {
   const [registros, setRegistros] = useState<any[]>([]);  // Armazena todos os registros
   const [id, setId] = useState(0);                        // Armazena o id clicado
 
-  const [msg, setMsg] = useState("");                    // Mostra mensagem de aviso
+  const [msg, setMsg] = useState("");                     // Mostra mensagem de aviso
 
   // Registros separados por data
   const registrosHoje: typeof registros  = [];
@@ -189,7 +188,7 @@ export default function Agenda() {
     setModalConfirmar(false);
   }
 
-  // PSepara os registros em passado presente e futuro
+  // Separa os registros em passado presente e futuro
   registros.forEach(item => {
     const dataItem = dataParaDate(item.data);
     if (!dataItem) return;
@@ -246,9 +245,7 @@ export default function Agenda() {
   };
 
   return (
-    <SafeAreaView
-    style={{flex: 1, backgroundColor: 'white'}}
-    edges={[ 'right', 'bottom', 'left']}>
+    <View style={{flex: 1, backgroundColor: 'white'}}>
 
       <ScrollView style={{ paddingHorizontal: 10 }}
       contentContainerStyle={{ paddingBottom: 120 }}>
@@ -261,6 +258,7 @@ export default function Agenda() {
           <Text style={styles.subtitulo_vazio}> Não existem registros para hoje.</Text>
           :
           registrosHoje.map((item) => (
+
           <View key={item.id} style={[styles2.botao, {alignItems: 'flex-start', paddingVertical: 10, height: 'auto'}]}>
             <FontAwesome5 name="bell" size={31} style={styles2.img_redondo}/>
             <View style={styles2.container_botao}>
@@ -270,13 +268,13 @@ export default function Agenda() {
                 <Text style={styles2.txt_botao}><Text style={styles.negrito}>Observação:</Text> {item.obs}</Text>
               }   
             </View>
+
             {/*Botão de editar e excluir*/}
-            <TouchableOpacity onPress={() => {setModalEditar(true); editarRegistro(item)}} style={{alignSelf: 'center'}}>
+            <TouchableOpacity onPress={() => {setModalEditar(true); editarRegistro(item)}} style={{alignSelf: 'center', padding: 10}}>
               <Entypo name="dots-three-vertical" size={27} style={styles2.seta} />
             </TouchableOpacity>
           </View>
           ))}
-
 
         {/*Registros de próximos*/}
         <Text style={[styles2.titulo, {fontSize: 24, marginVertical: 15}]}>Próximos</Text>
@@ -286,6 +284,7 @@ export default function Agenda() {
           <Text style={styles.subtitulo_vazio}> Não existem registros futuros.</Text>
           :
           registrosFuturo.map((item) => (
+
           <View key={item.id} style={[styles2.botao, {alignItems: 'flex-start', paddingVertical: 10, height: 'auto'}]}>
             <FontAwesome5 name="bell" size={31} style={styles2.img_redondo}/>
             <View style={styles2.container_botao}>
@@ -295,8 +294,9 @@ export default function Agenda() {
                 <Text style={styles2.txt_botao}><Text style={styles.negrito}>Observação:</Text> {item.obs}</Text>
               }   
             </View>
+
             {/*Botão de editar e excluir*/}
-            <TouchableOpacity onPress={() => {setModalEditar(true); editarRegistro(item)}} style={{alignSelf: 'center'}}>
+            <TouchableOpacity onPress={() => {setModalEditar(true); editarRegistro(item)}} style={{alignSelf: 'center', padding: 10}}>
               <Entypo name="dots-three-vertical" size={27} style={styles2.seta} />
             </TouchableOpacity>
           </View>
@@ -320,9 +320,10 @@ export default function Agenda() {
               }
             </View>
             {/*Botão de editar e excluir*/}
-            <TouchableOpacity onPress={() => {setModalEditar(true); editarRegistro(item)}} style={{alignSelf: 'center'}}>
+            <TouchableOpacity onPress={() => {setModalEditar(true); editarRegistro(item)}} style={{alignSelf: 'center', padding: 10}}>
               <Entypo name="dots-three-vertical" size={27} style={styles2.seta} />
             </TouchableOpacity>
+
           </View>
         ))}
 
@@ -331,9 +332,7 @@ export default function Agenda() {
       {/*Pop up de novo registro*/}
       <Modal animationType="fade" transparent visible={modalNovo}
         onRequestClose={() => {setModalNovo(false), zerarUseStates()}}>
-
         {msg ? <Text style={styles2.msg}>{msg}</Text> : null}
-
         <BlurView intensity={40} tint="dark" style={styles.embacado}>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
           <View style={styles.fundopopup}>
@@ -437,21 +436,19 @@ export default function Agenda() {
               label="Avisar 2 horas antes"
               value="24"
               selected={checked === 1}
-              onPress={() => {setChecked(1), Keyboard.dismiss}}
+              onPress={() => {setChecked(1), Keyboard.dismiss()}}
             />
-
             <CustomRadioButton
               label="Avisar 24 horas antes"
               value="2"
               selected={checked === 2}
               onPress={() => {setChecked(2), Keyboard.dismiss()}}
             />
-
             <CustomRadioButton
               label="Não avisar"
               value="nao"
               selected={checked === 3}
-              onPress={() => {setChecked(3), Keyboard.dismiss}}
+              onPress={() => {setChecked(3), Keyboard.dismiss()}}
             />
 
             {/*Botão de salvar*/}
@@ -466,10 +463,8 @@ export default function Agenda() {
 
       {/*Pop up de editar/excluir registro*/}
       <Modal animationType="fade" transparent visible={modalEditar}
-        onRequestClose={() => {setModalEditar(false), zerarUseStates()}}>
-        
+        onRequestClose={() => {setModalEditar(false), zerarUseStates()}}>    
         {msg ? <Text style={styles2.msg}>{msg}</Text> : null}
-
         <BlurView intensity={40} tint="dark" style={styles.embacado}>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
           <View style={styles.fundopopup}>
@@ -573,21 +568,19 @@ export default function Agenda() {
               label="Avisar 2 horas antes"
               value="24"
               selected={checked === 1}
-              onPress={() => {setChecked(1), Keyboard.dismiss}}
+              onPress={() => {setChecked(1), Keyboard.dismiss()}}
             />
-
             <CustomRadioButton
               label="Avisar 24 horas antes"
               value="2"
               selected={checked === 2}
               onPress={() => {setChecked(2), Keyboard.dismiss()}}
             />
-
             <CustomRadioButton
               label="Não avisar"
               value="nao"
               selected={checked === 3}
-              onPress={() => {setChecked(3), Keyboard.dismiss}}
+              onPress={() => {setChecked(3), Keyboard.dismiss()}}
             />
 
             {/*Botão de salvar/excluir*/}
@@ -614,6 +607,7 @@ export default function Agenda() {
               </TouchableOpacity>
 
             </View>
+
           </View> 
         </TouchableWithoutFeedback>
         </BlurView>
@@ -623,20 +617,22 @@ export default function Agenda() {
       <Modal animationType="fade" transparent visible={modalConfirmar}
         onRequestClose={() => {setModalConfirmar(false)}}>
         <BlurView  intensity={40} tint="dark" style={styles.embacado}>
-            <View style={styles.fundo_popup_confirmar}>
-              <Text style={styles.titulo}>Tem certeza que deseja excluir esse registro?</Text>
-              <Text style={styles.subtitulo}>Não será possível reverter essa ação.</Text>
+          <View style={styles.fundo_popup_confirmar}>
 
-              <View style={styles.dataehora}>
-                <TouchableOpacity style={styles.botao_editar} onPress={deletarRegistro}>
-                  <Text style={styles.txt_botao}>Excluir registro</Text>
-                </TouchableOpacity>
+            <Text style={styles.titulo}>Tem certeza que deseja excluir esse registro?</Text>
+            <Text style={styles.subtitulo}>Não será possível reverter essa ação.</Text>
 
-                <TouchableOpacity style={[styles.botao_editar, {backgroundColor:"#d63d3dff"}]} onPress={() => setModalConfirmar(false)}>
-                  <Text style={styles.txt_botao}>Cancelar</Text>
-                </TouchableOpacity>
-              </View>
+            <View style={styles.dataehora}>
+              <TouchableOpacity style={styles.botao_editar} onPress={deletarRegistro}>
+                <Text style={styles.txt_botao}>Excluir registro</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={[styles.botao_editar, {backgroundColor:"#d63d3dff"}]} onPress={() => setModalConfirmar(false)}>
+                <Text style={styles.txt_botao}>Cancelar</Text>
+              </TouchableOpacity>
             </View>
+
+          </View>
         </BlurView>
       </Modal>
     
@@ -645,7 +641,7 @@ export default function Agenda() {
         <MaterialIcons name="add" size={40} color="white"/>
       </TouchableOpacity>
 
-    </SafeAreaView>
+    </View>
   );
 }
 

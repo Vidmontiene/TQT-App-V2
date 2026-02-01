@@ -24,78 +24,78 @@ export default function Canula() {
 
   // Define os radioButtons de balão
   const baloes = [
-      { id: "1", label: "Com balão" },
-      { id: "2", label: "Sem balão" },
+    { id: "1", label: "Com balão" },
+    { id: "2", label: "Sem balão" },
   ];
 
   // Define os radioButtons de Material
   const materiais = [
-      { id: "1", label: "Metálica" },
-      { id: "2", label: "Plástica/Silicone" },
+    { id: "1", label: "Metálica" },
+    { id: "2", label: "Plástica/Silicone" },
   ];
 
   // Carregar do banco sempre que a tela ganhar foco
   useFocusEffect(
-      useCallback(() => {
-          carregarCanula();
-      }, [])
+    useCallback(() => {
+      carregarCanula();
+    }, [])
   );
 
   // Carrega os valores do banco nos useStates
   const carregarCanula = async () => {
-      const rows = await getCanula();
-      if (Array.isArray(rows) && rows.length > 0) {
-      const row = rows[0];
-      setTipo(row?.tipo != null ? String(row.tipo) : "");
-      setBalao(row?.balao != null ? String(row.balao) : "0");
-      setMaterial(row?.material != null ? String(row.material) : "0");
-      setTamanho(row?.tamanho != null ? String(row.tamanho) : "");
-      setMarca(row?.marca != null ? String(row.marca) : "");
-      setData(row?.data ? dataParaDate(row.data) : null);
-      }
+    const rows = await getCanula();
+    if (Array.isArray(rows) && rows.length > 0) {
+    const row = rows[0];
+    setTipo(row?.tipo != null ? String(row.tipo) : "");
+    setBalao(row?.balao != null ? String(row.balao) : "0");
+    setMaterial(row?.material != null ? String(row.material) : "0");
+    setTamanho(row?.tamanho != null ? String(row.tamanho) : "");
+    setMarca(row?.marca != null ? String(row.marca) : "");
+    setData(row?.data ? dataParaDate(row.data) : null);
+    }
   };
 
   // Lida com mudanças no tamanho (permite apenas n ou n.n ou 10.0 ou "")
   const mudanca = (num: string) => {
-      num = num.replace(',', '.');
+    num = num.replace(',', '.');
 
-      if (num === '') {
-          setTamanho('');
-          return;
-      }
+    if (num === '') {
+      setTamanho('');
+      return;
+    }
 
-      if (num === '.') return;
+    if (num === '.') return;
 
-      const partes = num.split('.');
-      if (partes.length > 2) {
-          num = partes[0] + '.' + partes[1];
-      }
+    const partes = num.split('.');
+    if (partes.length > 2) {
+      num = partes[0] + '.' + partes[1];
+    }
 
-      // Caso especial: "100" → "10.0"
-      if (num === "1.00") {
-          setTamanho("10.0");
-          return;
-      }
+    // Caso especial: "100" → "10.0"
+    if (num === "1.00") {
+      setTamanho("10.0");
+      return;
+    }
 
-      if (!num.includes('.') && num.length === 1) {
-      } 
-      else if (!num.includes('.') && num.length === 2) {
-          num = `${num[0]}.${num[1]}`;
-      }
+    if (!num.includes('.') && num.length === 1) {
+    } 
+    else if (!num.includes('.') && num.length === 2) {
+      num = `${num[0]}.${num[1]}`;
+    }
 
-      const regex = /^\d{0,2}(\.\d{0,1})?$/;
-      if (!regex.test(num)) return;
+    const regex = /^\d{0,2}(\.\d{0,1})?$/;
+    if (!regex.test(num)) return;
 
-      const valor = parseFloat(num);
-      if (!isNaN(valor) && valor > 10) return;
-      setTamanho(num);
+    const valor = parseFloat(num);
+    if (!isNaN(valor) && valor > 10) return;
+    setTamanho(num);
   };
 
   // Lida com mudança na data 
   const onChange = (event: any, dataSelecionada: any) => {
-      const dataAtual = dataSelecionada || data;
-      setShowData(false);
-      setData(dataAtual);
+    const dataAtual = dataSelecionada || data;
+    setShowData(false);
+    setData(dataAtual);
   };
 
   // Salva novos atributos da cânula
@@ -143,6 +143,7 @@ export default function Canula() {
         </TouchableOpacity>
       }
 
+      {/*Modal de balão IOS*/}
       <Modal animationType="slide" transparent visible={modalBalao}>
         <View style={styles.centralizar_modal}>
         <View  style={styles.modal}>
@@ -184,6 +185,7 @@ export default function Canula() {
         </TouchableOpacity>
       }
 
+      {/*Modal de material IOS*/}
       <Modal animationType="slide" transparent visible={modalMaterial}>
         <View style={styles.centralizar_modal}>
         <View  style={styles.modal}>
@@ -249,6 +251,8 @@ export default function Canula() {
           onChange={onChange}
         />
       )}
+
+      {/*Modal de Data IOS*/}
       <Modal animationType="slide" transparent visible={showData && Platform.OS === 'ios'}>
         <View style={styles.centralizar_modal}>
         <View  style={[styles.modal, {width: '90%'}]}>
@@ -274,10 +278,9 @@ export default function Canula() {
         <Text style={styles.txt_botao}>Salvar</Text>
       </TouchableOpacity>
 
-  </View>
-  </TouchableWithoutFeedback>
-);
-
+    </View>
+    </TouchableWithoutFeedback>
+  );
 }
 
 const { width } = Dimensions.get('window');

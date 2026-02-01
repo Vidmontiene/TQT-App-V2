@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {  Platform } from 'react-native';
+import { Platform } from 'react-native';
 
 export const styles = StyleSheet.create({
   
@@ -10,6 +10,7 @@ tracos_container: {
     flexDirection: 'row',
     justifyContent: 'center',
     gap: 6,
+    paddingBottom: 10
   },
 
   traco: {
@@ -39,7 +40,15 @@ tracos_container: {
     paddingHorizontal: 16,
     borderTopWidth: 1,
     borderTopColor: "#eee",
-    paddingBottom: Platform.OS === 'android' ? 8 : 5,
+    paddingBottom: Platform.OS === 'android' ? 10 : 12,
+  },
+
+  safeBottom: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'white',
   },
 
   botao:{

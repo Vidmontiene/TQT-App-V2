@@ -7,7 +7,7 @@ import { ligar } from "@/scripts/ligar";
 import { styles } from "@/estilos/swiper";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'; 
 import { router } from "expo-router";
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // Imports de telas DIFICULDADE DE RESPIRAR
 import Dr0 from "./dificuldaderesp0";
@@ -66,7 +66,8 @@ export default function EmergenciaSwipe() {
       </PagerView>
 
       {/*Botões*/}
-      <View style={[styles.container_botoes, { paddingBottom: 10 + insets.bottom}]}>
+      <SafeAreaView edges={['bottom']} style={styles.safeBottom}>
+      <View style={[styles.container_botoes]}>
 
         {pagina === 0 ?
           <TouchableOpacity style={styles.botao} onPress={() => router.push('/')}>
@@ -100,6 +101,7 @@ export default function EmergenciaSwipe() {
         }
 
       </View>
+      </SafeAreaView>
 
     </View>
   );

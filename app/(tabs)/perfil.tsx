@@ -1,5 +1,4 @@
 import { ScrollView, View, Text, TouchableOpacity, TextInput, AppState } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from '@/estilos/botoes';
 import { getPerfil, setPerfil } from '@/database/perfil';
 import { dateParaData, dataParaDate } from '@/scripts/datas';
@@ -122,12 +121,12 @@ export default function Perfil() {
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={[ 'left']}>
+    <View style={[styles.container, {paddingTop: 0}]}>
 
     {msg ? <Text style={styles.msg}>{msg}</Text> : null}
 
       <ScrollView showsVerticalScrollIndicator={false}
-      contentContainerStyle={{ paddingBottom: 150 }}>
+      contentContainerStyle={{ paddingBottom: 150}}>
         
         <Text style={[styles.txt_botao, {marginVertical: 15, textAlign: 'justify'}]}>
           Clique em qualquer informação para editá-la.
@@ -280,10 +279,10 @@ export default function Perfil() {
         </TouchableOpacity>
         {showData && (
           <DateTimePicker
-              value={data || new Date()}
-              mode="date"
-              display="default"
-              onChange={salvaData}
+            value={data || new Date()}
+            mode="date"
+            display="default"
+            onChange={salvaData}
         />)}
 
         {/*Patologias*/}
@@ -330,7 +329,7 @@ export default function Perfil() {
         </TouchableOpacity>
 
       </ScrollView>
-    </SafeAreaView>
+    </View>
 
   );
 }

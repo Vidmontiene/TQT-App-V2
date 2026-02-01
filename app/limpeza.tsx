@@ -1,5 +1,4 @@
 import { Text, View, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { CheckBox } from 'react-native-elements';
 import { useState } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';

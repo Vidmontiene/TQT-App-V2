@@ -20,7 +20,7 @@ export default function Materiais() {
       mascara: false  
   });
 
-  //Função para inverter o valor da checkbox ao clicar
+  // Função para inverter o valor da checkbox ao clicar
   const mudaValor = (key: keyof typeof items) => {
       setItems({ ...items, [key]: !items[key] });
       return !items[key];
@@ -52,7 +52,7 @@ export default function Materiais() {
       }
   };
 
-  //Muda o valor do checklist, tanto no DB quanto no react
+  // Muda o valor do checklist, tanto no DB quanto no react
   const mudaLista = async (campo: keyof typeof items) => {
       const valor = mudaValor(campo);
       await setLista(campo, valor ? 1 : 0); 

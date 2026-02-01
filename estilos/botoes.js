@@ -36,7 +36,8 @@ const { width } = Dimensions.get('window');
 
   txt_botao:{
     fontSize: Platform.OS === "ios" ? 16 : 14,
-    color: '#555'
+    color: '#555',
+    textAlign: 'justify'
   },
 
   img:{

@@ -1,9 +1,7 @@
 import { MaterialIcons, Octicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from '@/estilos/botoes';
 import { router } from 'expo-router';
-
 
 export default function Diarios() {
   return (

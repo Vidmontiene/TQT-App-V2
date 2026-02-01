@@ -7,7 +7,7 @@ import { styles } from "@/estilos/swiper";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'; 
 import { router } from "expo-router";
 import { IconSymbol } from '@/components/ui/icon-symbol';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSafeAreaInsets, SafeAreaView } from 'react-native-safe-area-context';
 
 // Imports de telas A CÂNULA SAIU 
 import Cs0 from "./canulasaiu0";
@@ -65,7 +65,8 @@ export default function EmergenciaSwipe() {
       </PagerView>
 
       {/*Botões*/}
-      <View style={[styles.container_botoes, { bottom: insets.bottom }]}>
+      <SafeAreaView edges={['bottom']} style={styles.safeBottom}>
+      <View style={[styles.container_botoes]}>
         {pagina === 0 ?
           <TouchableOpacity style={styles.botao} onPress={() => router.push('/')}>
             <IconSymbol  name="house.fill" size={24} color='white' />
@@ -97,6 +98,7 @@ export default function EmergenciaSwipe() {
         }
 
       </View>
+      </SafeAreaView>
       
     </View>
   );
