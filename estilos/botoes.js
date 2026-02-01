@@ -88,7 +88,8 @@ const { width } = Dimensions.get('window');
     width: width,
     zIndex: 999,
     borderRadius: 4,
-    position: 'absolute'
+    position: 'absolute',
+    marginTop: Platform.OS === "ios" ? 45 : 0
   },
 
   input_txt:{

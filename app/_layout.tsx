@@ -4,6 +4,7 @@ import 'react-native-reanimated';
 import { StatusBar } from 'expo-status-bar';
 import { TouchableOpacity } from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { Provider } from 'react-native-paper';
 
 export const unstable_settings = {
   anchor: '(tabs)',
@@ -11,13 +12,16 @@ export const unstable_settings = {
 
 export default function RootLayout() {
   return (
+    <Provider>
     <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
       <StatusBar style="dark" backgroundColor='white' translucent={false} />
       <Stack screenOptions={{
         headerLeft: () => (
           <TouchableOpacity
             onPress={() => router.back()}
-            style={{ padding: 7}}
+            style={{    
+              padding: 10, 
+            }}
           >
             <MaterialIcons
               name="arrow-back-ios"
@@ -155,6 +159,7 @@ export default function RootLayout() {
 
       </Stack>
     </SafeAreaView>
+    </Provider>
   );
 }
 

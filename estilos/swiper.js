@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {  Platform } from 'react-native';
 
 export const styles = StyleSheet.create({
   
@@ -38,6 +39,7 @@ tracos_container: {
     paddingHorizontal: 16,
     borderTopWidth: 1,
     borderTopColor: "#eee",
+    paddingBottom: Platform.OS === 'android' ? 8 : 5,
   },
 
   botao:{

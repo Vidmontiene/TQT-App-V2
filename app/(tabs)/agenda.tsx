@@ -1,4 +1,4 @@
-import { ScrollView, Text, TouchableOpacity, View, StyleSheet, Modal, TextInput , KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View, StyleSheet, Modal, TextInput , KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles as styles2 } from '@/estilos/botoes';
 import { useFocusEffect } from "expo-router";
@@ -11,7 +11,6 @@ import { agendarNotificacao, cancelarNotificacao } from '@/scripts/notificacoes'
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import Entypo from '@expo/vector-icons/Entypo';
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { RadioButton } from 'react-native-paper';
 
 export default function Agenda() {
 
@@ -219,6 +218,33 @@ export default function Agenda() {
     }
   };
 
+  // Interface das bolinhas
+  interface CustomRadioButtonProps {
+    label: string;
+    value: string;
+    selected: boolean;
+    onPress: (value: string) => void;
+  }
+
+  // Bolinhas
+  const CustomRadioButton: React.FC<CustomRadioButtonProps> = ({label, value, selected, onPress}) => {
+    return (
+      <TouchableOpacity
+        style={styles.container_radio}
+        onPress={() => onPress(value)}
+        activeOpacity={0.8}
+      >
+        {/*Bolinha*/}
+        <View style={[styles.circulo, selected && styles.circulo_selecionado]}>
+          {selected && <View style={styles.circulo_dentro} />}
+        </View>
+
+        {/*Label*/}
+        <Text style={styles.label}>{label}</Text>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <SafeAreaView
     style={{flex: 1, backgroundColor: 'white'}}
@@ -330,7 +356,7 @@ export default function Agenda() {
                   {data ? data.toLocaleDateString("pt-BR") : "Selecione a data"}
                 </Text>
               </TouchableOpacity>
-                {showData && (
+                {showData && Platform.OS === "android" &&(
                   <DateTimePicker
                     value={data || new Date()}
                     mode="date"
@@ -338,12 +364,31 @@ export default function Agenda() {
                     onChange={onChange}
                   />
                 )}
+                {showData && Platform.OS === 'ios' && (
+                  <View style={styles.calendario_fundo}>
+                    <View style={styles.calendario_container}>
+                      <TouchableOpacity
+                        onPress={() => setShowData(false)}
+                        style={{ padding: 15, alignItems: 'flex-end', alignSelf: 'baseline' }}>
+                        <Text style={{ color: '#007AFF', fontSize: 17 }}>Concluir</Text>
+                      </TouchableOpacity>
+                      <DateTimePicker
+                        value={data || new Date()}
+                        mode="date"
+                        display="inline" 
+                        onChange={(event, selectedDate) => {
+                          if (selectedDate) setData(selectedDate);
+                        }}    
+                      />
+                    </View>
+                  </View>
+                )}
               <TouchableOpacity onPress={() => {setShowTime(true), Keyboard.dismiss()}} style={styles.botao_dataehora}>
                 <Text style={[styles.txt_data, { color: hora ? '#000' : 'gray' }]}>
                   {hora ? hora.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }) : "Selecione o horário"}
                 </Text>
               </TouchableOpacity>
-                {showTime && (
+                {showTime && Platform.OS === "android" && (
                   <DateTimePicker
                     value={hora || new Date()}
                     mode="time"
@@ -353,6 +398,25 @@ export default function Agenda() {
                       if (selectedTime) setHora(selectedTime);
                     }}
                   />
+                )}
+                {showTime && Platform.OS === 'ios' && (
+                  <View style={styles.calendario_fundo}>
+                    <View style={styles.calendario_container}>
+                      <TouchableOpacity
+                        onPress={() => setShowTime(false)}
+                        style={{ padding: 15, alignItems: 'flex-end', alignSelf: 'baseline' }}>
+                        <Text style={{ color: '#007AFF', fontSize: 17 }}>Concluir</Text>
+                      </TouchableOpacity>
+                      <DateTimePicker
+                        value={hora || new Date()}
+                        mode="time"
+                        display="spinner" 
+                        onChange={(event, selectedTime) => {
+                          if (selectedTime) setHora(selectedTime);
+                        }}    
+                      />
+                    </View>
+                  </View>
                 )}
             </View>
 
@@ -369,39 +433,26 @@ export default function Agenda() {
             />
 
             {/*RadioButtons*/}
-            <View style={styles.container_radio}>
-              <RadioButton
-                value="24"
-                color='#12B9ED'
-                uncheckedColor="gray"
-                status={ checked === 1 ? 'checked' : 'unchecked' }
-                onPress={() => {setChecked(1), Keyboard.dismiss()}}
-              />
-              <Text>Avisar 2 horas antes</Text>
-              
-            </View>
+            <CustomRadioButton
+              label="Avisar 2 horas antes"
+              value="24"
+              selected={checked === 1}
+              onPress={() => {setChecked(1), Keyboard.dismiss}}
+            />
 
-            <View style={styles.container_radio}>
-              <RadioButton
-                value="2"
-                color='#12B9ED'
-                uncheckedColor="gray"
-                status={ checked === 2 ? 'checked' : 'unchecked' }
-                onPress={() => {setChecked(2), Keyboard.dismiss()}}
-              />
-              <Text>Avisar 24 horas antes</Text>
-            </View>
-            
-            <View style={styles.container_radio}>
-              <RadioButton
-                value="nao"
-                color='#12B9ED'
-                uncheckedColor="gray"
-                status={ checked === 3 ? 'checked' : 'unchecked' }
-                onPress={() => {setChecked(3), Keyboard.dismiss()}}
-              />
-              <Text>Não avisar</Text>
-            </View>
+            <CustomRadioButton
+              label="Avisar 24 horas antes"
+              value="2"
+              selected={checked === 2}
+              onPress={() => {setChecked(2), Keyboard.dismiss()}}
+            />
+
+            <CustomRadioButton
+              label="Não avisar"
+              value="nao"
+              selected={checked === 3}
+              onPress={() => {setChecked(3), Keyboard.dismiss}}
+            />
 
             {/*Botão de salvar*/}
             <TouchableOpacity style={styles.botaopop} onPress={salvarRegistro}>
@@ -441,13 +492,32 @@ export default function Agenda() {
                   {data ? data.toLocaleDateString("pt-BR") : "Selecione a data"}
                 </Text>
               </TouchableOpacity>
-                {showData && (
+                {showData && Platform.OS === "android" && (
                   <DateTimePicker
                     value={data || new Date()}
                     mode="date"
                     display="default"
                     onChange={onChange}
                   />
+                )}
+                {showData && Platform.OS === 'ios' && (
+                  <View style={styles.calendario_fundo}>
+                    <View style={styles.calendario_container}>
+                      <TouchableOpacity
+                        onPress={() => setShowData(false)}
+                        style={{ padding: 15, alignItems: 'flex-end', alignSelf: 'baseline' }}>
+                        <Text style={{ color: '#007AFF', fontSize: 17 }}>Concluir</Text>
+                      </TouchableOpacity>
+                      <DateTimePicker
+                        value={data || new Date()}
+                        mode="date"
+                        display="inline" 
+                        onChange={(event, selectedDate) => {
+                          if (selectedDate) setData(selectedDate);
+                        }}    
+                      />
+                    </View>
+                  </View>
                 )}
               <TouchableOpacity onPress={() => {setShowTime(true), Keyboard.dismiss()}} style={styles.botao_dataehora}>
                 <Text style={[styles.txt_data, { color: hora ? '#000' : 'gray' }]}>
@@ -465,6 +535,25 @@ export default function Agenda() {
                   }}
                 />
               )}
+              {showTime && Platform.OS === 'ios' && (
+                <View style={styles.calendario_fundo}>
+                  <View style={styles.calendario_container}>
+                    <TouchableOpacity
+                      onPress={() => setShowTime(false)}
+                      style={{ padding: 15, alignItems: 'flex-end', alignSelf: 'baseline' }}>
+                      <Text style={{ color: '#007AFF', fontSize: 17 }}>Concluir</Text>
+                    </TouchableOpacity>
+                    <DateTimePicker
+                      value={hora || new Date()}
+                      mode="time"
+                      display="spinner" 
+                      onChange={(event, selectedTime) => {
+                        if (selectedTime) setHora(selectedTime);
+                      }}    
+                    />
+                  </View>
+                </View>
+              )}
             </View>
 
             {/*Observação*/}
@@ -480,50 +569,50 @@ export default function Agenda() {
             />
 
             {/*RadioButtons*/}
-            <View style={styles.container_radio}>
-              <RadioButton
-                value="24"
-                color='#12B9ED'
-                uncheckedColor="gray"
-                status={ checked === 1 ? 'checked' : 'unchecked' }
-                onPress={() => {setChecked(1), Keyboard.dismiss()}}
-              />
-              <Text>Avisar 2 horas antes</Text>
-              
-            </View>
+            <CustomRadioButton
+              label="Avisar 2 horas antes"
+              value="24"
+              selected={checked === 1}
+              onPress={() => {setChecked(1), Keyboard.dismiss}}
+            />
 
-            <View style={styles.container_radio}>
-              <RadioButton
-                value="2"
-                color='#12B9ED'
-                uncheckedColor="gray"
-                status={ checked === 2 ? 'checked' : 'unchecked' }
-                onPress={() => {setChecked(2), Keyboard.dismiss()}}
-              />
-              <Text>Avisar 24 horas antes</Text>
-            </View>
-            
-            <View style={styles.container_radio}>
-              <RadioButton
-                value="nao"
-                color='#12B9ED'
-                uncheckedColor="gray"
-                status={ checked === 3 ? 'checked' : 'unchecked' }
-                onPress={() => {setChecked(3), Keyboard.dismiss()}}
-              />
-              <Text>Não avisar</Text>
-            </View>
+            <CustomRadioButton
+              label="Avisar 24 horas antes"
+              value="2"
+              selected={checked === 2}
+              onPress={() => {setChecked(2), Keyboard.dismiss()}}
+            />
+
+            <CustomRadioButton
+              label="Não avisar"
+              value="nao"
+              selected={checked === 3}
+              onPress={() => {setChecked(3), Keyboard.dismiss}}
+            />
 
             {/*Botão de salvar/excluir*/}
             <View style={styles.dataehora}>
+
               <TouchableOpacity style={styles.botao_editar} onPress={mudarRegistro}>
                 <Text style={styles.txt_botao}>Salvar</Text>
               </TouchableOpacity>
 
               <TouchableOpacity style={[styles.botao_editar, {backgroundColor:"#d63d3dff"}]} 
-                onPress={()=>setModalConfirmar(true)}>
+                onPress={Platform.OS === "android" ? 
+                  ()=>setModalConfirmar(true)
+                  : 
+                  () => Alert.alert(
+                    "Deseja excluir esse registro?",
+                    "Não será possível reverter essa ação.",
+                    [
+                      { text: "Cancelar", style: "cancel" },
+                      { text: "Deletar", onPress: deletarRegistro }
+                    ]
+                  )
+                }>
                 <Text style={styles.txt_botao}>Deletar</Text>
               </TouchableOpacity>
+
             </View>
           </View> 
         </TouchableWithoutFeedback>
@@ -550,7 +639,7 @@ export default function Agenda() {
             </View>
         </BlurView>
       </Modal>
-        
+    
       {/*Botão de "+"*/}
       <TouchableOpacity style={styles.botao_mais} onPress={() => setModalNovo(true)}>
         <MaterialIcons name="add" size={40} color="white"/>
@@ -643,7 +732,9 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     borderRadius: 5,
-    width: "80%"
+    width: "80%",
+    paddingVertical: 10,
+    paddingLeft:  5
   },
 
   dataehora:{ // Div de data e hora
@@ -695,5 +786,67 @@ const styles = StyleSheet.create({
     width: '80%',
     justifyContent: 'flex-start',
     alignItems: 'center',
-  }
+  },
+
+  circulo: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: 'gray',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  circulo_selecionado: {
+    borderColor: '#12B9ED',
+  },
+
+  circulo_dentro: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    backgroundColor: '#12B9ED',
+  },
+  
+  label: {
+    marginLeft: 10,
+    fontSize: Platform.OS === "ios" ? 16 : 14,
+    color: '#000',
+    lineHeight: 30
+  },
+
+  modal:{
+    backgroundColor: 'white',
+    width: '80%',
+    borderRadius: 12,
+    padding: 15,
+  },
+  centralizar_modal:{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.4)'
+  },
+
+calendario_fundo: {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: 'rgba(0,0,0,0.4)', // fundo semi-transparente
+  justifyContent: 'center',
+  alignItems: 'center',
+  zIndex: 999,
+},
+calendario_container: {
+  backgroundColor: 'white', // fundo branco do calendário
+  borderRadius: 12,
+  padding: 15,
+  width: '100%',
+  alignItems: 'center',
+  borderBlockColor: 'gray',
+  borderWidth: 0.5
+},
 });

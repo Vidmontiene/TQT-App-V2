@@ -18,9 +18,9 @@ export default function Canula() {
   const [showData, setShowData] = useState(false);       // Abre/Fecha escolhedor de DateTimePicker
   const [msg, setMsg] = useState("");                    // Mostra mensagem de salvamento 
 
-  const [modalBalao, setModalBalao] = useState(false);    // Picker do balão
-  const [modalMaterial, setModalMaterial] = useState(false);   // Picker do material
-  const [modalMarca, setModalMarca] = useState(false); // Picker da Marca
+  const [modalBalao, setModalBalao] = useState(false);          // Picker do balão
+  const [modalMaterial, setModalMaterial] = useState(false);    // Picker do material
+  const [modalMarca, setModalMarca] = useState(false);          // Picker da Marca
 
   // Define os radioButtons de balão
   const baloes = [
@@ -252,11 +252,18 @@ export default function Canula() {
       <Modal animationType="slide" transparent visible={showData && Platform.OS === 'ios'}>
         <View style={styles.centralizar_modal}>
         <View  style={[styles.modal, {width: '90%'}]}>
+          <TouchableOpacity
+            onPress={() => setShowData(false)}
+            style={{ padding: 15, alignItems: 'flex-end', alignSelf: 'baseline' }}>
+            <Text style={{ color: '#007AFF', fontSize: 17 }}>Concluir</Text>
+          </TouchableOpacity>
           <DateTimePicker
             value={data || new Date()}
             mode="date"
             display="inline"
-            onChange={onChange}
+            onChange={(event, selectedDate) => {
+              if (selectedDate) setData(selectedDate);
+            }}  
           />
         </View>
         </View>
