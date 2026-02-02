@@ -30,6 +30,7 @@ const getTituloTela = (routeName?: string) => {
   return titulos[routeName] ?? routeName;
 };
 
+// Header Customizado
 const Header = () => {
 
   const route = useNavigationState(

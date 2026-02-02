@@ -132,7 +132,8 @@ export default function Canula() {
           <Picker
           selectedValue={balao}
           onValueChange={(itemValue) => setBalao(itemValue)}
-          >
+          style={{ color: '#000' }}
+          dropdownIconColor="#000">
             <Picker.Item label="Sim" value="1" />
             <Picker.Item label="Não" value="2" />
           </Picker>
@@ -174,7 +175,9 @@ export default function Canula() {
         <View style={styles.input_txt}>
           <Picker
           selectedValue={material}
-          onValueChange={(itemValue) => setMaterial(itemValue)}>
+          onValueChange={(itemValue) => setMaterial(itemValue)}
+          style={{ color: '#000' }}
+          dropdownIconColor="#000">
             <Picker.Item label="Metálica" value="1" />
             <Picker.Item label="Plástica/Silicone" value="2" />
           </Picker>
@@ -206,7 +209,9 @@ export default function Canula() {
         <View style={styles.input_txt}>
           <Picker
           selectedValue={marca}
-          onValueChange={(itemValue) => setMarca(itemValue)}>
+          onValueChange={(itemValue) => setMarca(itemValue)}
+          style={{ color: '#000' }}
+          dropdownIconColor="#000">
             <Picker.Item label="BCI" value="BCI" />
             <Picker.Item label="Shiley" value="Shiley" />
             <Picker.Item label="Safer" value="Safer" />

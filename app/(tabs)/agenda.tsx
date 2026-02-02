@@ -265,7 +265,7 @@ export default function Agenda() {
               <Text style={styles2.titulo_botao}>{item.atividade}</Text>
               <Text style={[styles2.txt_botao, {fontSize: 15}]}>{item.hora}</Text>
               {item.obs === "" ? <></> : 
-                <Text style={styles2.txt_botao}><Text style={styles.negrito}>Observação:</Text> {item.obs}</Text>
+                <Text style={styles2.txt_botao_justify}><Text style={styles.negrito}>Observação:</Text> {item.obs}</Text>
               }   
             </View>
 
@@ -275,7 +275,7 @@ export default function Agenda() {
             </TouchableOpacity>
           </View>
           ))}
-
+        
         {/*Registros de próximos*/}
         <Text style={[styles2.titulo, {fontSize: 24, marginVertical: 15}]}>Próximos</Text>
 
@@ -291,7 +291,7 @@ export default function Agenda() {
               <Text style={styles2.titulo_botao}>{item.atividade}</Text>
               <Text style={styles2.txt_botao}>{item.data} - {item.hora}</Text>
               {item.obs === "" ? <></> : 
-                <Text style={styles2.txt_botao}><Text style={styles.negrito}>Observação:</Text> {item.obs}</Text>
+                <Text style={styles2.txt_botao_justify}><Text style={styles.negrito}>Observação:</Text> {item.obs}</Text>
               }   
             </View>
 
@@ -316,16 +316,17 @@ export default function Agenda() {
               <Text style={styles2.titulo_botao}>{item.atividade}</Text>
               <Text style={styles2.txt_botao}>{item.data} - {item.hora}</Text>
               {item.obs === "" ? <></> :
-                <Text style={styles2.txt_botao}><Text style={styles.negrito}>Observação:</Text> {item.obs}</Text>
+                <Text style={styles2.txt_botao_justify}><Text style={styles.negrito}>Observação:</Text> {item.obs}</Text>
               }
             </View>
+
             {/*Botão de editar e excluir*/}
             <TouchableOpacity onPress={() => {setModalEditar(true); editarRegistro(item)}} style={{alignSelf: 'center', padding: 10}}>
               <Entypo name="dots-three-vertical" size={27} style={styles2.seta} />
             </TouchableOpacity>
 
           </View>
-        ))}
+          ))}
 
       </ScrollView>
 
