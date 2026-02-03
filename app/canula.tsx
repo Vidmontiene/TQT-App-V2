@@ -100,15 +100,15 @@ export default function Canula() {
 
   // Salva novos atributos da cânula
   const mudarCanula = async () => {
-      await setCanula("tamanho", tamanho);
-      await setCanula("marca", marca);
-      await setCanula("data", dateParaData(data));
-      await setCanula("tipo", tipo);
-      await setCanula("material", material);
-      await setCanula("balao", balao);
-      await carregarCanula();
-      setMsg("Informações salvas com sucesso!");
-      setTimeout(() => setMsg(""), 1500); // desaparece após 1.5s
+    await setCanula("tamanho", tamanho);
+    await setCanula("marca", marca);
+    await setCanula("data", dateParaData(data));
+    await setCanula("tipo", tipo);
+    await setCanula("material", material);
+    await setCanula("balao", balao);
+    await carregarCanula();
+    setMsg("Informações salvas com sucesso!");
+    setTimeout(() => setMsg(""), 1500); // desaparece após 1.5s
   };
 
   return (
@@ -136,6 +136,7 @@ export default function Canula() {
           dropdownIconColor="#000">
             <Picker.Item label="Sim" value="1" />
             <Picker.Item label="Não" value="2" />
+            <Picker.Item label=" " value="0" />
           </Picker>
         </View>
         :
@@ -152,6 +153,7 @@ export default function Canula() {
           selectedValue={balao}
           onValueChange={(itemValue) => {setBalao(itemValue), setModalBalao(false)}}
           >
+            <Picker.Item label=" " value="0" />
             <Picker.Item label="Sim" value="1" />
             <Picker.Item label="Não" value="2" />
         </Picker>
@@ -180,6 +182,7 @@ export default function Canula() {
           dropdownIconColor="#000">
             <Picker.Item label="Metálica" value="1" />
             <Picker.Item label="Plástica/Silicone" value="2" />
+            <Picker.Item label=" " value="0" />
           </Picker>
         </View>
         :
@@ -196,6 +199,7 @@ export default function Canula() {
           selectedValue={material}
           onValueChange={(itemValue) => {setMaterial(itemValue), setModalMaterial(false)}}
           >
+            <Picker.Item label=" " value="0" />
             <Picker.Item label="Metálica" value="1" />
             <Picker.Item label="Plástica/Silicone" value="2" />
         </Picker>
@@ -217,6 +221,7 @@ export default function Canula() {
             <Picker.Item label="Safer" value="Safer" />
             <Picker.Item label="Portex" value="Portex" />
             <Picker.Item label="Outro" value="Outro" />
+            <Picker.Item label=" " value="" />
           </Picker>
         </View>
         :
@@ -224,6 +229,8 @@ export default function Canula() {
           <Text style={styles.txt}>{marca}</Text>
         </TouchableOpacity>
       }
+
+      {/*Modal de marca IOS*/}
       <Modal animationType="slide" transparent visible={modalMarca}>
         <View style={styles.centralizar_modal}>
         <View  style={styles.modal}>
@@ -231,6 +238,7 @@ export default function Canula() {
           selectedValue={marca}
           onValueChange={(itemValue) => {setMarca(itemValue), setModalMarca(false)}}
           >
+            <Picker.Item label=" " value="" />
             <Picker.Item label="BCI" value="BCI" />
             <Picker.Item label="Shiley" value="Shiley" />
             <Picker.Item label="Safer" value="Safer" />
