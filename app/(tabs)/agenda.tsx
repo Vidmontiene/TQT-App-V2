@@ -254,7 +254,7 @@ export default function Agenda() {
         <Text style={[styles2.titulo, {fontSize: 24, marginTop: 13}]}>Hoje</Text>
 
         {registrosHoje.length === 0 ? 
-
+        
           <Text style={styles.subtitulo_vazio}> Não existem registros para hoje.</Text>
           :
           registrosHoje.map((item) => (

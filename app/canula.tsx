@@ -1,6 +1,6 @@
 import { useFocusEffect } from 'expo-router';
 import { useCallback, useState } from 'react';
-import { Text, TouchableOpacity, View, StyleSheet, TextInput, Dimensions, Keyboard, TouchableWithoutFeedback, Platform, Modal } from 'react-native';
+import { Text, TouchableOpacity, View, StyleSheet, TextInput, Dimensions, Keyboard, TouchableWithoutFeedback, Platform, Modal, ScrollView } from 'react-native';
 import { dateParaData, dataParaDate } from '@/scripts/datas';
 import { getCanula, setCanula } from '@/database/canula';
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -114,6 +114,11 @@ export default function Canula() {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
     <View style={styles.container}>
+    <ScrollView 
+      style={{backgroundColor: 'white'}}        
+      contentContainerStyle={{ paddingBottom: 10}}
+      showsVerticalScrollIndicator={false}
+    >
 
       {msg ? <Text style={styles.msg}>{msg}</Text> : null}
       
@@ -291,6 +296,7 @@ export default function Canula() {
         <Text style={styles.txt_botao}>Salvar</Text>
       </TouchableOpacity>
 
+    </ScrollView>
     </View>
     </TouchableWithoutFeedback>
   );
