@@ -15,12 +15,12 @@ export default function Ajuda() {
 
       {/*E-mail*/}
       <TouchableOpacity style={styles.botao} 
-        onPress={() => Linking.openURL(`mailto: suportetqt@gmail.com`)}>
+        onPress={() => Linking.openURL(`mailto:draraquelsales@hotmail.com`)}>
 
         <MaterialCommunityIcons  name="email-outline" size={31} style={styles.img_redondo}/>
         <View style={styles.container_botao}>
           <Text style={styles.titulo_botao}>E-mail</Text>
-          <Text style={styles.txt_botao}>suportetqt@gmail.com</Text>
+          <Text style={styles.txt_botao}>draraquelsales@hotmail.com</Text>
         </View>
       </TouchableOpacity>
 

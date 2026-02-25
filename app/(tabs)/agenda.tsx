@@ -826,24 +826,24 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.4)'
   },
 
-calendario_fundo: {
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  backgroundColor: 'rgba(0,0,0,0.4)', // fundo semi-transparente
-  justifyContent: 'center',
-  alignItems: 'center',
-  zIndex: 999,
-},
-calendario_container: {
-  backgroundColor: 'white', // fundo branco do calendário
-  borderRadius: 12,
-  padding: 15,
-  width: '100%',
-  alignItems: 'center',
-  borderBlockColor: 'gray',
-  borderWidth: 0.5
-},
+  calendario_fundo: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0,0,0,0.4)', // fundo semi-transparente
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 999,
+  },
+  calendario_container: {
+    backgroundColor: 'white', // fundo branco do calendário
+    borderRadius: 12,
+    padding: 15,
+    width: '100%',
+    alignItems: 'center',
+    borderBlockColor: 'gray',
+    borderWidth: 0.5
+  },
 });

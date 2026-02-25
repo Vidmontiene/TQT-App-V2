@@ -62,5 +62,3 @@ export const cancelarNotificacao = async ( notificationId ) => {
   await Notifications.cancelScheduledNotificationAsync(notificationId);
   console.log(`Notificação de id ${notificationId} cancelada`);
 };
-
-
