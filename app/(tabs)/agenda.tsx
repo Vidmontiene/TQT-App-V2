@@ -265,7 +265,7 @@ export default function Agenda() {
               <Text style={styles2.titulo_botao}>{item.atividade}</Text>
               <Text style={[styles2.txt_botao, {fontSize: 15}]}>{item.hora}</Text>
               {item.obs === "" ? <></> : 
-                <Text style={styles2.txt_botao_justify}><Text style={styles.negrito}>Observação:</Text> {item.obs}</Text>
+                <Text style={styles2.txt_botao}><Text style={styles.negrito}>Observação:</Text> {item.obs}</Text>
               }   
             </View>
 
@@ -291,7 +291,7 @@ export default function Agenda() {
               <Text style={styles2.titulo_botao}>{item.atividade}</Text>
               <Text style={styles2.txt_botao}>{item.data} - {item.hora}</Text>
               {item.obs === "" ? <></> : 
-                <Text style={styles2.txt_botao_justify}><Text style={styles.negrito}>Observação:</Text> {item.obs}</Text>
+                <Text style={styles2.txt_botao}><Text style={styles.negrito}>Observação:</Text> {item.obs}</Text>
               }   
             </View>
 
@@ -316,7 +316,7 @@ export default function Agenda() {
               <Text style={styles2.titulo_botao}>{item.atividade}</Text>
               <Text style={styles2.txt_botao}>{item.data} - {item.hora}</Text>
               {item.obs === "" ? <></> :
-                <Text style={styles2.txt_botao_justify}><Text style={styles.negrito}>Observação:</Text> {item.obs}</Text>
+                <Text style={styles2.txt_botao}><Text style={styles.negrito}>Observação:</Text> {item.obs}</Text>
               }
             </View>
 

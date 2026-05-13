@@ -57,6 +57,12 @@
         "projectId": "9282ac5c-60a3-4539-9ea4-8aaf68bc9422"
       }
     },
-    "owner": "camilavidmontiene"
+    "owner": "camilavidmontiene",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/9282ac5c-60a3-4539-9ea4-8aaf68bc9422"
+    }
   }
 }
